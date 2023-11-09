@@ -1,0 +1,95 @@
+.panel {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: #1e2227;
+    color: #ffffff;
+}
+
+.panel-control {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    border-top: 1px solid #434244;
+}
+
+.panel-control-item,
+.panel-control-hide {
+    flex: 1;
+    height: 16px;
+    width: 100%;
+    /* margin: 1px; */
+    /* border-radius: 2px; */
+    fill: #b9b9b9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: transform 0.3s linear;
+}
+
+.panel-control-item:hover {
+    background-color: #4e4e4e;
+    fill: #e0e0e0
+}
+
+.panel-control-pin-conainer {
+    cursor: move;
+}
+
+.panel-control-pin {
+    transform: rotate(-45deg);
+    fill: #a7e3ed;
+    cursor: pointer;
+}
+
+.panel-control-copy,
+.panel-control-copy:hover {
+    fill: #a7edb1
+}
+
+.panel-control-hide-hover {
+    background-color: #878787;
+    fill: #e0e0e0
+}
+
+.result {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    margin: 4px;
+    padding: 4px;
+    text-align: left;
+    border-radius: 4px;
+    background-color: #262a30;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    user-select: text;
+    line-height: 1.3;
+}
+
+.dict {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 2px;
+}
+
+.dict-pos {
+    padding: 1px 2px;
+    border-radius: 2px;
+    color: #000;
+    background-color: #07c3f2;
+    font-weight: bold;
+    margin: 1px;
+}
+
+.dict-term {
+    padding: 1px 4px;
+    border-radius: 2px;
+    background-color: #434244;
+    margin: 1px 2px
+}

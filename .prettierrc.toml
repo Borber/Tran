@@ -1,0 +1,7 @@
+semi = false
+tabWidth = 4
+
+[[overrides]]
+files = "*.yml"
+[overrides.options]
+tabWidth = 2 #缩进字节数
