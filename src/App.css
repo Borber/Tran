@@ -9,8 +9,6 @@
   overflow: hidden;
 }
 
-
-
 input:hover,
 button:hover {
   filter: brightness(1.4);

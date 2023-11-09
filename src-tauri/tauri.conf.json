@@ -72,7 +72,7 @@
       {
         "label": "panel",
         "url": "/panel",
-        "width": 250,
+        "width": 256,
         "height": 100,
         "fullscreen": false,
         "resizable": false,

@@ -187,7 +187,11 @@ input:-webkit-autofill {
 
 #root {
   height: 100%;
+  width: 100%;
   overflow: hidden;
+  box-sizing: border-box;
+  background-color: #1e1e1e;
+  border: #434244 1px solid;
 }
 
 /*
@@ -206,11 +210,4 @@ body {
 /* 隐藏滚动条 */
 ::-webkit-scrollbar {
   width: 0;
-}
-
-/* 妥协 */
-.compromise {
-  box-sizing: border-box;
-  background-color: #1e1e1e;
-  border: #434244 1px solid;
 }

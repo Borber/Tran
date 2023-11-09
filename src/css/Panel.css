@@ -1,10 +1,64 @@
 .panel {
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     text-align: center;
-    background-color: #252a31;
+    background-color: #1e2227;
     color: #ffffff;
+}
+
+.panel-control {
+    display: flex;
+    flex-direction: row;
     box-sizing: border-box;
-    border: 1px solid #434244;
+    border-bottom: 1px solid #434244;
+}
+
+.panel-control-item {
+    height: 16px;
+    width: 16px;
+    margin: 2px;
+    cursor: pointer;
+    border-radius: 2px;
+    fill: #b9b9b9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: transform 0.3s linear;
+}
+
+.panel-control-item:hover {
+    background-color: #878787;
+    fill: #e0e0e0
+}
+
+.panel-control-pin {
+    transform: rotate(-45deg);
+    fill: #a7e3ed
+}
+
+.panel-control-copy,
+.panel-control-copy:hover {
+    fill: #a7edb1
+}
+
+.panel-control-drag {
+    height: 20px;
+    flex: 1;
+    cursor: move;
+}
+
+.result {
+    color: #ffffff;
+    margin: 4px;
+    padding: 4px;
+    text-align: left;
+    border-radius: 4px;
+    background-color: #262a30;
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    user-select: text;
 }
