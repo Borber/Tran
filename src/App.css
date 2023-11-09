@@ -1,0 +1,17 @@
+.container {
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+
+
+input:hover,
+button:hover {
+  filter: brightness(1.4);
+}
