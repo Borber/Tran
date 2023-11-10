@@ -1,12 +1,13 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod setup;
+mod shortcut;
 mod tray;
 mod window;
 
 #[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
+fn translate() -> String {
+    "Hello, world!".to_string()
 }
 
 fn main() {
@@ -14,7 +15,7 @@ fn main() {
         .system_tray(tray::new())
         .on_system_tray_event(tray::handler)
         .setup(setup::handler)
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![translate])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

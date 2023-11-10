@@ -12,10 +12,11 @@
     display: flex;
     flex-direction: row;
     box-sizing: border-box;
-    border-bottom: 1px solid #434244;
+    border-top: 1px solid #434244;
 }
 
-.panel-control-item {
+.panel-control-item,
+.panel-control-hide {
     height: 16px;
     width: 16px;
     margin: 2px;
@@ -48,6 +49,11 @@
     height: 20px;
     flex: 1;
     cursor: move;
+}
+
+.panel-control-hide-hover {
+    background-color: #878787;
+    fill: #e0e0e0
 }
 
 .result {
