@@ -22,9 +22,12 @@ const Panel = () => {
     panel.listen<{ x: number; y: number }>("show", async (pos) => {
         Copy(false)
         Result(await invoke("translate"))
-        await panel.setPosition(
-            new PhysicalPosition(pos.payload.x - 40, pos.payload.y + 20)
-        )
+        if (!pin()) {
+            await panel.setPosition(
+                new PhysicalPosition(pos.payload.x - 40, pos.payload.y + 20)
+            )
+        }
+
         await panel.show()
         await panel.setFocus()
     })
