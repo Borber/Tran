@@ -82,7 +82,7 @@
         "decorations": false,
         "transparent": false,
         "center": true,
-        "visible": true,
+        "visible": false,
         "alwaysOnTop": true,
         "skipTaskbar": true
       }
