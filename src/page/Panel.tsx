@@ -22,6 +22,11 @@ const Panel = () => {
             await panel.setPosition(
                 new PhysicalPosition(pos.payload.x - 40, pos.payload.y + 20)
             )
+
+            // 刷新 固定图标状态
+            moveFlag = true
+            pinFlag = false
+            Pin(false)
         }
 
         Copy(false)
@@ -36,27 +41,36 @@ const Panel = () => {
             class="panel"
             onMouseLeave={async () => {
                 if (moveFlag) {
+                    moveFlag = true
+                    pinFlag = false
+                    Pin(false)
                     await panel.hide()
                 }
             }}>
             <div class="result">{result()}</div>
             <div class="panel-control">
                 <div
-                    class="panel-control-item"
-                    onClick={() => {
+                    data-tauri-drag-region
+                    class="panel-control-item panel-control-pin-conainer"
+                    onMouseUp={() => {
                         moveFlag = !moveFlag
                         pinFlag = !pinFlag
                         Pin(pinFlag)
+                    }}
+                    onMouseEnter={() => {
+                        moveFlag = false
+                        pinFlag = true
+                        Pin(true)
                     }}>
-                    <span classList={{ "panel-control-pin": pin() }}>
+                    <div classList={{ "panel-control-pin": pin() }}>
                         <PinIcon size={14} />
-                    </span>
+                    </div>
                 </div>
-                <div data-tauri-drag-region class="panel-control-drag" />
+
                 <div
                     class="panel-control-item"
                     classList={{ "panel-control-copy": copy() }}
-                    onClick={() => Copy(!copy())}>
+                    onMouseEnter={() => Copy(true)}>
                     <CopyIcon size={12} />
                 </div>
             </div>

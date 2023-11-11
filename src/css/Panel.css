@@ -17,11 +17,11 @@
 
 .panel-control-item,
 .panel-control-hide {
+    flex: 1;
     height: 16px;
-    width: 16px;
-    margin: 2px;
-    cursor: pointer;
-    border-radius: 2px;
+    width: 100%;
+    /* margin: 1px; */
+    /* border-radius: 2px; */
     fill: #b9b9b9;
     display: flex;
     align-items: center;
@@ -31,13 +31,18 @@
 }
 
 .panel-control-item:hover {
-    background-color: #878787;
+    background-color: #4e4e4e;
     fill: #e0e0e0
+}
+
+.panel-control-pin-conainer {
+    cursor: move;
 }
 
 .panel-control-pin {
     transform: rotate(-45deg);
-    fill: #a7e3ed
+    fill: #a7e3ed;
+    cursor: pointer;
 }
 
 .panel-control-copy,
@@ -45,11 +50,11 @@
     fill: #a7edb1
 }
 
-.panel-control-drag {
+/* .panel-control-drag {
     height: 20px;
     flex: 1;
     cursor: move;
-}
+} */
 
 .panel-control-hide-hover {
     background-color: #878787;
@@ -67,4 +72,5 @@
     overflow-x: hidden;
     overflow-y: scroll;
     user-select: text;
+    line-height: 1.3;
 }

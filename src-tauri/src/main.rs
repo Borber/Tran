@@ -10,15 +10,13 @@ mod window;
 
 #[tauri::command]
 async fn translate() -> String {
-    // TODO 发送复制按键
-    tokio::time::sleep(std::time::Duration::from_millis(100)).await;
     let mut enigo = Enigo::new();
-    enigo.key_sequence_parse("{+CTRL}c{-CTRL}");
+    enigo.key_sequence_parse("{ALT}{+CTRL}c{-CTRL}{ALT}");
     let context = clip::get();
     println!("context: {:?}", context);
     context
 }
-//
+
 fn main() {
     tauri::Builder::default()
         .system_tray(tray::new())
