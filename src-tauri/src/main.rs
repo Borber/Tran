@@ -2,6 +2,7 @@
 
 use enigo::{Enigo, KeyboardControllable};
 
+mod api;
 mod clip;
 mod setup;
 mod shortcut;
@@ -13,8 +14,10 @@ async fn translate() -> String {
     let mut enigo = Enigo::new();
     enigo.key_sequence_parse("{ALT}{+CTRL}c{-CTRL}{ALT}");
     let context = clip::get();
-    println!("context: {:?}", context);
-    context
+    println!("context: {}", context);
+    let result = api::translate(&context).await.unwrap();
+    println!("result: {}", result);
+    result
 }
 
 fn main() {

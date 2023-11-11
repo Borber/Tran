@@ -14,7 +14,7 @@ const Panel = () => {
 
     const [pin, Pin] = createSignal(false)
     const [copy, Copy] = createSignal(false)
-    const [result, Result] = createSignal("")
+    const [result, Result] = createSignal("翻译中...")
 
     // 监听事件， 显示panel
     panel.listen<{ x: number; y: number }>("show", async (pos) => {
@@ -30,10 +30,11 @@ const Panel = () => {
         }
 
         Copy(false)
-        Result(await invoke("translate"))
 
+        Result("翻译中...")
         await panel.show()
         await panel.setFocus()
+        Result(await invoke("translate"))
     })
 
     return (
@@ -70,7 +71,10 @@ const Panel = () => {
                 <div
                     class="panel-control-item"
                     classList={{ "panel-control-copy": copy() }}
-                    onMouseEnter={() => Copy(true)}>
+                    onMouseEnter={() => {
+                        // TODO 复制到剪贴板
+                        Copy(true)
+                    }}>
                     <CopyIcon size={12} />
                 </div>
             </div>
