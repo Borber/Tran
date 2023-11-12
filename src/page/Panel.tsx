@@ -17,25 +17,30 @@ const Panel = () => {
     const [result, Result] = createSignal("翻译中...")
 
     // 监听事件， 显示panel
-    panel.listen<{ x: number; y: number }>("show", async (pos) => {
-        if (!pinFlag) {
-            await panel.setPosition(
-                new PhysicalPosition(pos.payload.x - 40, pos.payload.y + 20)
+    panel.listen<{ x: number; y: number; context: string }>(
+        "show",
+        async (pos) => {
+            Result("翻译中...")
+            if (!pinFlag) {
+                await panel.setPosition(
+                    new PhysicalPosition(pos.payload.x - 40, pos.payload.y + 20)
+                )
+
+                // 刷新 固定图标状态
+                moveFlag = true
+                pinFlag = false
+                Pin(false)
+            }
+
+            Copy(false)
+            await panel.show()
+            Result(
+                await invoke<string>("translate", {
+                    context: pos.payload.context,
+                })
             )
-
-            // 刷新 固定图标状态
-            moveFlag = true
-            pinFlag = false
-            Pin(false)
         }
-
-        Copy(false)
-
-        Result("翻译中...")
-        await panel.show()
-        await panel.setFocus()
-        Result(await invoke("translate"))
-    })
+    )
 
     return (
         <div
@@ -46,6 +51,7 @@ const Panel = () => {
                     pinFlag = false
                     Pin(false)
                     await panel.hide()
+                    Result("翻译中...")
                 }
             }}>
             <div class="result">{result()}</div>
