@@ -4,6 +4,7 @@ use tauri::{PhysicalPosition, Window};
 
 use crate::clip;
 
+/// 鼠标坐标与选中内容
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct ShowVO {
     pub x: i32,
@@ -12,6 +13,7 @@ pub struct ShowVO {
 }
 
 pub fn show(panel: &Window) {
+    // TODO 考虑可重用的方式
     let mut enigo = Enigo::new();
     enigo.key_sequence_parse("{ALT}{+CTRL}c{-CTRL}{ALT}");
     let context = clip::get();
