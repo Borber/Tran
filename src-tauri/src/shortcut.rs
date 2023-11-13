@@ -13,11 +13,9 @@ pub struct ShowVO {
 }
 
 pub fn show(panel: &Window) {
-    // TODO 考虑可重用的方式
     let mut enigo = Enigo::new();
     enigo.key_sequence_parse("{ALT}{+CTRL}c{-CTRL}{ALT}");
     let context = clip::get();
-    println!("context: {}", context);
     let position = Mouse::get_mouse_position();
     match position {
         Mouse::Position { x, y } => {

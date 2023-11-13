@@ -6,6 +6,7 @@ mod setup;
 mod shortcut;
 mod tray;
 mod window;
+mod common;
 
 #[tauri::command]
 async fn translate(context: String) -> String {
