@@ -7,6 +7,14 @@ import Control from "../components/Control"
 import TopBar from "../components/TopBar"
 
 const Setting = () => {
+    // TODO 代理模式
+    // 设置代理链接
+    // TODO 镜像模式
+    // 设置镜像网址
+
+    // TODO 设置第一语言
+    // TODO 设置第二语言
+
     const main = getCurrent()
 
     main.listen("tauri://close-requested", async () => {

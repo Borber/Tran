@@ -37,6 +37,13 @@ enigo = "0.1"
 anyhow = "1"
 urlencoding = "2"
 
+lingua = { version = "1.5", default-features = false, features = [
+    "chinese",
+    "english",
+    "japanese",
+
+] }
+
 [features]
 custom-protocol = ["tauri/custom-protocol"]
 

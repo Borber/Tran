@@ -2,7 +2,7 @@ use anyhow::Result;
 use serde::Serialize;
 use urlencoding::encode;
 
-use crate::common::CLIENT;
+use crate::{common::CLIENT, lang};
 
 /// 翻译结果
 #[derive(Debug, Serialize)]
@@ -22,10 +22,20 @@ pub struct Dict {
 }
 
 pub async fn translate(context: &str) -> Result<TransVO> {
+    // TODO 识别语言类型
+    let lang = lang::lang(context);
+    // 识别到非第一语言则翻译为第一语言
+    // 识别到第一语言则翻译为第二语言
+    let tl = if lang != "zh_cn" {
+        "zh_cn".to_owned()
+    } else {
+        "en".to_string()
+    };
+
     // 转换为 url 编码
     let context = encode(context);
     let resp = CLIENT
-        .get(format!("https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&dt=bd&dt=qc&dt=rm&dt=ex&dt=at&dt=ss&dt=rw&dt=ld&q=%22{}%22", &context))
+        .get(format!("https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={}&dj=1&dt=t&dt=bd&dt=qc&dt=rm&dt=ex&dt=at&dt=ss&dt=rw&dt=ld&q=%22{}%22",tl, &context))
         .header("Accept", "application/json, text/plain, */*")
         .header("Accept-Encoding", "gzip")
         .header("Accept-Language", "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6")
