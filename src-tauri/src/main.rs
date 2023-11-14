@@ -1,18 +1,25 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use api::TransVO;
+
 mod api;
 mod clip;
+mod common;
 mod setup;
 mod shortcut;
 mod tray;
 mod window;
-mod common;
 
 #[tauri::command]
-async fn translate(context: String) -> String {
-    let result = api::translate(&context).await.unwrap();
-    println!("result: {}", result);
-    result
+async fn translate(context: String) -> TransVO {
+    match api::translate(&context).await {
+        Ok(res) => res,
+        Err(_) => TransVO {
+            word: false,
+            trans: Some("翻译失败".to_string()),
+            dicts: None,
+        },
+    }
 }
 
 fn main() {

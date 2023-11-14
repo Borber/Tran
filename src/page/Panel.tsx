@@ -2,9 +2,20 @@ import "../css/Panel.css"
 
 import { invoke } from "@tauri-apps/api"
 import { getCurrent, PhysicalPosition } from "@tauri-apps/api/window"
-import { createSignal } from "solid-js"
+import { createSignal, For, Match, Switch } from "solid-js"
 
 import { CopyIcon, PinIcon } from "../icon"
+
+interface TransVO {
+    word: boolean
+    trans: string
+    dicts: Dict[]
+}
+
+interface Dict {
+    pos: string
+    terms: string[]
+}
 
 const Panel = () => {
     const panel = getCurrent()
@@ -14,13 +25,13 @@ const Panel = () => {
 
     const [pin, Pin] = createSignal(false)
     const [copy, Copy] = createSignal(false)
-    const [result, Result] = createSignal("翻译中...")
+    const [result, Result] = createSignal<TransVO>()
 
     // 监听事件， 显示panel
     panel.listen<{ x: number; y: number; context: string }>(
         "show",
         async (pos) => {
-            Result("翻译中...")
+            Result(undefined)
             if (!pinFlag) {
                 await panel.setPosition(
                     new PhysicalPosition(pos.payload.x - 40, pos.payload.y + 20)
@@ -34,8 +45,9 @@ const Panel = () => {
 
             Copy(false)
             await panel.show()
+
             Result(
-                await invoke<string>("translate", {
+                await invoke<TransVO>("translate", {
                     context: pos.payload.context,
                 })
             )
@@ -51,10 +63,30 @@ const Panel = () => {
                     pinFlag = false
                     Pin(false)
                     await panel.hide()
-                    Result("翻译中...")
+                    Result(undefined)
                 }
             }}>
-            <div class="result">{result()}</div>
+            <div class="result">
+                <Switch fallback={"翻译中..."}>
+                    <Match when={result() == undefined}>翻译中...</Match>
+                    <Match when={result()?.word}>
+                        {/* 每一个都显示为一行, flex 布局, 可挤压下去 */}
+                        <For each={result()!.dicts}>
+                            {(dict) => (
+                                <div class="dict">
+                                    <div class="dict-pos">{dict.pos}</div>
+                                    <For each={dict.terms}>
+                                        {(term) => (
+                                            <div class="dict-term">{term}</div>
+                                        )}
+                                    </For>
+                                </div>
+                            )}
+                        </For>
+                    </Match>
+                    <Match when={!result()?.word}>{result()?.trans}</Match>
+                </Switch>
+            </div>
             <div class="panel-control">
                 <div
                     data-tauri-drag-region
