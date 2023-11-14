@@ -68,7 +68,9 @@ pub async fn translate(context: &str) -> Result<TransVO> {
             .trim_matches('“')
             .trim_matches('”')
             .trim_matches('「')
-            .trim_matches('」');
+            .trim_matches('」')
+            .trim_matches('《')
+            .trim_matches('》');
         let result = TransVO {
             word: false,
             trans: Some(trans.to_string()),

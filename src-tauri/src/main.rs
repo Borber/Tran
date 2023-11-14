@@ -3,7 +3,6 @@
 use api::TransVO;
 
 mod api;
-mod clip;
 mod common;
 mod lang;
 mod setup;
