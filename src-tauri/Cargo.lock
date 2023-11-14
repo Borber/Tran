@@ -1836,7 +1836,6 @@ dependencies = [
  "itertools",
  "lingua-chinese-language-model",
  "lingua-english-language-model",
- "lingua-japanese-language-model",
  "maplit",
  "once_cell",
  "rayon",
@@ -1863,15 +1862,6 @@ name = "lingua-english-language-model"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fbd066693abb10083bb5b5fc1c494dda357170265021ad873ef582211817b8a8"
-dependencies = [
- "include_dir",
-]
-
-[[package]]
-name = "lingua-japanese-language-model"
-version = "1.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b34b94aa96a1bc0838ddda2c7912d0ebd7256bb21e7a2974e4dd8b186df501a8"
 dependencies = [
  "include_dir",
 ]

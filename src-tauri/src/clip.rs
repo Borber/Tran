@@ -8,3 +8,6 @@ pub fn get() -> String {
         Err(_) => "获取剪贴板内容失败".to_string(),
     }
 }
+
+// TODO 写入剪贴板
+pub fn set() {}
