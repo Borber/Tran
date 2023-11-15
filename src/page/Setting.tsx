@@ -2,7 +2,6 @@ import "../css/Setting.css"
 
 import { getCurrent } from "@tauri-apps/api/window"
 
-import { vibrancy } from "../common"
 import Control from "../components/Control"
 import TopBar from "../components/TopBar"
 
@@ -22,10 +21,7 @@ const Setting = () => {
     })
 
     return (
-        <div
-            data-tauri-drag-region
-            class="container"
-            classList={{ compromise: !vibrancy() }}>
+        <div data-tauri-drag-region class="container compromise">
             <Control maximize={false} minimize={false} />
             <TopBar />
             <div data-tauri-drag-region class="content">

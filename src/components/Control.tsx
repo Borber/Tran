@@ -3,7 +3,6 @@ import "../css/Control.css"
 import { appWindow } from "@tauri-apps/api/window"
 import { createSignal, Show } from "solid-js"
 
-import { vibrancy } from "../common"
 import { Close, Maximize, Minimize } from "../icon"
 
 export interface BarProps {
@@ -27,7 +26,7 @@ const Control = (props: BarProps) => {
     const [closeFlag, setCloseFlag] = createSignal(false)
 
     return (
-        <div class="control" classList={{ "control-compromise": !vibrancy() }}>
+        <div class="control control-compromise">
             <Show when={setting.minimize}>
                 <div
                     class="control-item"

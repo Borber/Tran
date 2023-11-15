@@ -5,6 +5,7 @@ import { getCurrent, PhysicalPosition } from "@tauri-apps/api/window"
 import { createSignal, For, Match, Switch } from "solid-js"
 
 import { CopyIcon, PinIcon } from "../icon"
+import { Resp } from "../model/resp"
 
 interface TransVO {
     word: boolean
@@ -45,12 +46,11 @@ const Panel = () => {
 
             Copy(false)
             await panel.show()
-
-            Result(
-                await invoke<TransVO>("translate", {
-                    context: pos.payload.context,
-                })
-            )
+            // TODO 错误处理
+            const resp = await invoke<Resp<TransVO>>("translate", {
+                context: pos.payload.context,
+            })
+            Result(resp.data)
         }
     )
 
@@ -70,7 +70,6 @@ const Panel = () => {
                 <Switch fallback={"翻译中..."}>
                     <Match when={result() == undefined}>翻译中...</Match>
                     <Match when={result()?.word}>
-                        {/* 每一个都显示为一行, flex 布局, 可挤压下去 */}
                         <For each={result()!.dicts}>
                             {(dict) => (
                                 <div class="dict">
@@ -110,7 +109,17 @@ const Panel = () => {
                     class="panel-control-item"
                     classList={{ "panel-control-copy": copy() }}
                     onMouseEnter={() => {
-                        // TODO 复制到剪贴板
+                        let context
+                        if (result() == undefined) {
+                            return
+                        } else if (!result()?.word) {
+                            context = result()!.trans
+                        } else {
+                            context = result()!.dicts[0].terms[0]
+                        }
+                        invoke("copy", {
+                            context,
+                        })
                         Copy(true)
                     }}>
                     <CopyIcon size={12} />

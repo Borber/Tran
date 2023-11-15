@@ -42,13 +42,18 @@ pub async fn translate(context: &str) -> Result<TransVO> {
         let dicts = dict
             .iter()
             .map(|item| {
-                let pos = item["pos"].as_str().unwrap();
-                let terms = item["terms"].as_array().unwrap();
+                let pos = item["pos"].as_str().unwrap_or("解析失败");
+                let terms = match item["terms"].as_array() {
+                    Some(terms) => terms.to_owned(),
+                    None => {
+                        vec![]
+                    }
+                };
                 Dict {
                     pos: pos.to_string(),
                     terms: terms
                         .iter()
-                        .map(|x| x.as_str().unwrap().to_string())
+                        .map(|x| x.as_str().unwrap_or("解析失败").to_string())
                         .collect(),
                 }
             })
@@ -61,7 +66,7 @@ pub async fn translate(context: &str) -> Result<TransVO> {
         };
         Ok(trans)
     } else {
-        let trans = resp["sentences"][0]["trans"].as_str().unwrap();
+        let trans = resp["sentences"][0]["trans"].as_str().unwrap_or("解析失败");
         let trans = trans
             .trim()
             .trim_matches('"')
