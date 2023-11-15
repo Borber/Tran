@@ -12,6 +12,7 @@ mod setup;
 mod shortcut;
 mod tray;
 mod window;
+mod config;
 
 /// 翻译文本
 #[tauri::command]
