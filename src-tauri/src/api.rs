@@ -2,7 +2,7 @@ use anyhow::Result;
 use serde::Serialize;
 use urlencoding::encode;
 
-use crate::{common::CLIENT, lang};
+use crate::{common::CLIENT, lang, manager::mirror};
 
 /// 翻译结果
 #[derive(Debug, Serialize)]
@@ -28,7 +28,7 @@ pub async fn translate(context: &str) -> Result<TransVO> {
     // 转换为 url 编码
     let context = encode(context);
     let resp = CLIENT
-        .get(format!("https://v2g.borber.top/translate_a/single?client=gtx&sl=auto&tl={}&dj=1&dt=t&dt=bd&dt=qc&dt=rm&dt=ex&dt=at&dt=ss&dt=rw&dt=ld&q=%22{}%22", lang, &context))
+        .get(format!("{}/translate_a/single?client=gtx&sl=auto&tl={}&dj=1&dt=t&dt=bd&dt=qc&dt=rm&dt=ex&dt=at&dt=ss&dt=rw&dt=ld&q=%22{}%22", mirror::one(), lang, &context))
         .header("Accept", "application/json, text/plain, */*")
         .header("Accept-Encoding", "gzip")
         .header("Accept-Language", "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6")
@@ -36,8 +36,6 @@ pub async fn translate(context: &str) -> Result<TransVO> {
         .await?
         .json::<serde_json::Value>()
         .await?;
-
-    println!("resp: {}", resp["sentences"]);
 
     // 识别单词状态, 检测是否有 dict
     if let Some(dict) = resp["dict"].as_array() {
@@ -68,7 +66,6 @@ pub async fn translate(context: &str) -> Result<TransVO> {
         };
         Ok(trans)
     } else {
-        // let trans = resp["sentences"][0]["trans"].as_str().unwrap_or("解析失败");
         let tran_list = match resp["sentences"].as_array() {
             Some(tran_list) => tran_list.to_owned(),
             None => {

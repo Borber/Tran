@@ -1,22 +1,26 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use api::TransVO;
+use config::save;
 use resp::Resp;
 
 mod api;
 mod clip;
 mod common;
+mod config;
 mod lang;
+mod manager;
 mod resp;
 mod setup;
 mod shortcut;
 mod tray;
+mod util;
 mod window;
-mod config;
 
 /// 翻译文本
 #[tauri::command]
 async fn translate(context: String) -> Resp<TransVO> {
+    save().unwrap();
     api::translate(&context).await.into()
 }
 
@@ -29,7 +33,11 @@ fn copy(context: String) -> Result<(), String> {
     }
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
+    // 全局初始化
+    common::init().await;
+
     tauri::Builder::default()
         .system_tray(tray::new())
         .on_system_tray_event(tray::handler)
