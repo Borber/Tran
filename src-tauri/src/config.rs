@@ -36,22 +36,22 @@ pub fn load() -> Config {
     }
 }
 
-// 保存配置
-pub fn save() -> Result<()> {
-    // 获取可执行文件位置
-    let exe_dir = util::get_exe_dir();
-    let path = exe_dir.join("config.json");
-    let config = {
-        let config = CONFIG.lock();
-        config.clone()
-    };
-    let config = serde_json::to_string_pretty(&config).unwrap();
-    std::fs::write(path, config).unwrap();
+// 更新配置
+pub fn update(config: Config) -> Result<()> {
+    // 保存配置
+    save(&config)?;
+    // 更新全局配置
+    let mut old_config = CONFIG.lock();
+    *old_config = config;
     Ok(())
 }
 
-// 更新配置
-pub fn update(config: Config) {
-    let mut old_config = CONFIG.lock();
-    *old_config = config;
+// 保存配置
+fn save(config: &Config) -> Result<()> {
+    // 获取可执行文件位置
+    let exe_dir = util::get_exe_dir();
+    let path = exe_dir.join("config.json");
+    let config = serde_json::to_string_pretty(config).unwrap();
+    std::fs::write(path, config).unwrap();
+    Ok(())
 }

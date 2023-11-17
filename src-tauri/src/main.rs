@@ -1,6 +1,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use config::save;
+use config::Config;
 use manager::api;
 use manager::api::TransVO;
 use resp::Resp;
@@ -20,7 +20,6 @@ mod window;
 /// 翻译文本
 #[tauri::command]
 async fn translate(context: String) -> Resp<TransVO> {
-    save().unwrap();
     api::translate(&context).await.into()
 }
 
@@ -33,6 +32,12 @@ fn copy(context: String) -> Result<(), String> {
     }
 }
 
+/// 更新配置
+#[tauri::command]
+fn update(config: Config) -> Resp<()> {
+    config::update(config).into()
+}
+
 #[tokio::main]
 async fn main() {
     // 全局初始化
@@ -42,7 +47,7 @@ async fn main() {
         .system_tray(tray::new())
         .on_system_tray_event(tray::handler)
         .setup(setup::handler)
-        .invoke_handler(tauri::generate_handler![copy, translate])
+        .invoke_handler(tauri::generate_handler![copy, translate, update])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
