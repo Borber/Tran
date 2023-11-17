@@ -21,9 +21,13 @@ pub async fn init() {
 
 // 从网络获取镜像地址
 async fn get() -> Result<Mirror> {
-    let mirror = match CLIENT.get("https://v2g.borber.top/mirrors").send().await {
-        Ok(resp) => match resp.json::<Mirror>().await {
-            Ok(mirror) => mirror,
+    let mirror = match CLIENT
+        .get("https://cdn.jsdelivr.net/gh/Borber/tran/resource/mirror.json")
+        .send()
+        .await
+    {
+        Ok(resp) => match resp.json::<Vec<String>>().await {
+            Ok(urls) => Mirror { urls },
             Err(_) => Mirror { urls: vec![] },
         },
         Err(_) => Mirror { urls: vec![] },
