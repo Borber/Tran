@@ -53,6 +53,8 @@ fastrand = "2"
 [features]
 custom-protocol = ["tauri/custom-protocol"]
 
+[build]
+rustflags = ["-Z", "threads=8"]
 
 [profile.release]
 opt-level = "z"

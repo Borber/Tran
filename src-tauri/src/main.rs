@@ -1,10 +1,10 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use api::TransVO;
 use config::save;
+use manager::api;
+use manager::api::TransVO;
 use resp::Resp;
 
-mod api;
 mod clip;
 mod common;
 mod config;

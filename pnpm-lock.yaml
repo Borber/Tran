@@ -20,8 +20,8 @@ devDependencies:
     specifier: ^1.5.6
     version: 1.5.6
   '@types/node':
-    specifier: ^20.9.0
-    version: 20.9.0
+    specifier: ^20.9.1
+    version: registry.npmmirror.com/@types/node@20.9.1
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.11.0
     version: 6.11.0(@typescript-eslint/parser@6.11.0)(eslint@8.53.0)(typescript@5.2.2)
@@ -42,7 +42,7 @@ devDependencies:
     version: registry.npmmirror.com/typescript@5.2.2
   vite:
     specifier: ^5.0.0
-    version: registry.npmmirror.com/vite@5.0.0(@types/node@20.9.0)
+    version: registry.npmmirror.com/vite@5.0.0(@types/node@20.9.1)
   vite-plugin-solid:
     specifier: ^2.7.2
     version: 2.7.2(solid-js@1.8.5)(vite@5.0.0)
@@ -551,12 +551,6 @@ packages:
 
   /@types/json-schema@7.0.15:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
-    dev: true
-
-  /@types/node@20.9.0:
-    resolution: {integrity: sha512-nekiGu2NDb1BcVofVcEKMIwzlx4NjHlcjhoxxKBNLtz15Y1z7MYf549DFvkHSId02Ax6kGwWntIBPC3l/JZcmw==}
-    dependencies:
-      undici-types: 5.26.5
     dev: true
 
   /@types/semver@7.5.5:
@@ -1539,10 +1533,6 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /undici-types@5.26.5:
-    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
-    dev: true
-
   /update-browserslist-db@1.0.13(browserslist@4.22.1):
     resolution: {integrity: sha512-xebP81SNcPuNpPP3uzeW1NYXxI3rxyJzF3pD6sH4jE7o/IX+WtSpwnVU+qIsDPyk0d3hmFQ7mjqc6AtV604hbg==}
     hasBin: true
@@ -1577,7 +1567,7 @@ packages:
       merge-anything: 5.1.7
       solid-js: 1.8.5
       solid-refresh: 0.5.3(solid-js@1.8.5)
-      vite: registry.npmmirror.com/vite@5.0.0(@types/node@20.9.0)
+      vite: registry.npmmirror.com/vite@5.0.0(@types/node@20.9.1)
       vitefu: 0.2.5(vite@5.0.0)
     transitivePeerDependencies:
       - supports-color
@@ -1591,7 +1581,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: registry.npmmirror.com/vite@5.0.0(@types/node@20.9.0)
+      vite: registry.npmmirror.com/vite@5.0.0(@types/node@20.9.1)
     dev: true
 
   /which@2.0.2:
@@ -2143,6 +2133,14 @@ packages:
     resolution: {integrity: sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==, registry: https://registry.npmjs.org/, tarball: https://registry.npmmirror.com/@types/json-schema/-/json-schema-7.0.12.tgz}
     name: '@types/json-schema'
     version: 7.0.12
+    dev: true
+
+  registry.npmmirror.com/@types/node@20.9.1:
+    resolution: {integrity: sha512-HhmzZh5LSJNS5O8jQKpJ/3ZcrrlG6L70hpGqMIAoM9YVD0YBRNWYsfwcXq8VnSjlNpCpgLzMXdiPo+dxcvSmiA==, tarball: https://registry.npmmirror.com/@types/node/-/node-20.9.1.tgz}
+    name: '@types/node'
+    version: 20.9.1
+    dependencies:
+      undici-types: registry.npmmirror.com/undici-types@5.26.5
     dev: true
 
   registry.npmmirror.com/@types/semver@7.5.0:
@@ -3212,7 +3210,13 @@ packages:
       which-boxed-primitive: registry.npmmirror.com/which-boxed-primitive@1.0.2
     dev: true
 
-  registry.npmmirror.com/vite@5.0.0(@types/node@20.9.0):
+  registry.npmmirror.com/undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==, tarball: https://registry.npmmirror.com/undici-types/-/undici-types-5.26.5.tgz}
+    name: undici-types
+    version: 5.26.5
+    dev: true
+
+  registry.npmmirror.com/vite@5.0.0(@types/node@20.9.1):
     resolution: {integrity: sha512-ESJVM59mdyGpsiNAeHQOR/0fqNoOyWPYesFto8FFZugfmhdHx8Fzd8sF3Q/xkVhZsyOxHfdM7ieiVAorI9RjFw==, tarball: https://registry.npmmirror.com/vite/-/vite-5.0.0.tgz}
     id: registry.npmmirror.com/vite/5.0.0
     name: vite
@@ -3243,7 +3247,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.9.0
+      '@types/node': registry.npmmirror.com/@types/node@20.9.1
       esbuild: registry.npmmirror.com/esbuild@0.19.5
       postcss: registry.npmmirror.com/postcss@8.4.31
       rollup: registry.npmmirror.com/rollup@4.4.1
