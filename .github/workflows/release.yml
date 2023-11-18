@@ -1,5 +1,8 @@
 name: 'Test build'
-on: [pull_request]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   test-tauri:
