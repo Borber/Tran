@@ -24,6 +24,8 @@ vercel proxy google translate
 
 <a href="https://vercel.com/import/project?template=https://github.com/Borber/v2g" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="https://vercel.com/button" alt="Deploy to Vercel" ></a>
 
+> 因 vercel 默认域名无法直接访问, 如果您没有域名,可以提 issue , 我将提供域名供您绑定。
+
 **部署后可 PR 到 [MIRROR](https://github.com/Borber/tran/blob/master/resource/mirror.json) 来贡献你的力量**
 
 # 感谢
