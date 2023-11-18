@@ -36,17 +36,7 @@ pub fn load() -> Config {
     }
 }
 
-// 更新配置
-pub fn update(config: Config) -> Result<()> {
-    // 保存配置
-    save(&config)?;
-    // 更新全局配置
-    let mut old_config = CONFIG.lock();
-    *old_config = config;
-    Ok(())
-}
-
-// 保存配置
+/// 保存配置
 fn save(config: &Config) -> Result<()> {
     // 获取可执行文件位置
     let exe_dir = util::get_exe_dir();
@@ -54,4 +44,26 @@ fn save(config: &Config) -> Result<()> {
     let config = serde_json::to_string_pretty(config).unwrap();
     std::fs::write(path, config).unwrap();
     Ok(())
+}
+
+// 开启代理
+pub fn enable_proxy() {
+    CONFIG.lock().proxy = true;
+
+    // 保存配置
+    save(&CONFIG.lock()).unwrap();
+}
+
+// 关闭代理
+pub fn disable_proxy() {
+    CONFIG.lock().proxy = false;
+    // 保存配置
+    save(&CONFIG.lock()).unwrap();
+}
+
+// 设置代理地址
+pub fn set_proxy_url(url: String) {
+    CONFIG.lock().url = url;
+    // 保存配置
+    save(&CONFIG.lock()).unwrap();
 }
