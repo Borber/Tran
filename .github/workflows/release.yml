@@ -18,8 +18,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: install Rust stable
-        uses: dtolnay/rust-toolchain@stable
+      - name: install Rust nightly
+        uses: dtolnay/rust-toolchain@nightly
       - name: install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-latest'
         run: |
