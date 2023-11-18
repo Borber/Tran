@@ -14,6 +14,8 @@
 | :-----------------------------------------------------------------: | :----------------------------------------------------------------: |
 | <img src="https://i.pstorage.space/i/JwQDALlO/original_close.gif"/> | <img src="https://i.pstorage.space/i/MDd9XKW6/original_copy.gif"/> |
 
+**快捷键：** `Alt + X`
+
 # 贡献
 
 ## 创建镜像
