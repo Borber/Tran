@@ -4,7 +4,7 @@
 
 > **Keep it simple，stupid.**
 
-# 特色功能
+# 功能
 
 |                                 划词翻译                                 |                              划过固定                               |
 | :----------------------------------------------------------------------: | :-----------------------------------------------------------------: |
@@ -16,14 +16,16 @@
 
 # 贡献
 
-十分欢迎您：
+## 创建镜像
 
--   提出问题
--   提交补丁
--   创建镜像
+### V2G
 
-# 技术栈
+[V2G](https://github.com/Borber/v2g) vercel proxy google translate
 
--   Rust
--   Tauri
--   Solid
+<a href="https://vercel.com/import/project?template=https://github.com/Borber/v2g" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="https://vercel.com/button" alt="Deploy to Vercel" ></a>
+
+**部署后可 PR 到 [MIRROR](https://github.com/Borber/tran/blob/master/resource/mirror.json) 来贡献你的力量**
+
+# 感谢
+
+-   **[Pot](https://github.com/pot-app/pot-desktop)** 划词功能模块 [Selection](https://github.com/pot-app/Selection)
