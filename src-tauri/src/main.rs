@@ -18,39 +18,48 @@ mod util;
 mod window;
 
 /// 翻译文本
+///
+/// Translate text
 #[tauri::command]
 async fn translate(context: String) -> Resp<TransVO> {
     api::translate(&context).await.into()
 }
 
 /// 写入剪贴板
+///
+/// Write to clipboard
 #[tauri::command]
-fn copy(context: String) -> Result<(), String> {
-    match clip::set(context) {
-        Ok(_) => Ok(()),
-        Err(e) => Err(e.to_string()),
-    }
+fn copy(context: String) -> Resp<()> {
+    clip::set(context).into()
 }
 
 /// 获取配置
+///
+/// Get config
 #[tauri::command]
 fn get_config() -> Resp<Config> {
     Ok(CONFIG.lock().clone()).into()
 }
 
 /// 开启代理
+///
+/// Enable proxy
 #[tauri::command]
 fn enable_proxy() {
     config::enable_proxy();
 }
 
 /// 关闭代理
+///
+/// Disable proxy
 #[tauri::command]
 fn disable_proxy() {
     config::disable_proxy();
 }
 
 /// 设置代理地址
+///
+/// Set proxy url
 #[tauri::command]
 fn set_proxy_url(url: String) {
     config::set_proxy_url(url);
@@ -59,6 +68,7 @@ fn set_proxy_url(url: String) {
 #[tokio::main]
 async fn main() {
     // 全局初始化
+    // Global initialization
     common::init().await;
 
     tauri::Builder::default()

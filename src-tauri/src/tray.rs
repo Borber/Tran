@@ -8,7 +8,6 @@ pub fn new() -> SystemTray {
 
 pub fn handler(app: &AppHandle, event: SystemTrayEvent) {
     // 右键点击时, 显示托盘菜单
-    //
     // Right-click to show the tray menu
     if let SystemTrayEvent::RightClick { .. } = event {
         let position = Mouse::get_mouse_position();

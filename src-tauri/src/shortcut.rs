@@ -4,6 +4,8 @@ use tauri::{PhysicalPosition, Window};
 use selection::get_text;
 
 /// 鼠标坐标与选中内容
+///
+/// Mouse coordinates and selected content
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct ShowVO {
     pub x: i32,
