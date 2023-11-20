@@ -32,8 +32,11 @@ jobs:
           version: latest
       - name: Install frontend dependencies
         run: pnpm install
+      - uses: ilammy/msvc-dev-cmd@v1
       - name: Install lua
         uses: leafo/gh-actions-lua@v10
+        with:
+          buildCache: false
       - name: Confirm language
         env:
           MATRIX_LANG: ${{ matrix.lang }}
