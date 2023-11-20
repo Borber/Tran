@@ -33,7 +33,7 @@ jobs:
       - name: Install frontend dependencies
         run: pnpm install
       - name: Install lua
-        use: leafo/gh-actions-lua@v10
+        uses: leafo/gh-actions-lua@v10
       - name: Confirm language
         env:
           MATRIX_LANG: ${{ matrix.lang }}
