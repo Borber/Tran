@@ -18,7 +18,7 @@
 
 # 构建
 
-<div alian="center">
+<div align="center">
 
 | **To \ Form** | **CN** |
 | :-----------: | :----: |
