@@ -4,7 +4,7 @@ use lingua::{Language, LanguageDetectorBuilder};
 ///
 /// Get the translation target language
 pub fn lang(text: &str) -> String {
-    let first_lang = "zh_cn";
+    let first_lang = "zh";
     let second_lang = "en";
     let languages = vec![Language::Chinese, Language::English];
     let detector = LanguageDetectorBuilder::from_languages(&languages).build();
