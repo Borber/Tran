@@ -53,4 +53,4 @@ vercel proxy google translate
 
 # 感谢
 
--   **[Pot](https://github.com/pot-app/pot-desktop)** 划词功能模块 [Selection](https://github.com/pot-app/Selection)
+- **[Pot](https://github.com/pot-app/pot-desktop)** 划词功能模块 [Selection](https://github.com/pot-app/Selection)
