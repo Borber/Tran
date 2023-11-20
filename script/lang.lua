@@ -1,3 +1,6 @@
+print("Lua script start")
+print(os.getenv("MATRIX_LANG"))
+
 Root = io.popen("git rev-parse --show-toplevel"):read("*l")
 
 File = Root .. "/src-tauri/Cargo.toml"
