@@ -29,7 +29,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: latest
       - name: Install frontend dependencies
         run: pnpm install
       - name: Install lua
@@ -37,7 +37,7 @@ jobs:
       - name: Confirm language
         env:
           MATRIX_LANG: ${{ matrix.lang }}
-        run: lua ./scripts/lang.lua
+        run: lua ./script/lang.lua
       - name: Build
         uses: tauri-apps/tauri-action@v0
         env:
