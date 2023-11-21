@@ -2,7 +2,7 @@ require("util")
 
 print("Lua script start")
 
-local lang_short = { "cn", "en", "jp", }
+local lang_short = { "zh", "en", "jp", }
 local lang_long = { "Chinese", "English", "Japanese", }
 
 local Lang = os.getenv("MATRIX_LANG")
