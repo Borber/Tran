@@ -12,7 +12,7 @@ d:
 
 # 更新版本
 v:
-    lua ./script/version.lua
+    deno run -A script/version.ts
 
 # 更新 GUI 依赖
 up:

@@ -35,17 +35,19 @@ jobs:
           version: latest
       - name: Install frontend dependencies
         run: pnpm install
-      - name: Install lua
-        uses: leafo/gh-actions-lua@v10
-        with:
-          buildCache: false
+      - name: Install deno
+        uses: denoland/setup-deno@v1
+          with:
+            deno-version: canary
       - name: Confirm language
         env:
           MATRIX_LANG: ${{ matrix.lang }}
-        run: |
-          cd script
-          lua lang.lua
+        run: deno run -A  script/lang.ts
       - name: Build
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Add tag
+        env:
+          MATRIX_LANG: ${{ matrix.lang }}
+        run: deno run -A script/tag.ts

@@ -1,1 +1,0 @@
---  { "msi", "nsis", "deb", "appimage", "dmg", "macos", }
