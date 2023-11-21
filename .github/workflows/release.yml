@@ -42,7 +42,9 @@ jobs:
       - name: Confirm language
         env:
           MATRIX_LANG: ${{ matrix.lang }}
-        run: lua ./script/lang.lua
+        run: |
+          cd script
+          lua lang.lua
       - name: Build
         uses: tauri-apps/tauri-action@v0
         env:
