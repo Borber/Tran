@@ -50,6 +50,4 @@ jobs:
       - name: Add tag
         env:
           MATRIX_LANG: ${{ matrix.lang }}
-        run: |
-          cd src-tauri/target/release/bundle
-          deno run -A script/tag.ts
+        run: deno run -A script/tag.ts
