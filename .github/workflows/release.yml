@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        lang: [zh-en, zh-jp]
+        lang: [zh_en, zh_jp]
         platform: [macos-latest, ubuntu-latest, windows-latest]
 
     runs-on: ${{ matrix.platform }}

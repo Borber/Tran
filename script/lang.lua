@@ -6,7 +6,7 @@ local lang_short = { "zh", "en", "jp", }
 local lang_long = { "Chinese", "English", "Japanese", }
 
 local Lang = os.getenv("MATRIX_LANG")
-local Langs = Util.split(Lang, "-")
+local Langs = Util.split(Lang, "_")
 
 FirstShort = Langs[1]
 FirstLong = lang_long[Util.indexOf(lang_short, FirstShort)]
