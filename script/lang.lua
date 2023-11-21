@@ -37,13 +37,16 @@ print(Context)
 print("Lua script end")
 
 
-function split(str, sep)
-    local sep, res = sep or '%s', {}
-    string.gsub(str, '[^'..sep..']+', function(x) res[#res+1] = x end)
-    return res 
+local function split(str, sep)
+    local result = {}
+    local regex = ("([^%s]+)"):format(sep)
+    for each in str:gmatch(regex) do
+        table.insert(result, each)
+    end
+    return result
 end
 
-function indexOf(array, value)
+local function indexOf(array, value)
     for i, v in ipairs(array) do
         if v == value then
             return i
