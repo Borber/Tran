@@ -59,6 +59,9 @@ custom-protocol = ["tauri/custom-protocol"]
 [build]
 rustflags = ["-Z", "threads=8"]
 
+[target.'cfg(unix)'.dependencies]
+openssl = { version = '0.10', features = ["vendored"] }
+
 [profile.release]
 opt-level = "z"
 lto = true
