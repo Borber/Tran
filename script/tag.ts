@@ -5,12 +5,12 @@ const root = "src-tauri/target/release/bundle"
 
 for (const dir of dirs) {
     if (Deno.statSync(`${root}/${dir}`).isDirectory) {
-        for await (const file of Deno.readDir(dir)) {
+        for await (const file of Deno.readDir(`${root}/${dir}`)) {
             if (file.isFile && file.name.startsWith("tran")) {
                 let name = file.name
                 name = name.replace("tran", "tran" + "_" + lang)
-                Deno.renameSync(`${root}/${file.name}`, `${root}/${name}`)
-                console.log(`${root}/${name}`)
+                Deno.renameSync(`${root}/${dir}/${file.name}`, `${root}/${dir}/${name}`)
+                console.log(`${root}/${dir}/${name}`)
             }
         }
     }
