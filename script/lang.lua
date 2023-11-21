@@ -1,18 +1,60 @@
 print("Lua script start")
-print(os.getenv("MATRIX_LANG"))
+
+local lang_short = { "cn", "en", "jp", }
+local lang_long = { "Chinese", "English", "Japanese", }
+
+
+Lang = os.getenv("MATRIX_LANG")
+
+Langs = split(Lang, "-")
+
+FirstShort = Langs[1]
+FirstLong = lang_long[indexOf(lang_short, FirstShort)]
+FirstLongLower = string.lower(FirstLong)
+SecondShort = Langs[2]
+SecondLong = lang_long[indexOf(lang_short, SecondShort)]
+SecondLongLower = string.lower(SecondLong)
+
 
 Root = io.popen("git rev-parse --show-toplevel"):read("*l")
 
 File = Root .. "/src-tauri/Cargo.toml"
 Context = io.open(File, "r"):read("*a")
-Context = string.gsub(Context, 'chinese', 'chinese')
-Context = string.gsub(Context, 'english', 'japanese')
+Context = string.gsub(Context, 'chinese', FirstLongLower)
+Context = string.gsub(Context, 'english', SecondLongLower)
 io.open(File, "w"):write(Context)
 
 File = Root .. "/src-tauri/src/lang.rs"
 Context = io.open(File, "r"):read("*a")
-Context = string.gsub(Context, 'zh', 'zh')
-Context = string.gsub(Context, 'en', 'ja')
-Context = string.gsub(Context, 'Chinese', 'Chinese')
-Context = string.gsub(Context, 'English', 'Japanese')
+Context = string.gsub(Context, 'zh', FirstShort)
+Context = string.gsub(Context, 'en', SecondShort)
+Context = string.gsub(Context, 'Chinese', FirstLong)
+Context = string.gsub(Context, 'English', SecondShort)
 io.open(File, "w"):write(Context)
+
+print(Context)
+
+print("Lua script end")
+
+
+function split(input, delimiter)
+    input = tostring(input)
+    delimiter = tostring(delimiter)
+    if (delimiter == "") then return false end
+    local pos, arr = 0, {}
+    for st, sp in function() return string.find(input, delimiter, pos, true) end do
+        table.insert(arr, string.sub(input, pos, st - 1))
+        pos = sp + 1
+    end
+    table.insert(arr, string.sub(input, pos))
+    return arr
+end
+
+function indexOf(array, value)
+    for i, v in ipairs(array) do
+        if v == value then
+            return i
+        end
+    end
+    return nil
+end
