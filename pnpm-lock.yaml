@@ -20,8 +20,8 @@ devDependencies:
     specifier: ^1.5.6
     version: 1.5.6
   '@types/node':
-    specifier: ^20.9.2
-    version: registry.npmmirror.com/@types/node@20.9.2
+    specifier: ^20.9.3
+    version: 20.9.3
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.12.0
     version: 6.12.0(@typescript-eslint/parser@6.12.0)(eslint@8.54.0)(typescript@5.3.2)
@@ -42,7 +42,7 @@ devDependencies:
     version: 5.3.2
   vite:
     specifier: ^5.0.0
-    version: registry.npmmirror.com/vite@5.0.0(@types/node@20.9.2)
+    version: registry.npmmirror.com/vite@5.0.0(@types/node@20.9.3)
   vite-plugin-solid:
     specifier: ^2.7.2
     version: 2.7.2(solid-js@1.8.5)(vite@5.0.0)
@@ -890,6 +890,12 @@ packages:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: true
 
+  /@types/node@20.9.3:
+    resolution: {integrity: sha512-nk5wXLAXGBKfrhLB0cyHGbSqopS+nz0BUgZkUQqSHSSgdee0kssp1IAqlQOu333bW+gMNs2QREx7iynm19Abxw==}
+    dependencies:
+      undici-types: 5.26.5
+    dev: true
+
   /@types/semver@7.5.5:
     resolution: {integrity: sha512-+d+WYC1BxJ6yVOgUgzK8gWvp5qF8ssV5r4nsDcZWKRWcDQLQ619tvWAxJQYGgBrO1MnLJC7a5GtiYsAoQ47dJg==}
     dev: true
@@ -1409,6 +1415,10 @@ packages:
     hasBin: true
     dev: true
 
+  /undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+    dev: true
+
   /update-browserslist-db@1.0.13(browserslist@4.22.1):
     resolution: {integrity: sha512-xebP81SNcPuNpPP3uzeW1NYXxI3rxyJzF3pD6sH4jE7o/IX+WtSpwnVU+qIsDPyk0d3hmFQ7mjqc6AtV604hbg==}
     hasBin: true
@@ -1437,7 +1447,7 @@ packages:
       merge-anything: 5.1.7
       solid-js: 1.8.5
       solid-refresh: 0.5.3(solid-js@1.8.5)
-      vite: registry.npmmirror.com/vite@5.0.0(@types/node@20.9.2)
+      vite: registry.npmmirror.com/vite@5.0.0(@types/node@20.9.3)
       vitefu: 0.2.5(vite@5.0.0)
     transitivePeerDependencies:
       - supports-color
@@ -1451,7 +1461,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: registry.npmmirror.com/vite@5.0.0(@types/node@20.9.2)
+      vite: registry.npmmirror.com/vite@5.0.0(@types/node@20.9.3)
     dev: true
 
   /yallist@3.1.1:
@@ -1572,14 +1582,6 @@ packages:
     resolution: {integrity: sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==, registry: https://registry.npmjs.org/, tarball: https://registry.npmmirror.com/@types/json-schema/-/json-schema-7.0.12.tgz}
     name: '@types/json-schema'
     version: 7.0.12
-    dev: true
-
-  registry.npmmirror.com/@types/node@20.9.2:
-    resolution: {integrity: sha512-WHZXKFCEyIUJzAwh3NyyTHYSR35SevJ6mZ1nWwJafKtiQbqRTIKSRcw3Ma3acqgsent3RRDqeVwpHntMk+9irg==, tarball: https://registry.npmmirror.com/@types/node/-/node-20.9.2.tgz}
-    name: '@types/node'
-    version: 20.9.2
-    dependencies:
-      undici-types: registry.npmmirror.com/undici-types@5.26.5
     dev: true
 
   registry.npmmirror.com/@types/semver@7.5.0:
@@ -3270,12 +3272,6 @@ packages:
       which-boxed-primitive: registry.npmmirror.com/which-boxed-primitive@1.0.2
     dev: true
 
-  registry.npmmirror.com/undici-types@5.26.5:
-    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==, tarball: https://registry.npmmirror.com/undici-types/-/undici-types-5.26.5.tgz}
-    name: undici-types
-    version: 5.26.5
-    dev: true
-
   registry.npmmirror.com/uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==, tarball: https://registry.npmmirror.com/uri-js/-/uri-js-4.4.1.tgz}
     name: uri-js
@@ -3284,7 +3280,7 @@ packages:
       punycode: registry.npmmirror.com/punycode@2.3.1
     dev: true
 
-  registry.npmmirror.com/vite@5.0.0(@types/node@20.9.2):
+  registry.npmmirror.com/vite@5.0.0(@types/node@20.9.3):
     resolution: {integrity: sha512-ESJVM59mdyGpsiNAeHQOR/0fqNoOyWPYesFto8FFZugfmhdHx8Fzd8sF3Q/xkVhZsyOxHfdM7ieiVAorI9RjFw==, tarball: https://registry.npmmirror.com/vite/-/vite-5.0.0.tgz}
     id: registry.npmmirror.com/vite/5.0.0
     name: vite
@@ -3315,7 +3311,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': registry.npmmirror.com/@types/node@20.9.2
+      '@types/node': 20.9.3
       esbuild: registry.npmmirror.com/esbuild@0.19.5
       postcss: registry.npmmirror.com/postcss@8.4.31
       rollup: registry.npmmirror.com/rollup@4.4.1
