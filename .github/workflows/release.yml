@@ -9,7 +9,7 @@ on:
       - v.*
 
 jobs:
-  create-release:
+  prelease:
     runs-on: ubuntu-latest
     outputs:
       changes: ${{ steps.changelog_reader.outputs.changes }}
@@ -30,6 +30,7 @@ jobs:
           version: ${{ steps.get_version.outputs.version }}
 
   build:
+    needs: prelease
     strategy:
       fail-fast: false
       matrix:
@@ -89,9 +90,24 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: Tran ${{ needs.create_release.outputs.version }}
+          name: Tran ${{ needs.prelease.outputs.version }}
           body: |
-            ${{ needs.create_release.outputs.changes }}
+            ${{ needs.prelease.outputs.changes }}
           files: release/*
-          draft: false
+          draft: true
+          prerelease: false
+  release:
+    needs: [prelease, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: Tran ${{ needs.prelease.outputs.version }}
+          body: |
+            ${{ needs.prelease.outputs.changes }}
+          files: release/*
+          draft: true
           prerelease: false
