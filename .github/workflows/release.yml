@@ -9,7 +9,7 @@ on:
       - v.*
 
 jobs:
-  prelease:
+  changelog:
     runs-on: ubuntu-latest
     outputs:
       changes: ${{ steps.changelog_reader.outputs.changes }}
@@ -31,6 +31,8 @@ jobs:
 
   build:
     needs: prelease
+    outputs:
+      release_id: ${{ steps.action_gh_release.outputs.id }}
     strategy:
       fail-fast: false
       matrix:
@@ -86,28 +88,33 @@ jobs:
         run: deno run -A script/built.ts
 
       - name: Upload release assets
+        id: action_gh_release
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: Tran ${{ needs.prelease.outputs.version }}
+          name: Tran ${{ needs.changelog.outputs.version }}
           body: |
-            ${{ needs.prelease.outputs.changes }}
+            ${{ needs.changelog.outputs.changes }}
           files: release/*
           draft: true
           prerelease: false
-  release:
-    needs: [prelease, build]
+
+  publish:
+    needs: [changelog, build]
     runs-on: ubuntu-latest
     steps:
-      - name: Upload release assets
-        uses: softprops/action-gh-release@v1
+      - name: publish release
+        id: publish-release
+        uses: actions/github-script@v6
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          release_id: ${{ needs.build.outputs.release_id }}
         with:
-          name: Tran ${{ needs.prelease.outputs.version }}
-          body: |
-            ${{ needs.prelease.outputs.changes }}
-          files: release/*
-          draft: false
-          prerelease: false
+          script: |
+            github.rest.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: process.env.release_id,
+              draft: false,
+              prerelease: false
+            })
