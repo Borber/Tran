@@ -109,5 +109,5 @@ jobs:
           body: |
             ${{ needs.prelease.outputs.changes }}
           files: release/*
-          draft: true
+          draft: false
           prerelease: false
