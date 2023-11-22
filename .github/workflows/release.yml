@@ -30,7 +30,7 @@ jobs:
           version: ${{ steps.get_version.outputs.version }}
 
   build:
-    needs: prelease
+    needs: changelog
     outputs:
       release_id: ${{ steps.action_gh_release.outputs.id }}
     strategy:
