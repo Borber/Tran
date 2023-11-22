@@ -1,4 +1,4 @@
-import { ensureDir } from "https://deno.land/std/fs/mod.ts";
+import { ensureDir } from "https://deno.land/std@0.207.0/fs/mod.ts";
 
 const dirs = ["msi", "nsis", "deb", "appimage", "dmg", "macos",]
 
