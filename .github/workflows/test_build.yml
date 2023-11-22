@@ -31,11 +31,6 @@ jobs:
           version: latest
       - name: Install frontend dependencies
         run: pnpm install
-      - name: Install deno
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: canary
-        run: deno run -A  script/lang.ts
       - name: Build
         uses: tauri-apps/tauri-action@v0
         env:
