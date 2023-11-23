@@ -1,6 +1,6 @@
 console.log("Start confirm language");
 
-const lang_short = ["zh", "en", "jp",]
+const lang_short = ["zh", "en", "ja",]
 const lang_long = ["Chinese", "English", "Japanese",]
 
 const lang = Deno.env.get("MATRIX_LANG")
