@@ -1681,9 +1681,9 @@ checksum = "8f518f335dce6725a761382244631d86cf0ccb2863413590b31338feb467f9c3"
 
 [[package]]
 name = "itertools"
-version = "0.11.0"
+version = "0.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57"
+checksum = "25db6b064527c5d482d0423354fcd07a89a2dfe07b67892e62411946db7f07b0"
 dependencies = [
  "either",
 ]
@@ -1863,9 +1863,9 @@ dependencies = [
 
 [[package]]
 name = "lingua"
-version = "1.6.0"
+version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "91643f3c9d034233f0fd17ba9b74032313f42e7113b3c9fb41c6bed43a523cd7"
+checksum = "73989d32b4cd00a69e78d979203fa3b87e43fae0236a29544331c2ccfa180fdd"
 dependencies = [
  "ahash",
  "brotli",
