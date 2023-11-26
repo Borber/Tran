@@ -1,0 +1,5 @@
+{
+    "deno.enablePaths": ["./script"],
+    "deno.lint": true,
+    "deno.unstable": true
+}
