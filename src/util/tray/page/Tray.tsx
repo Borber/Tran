@@ -59,7 +59,6 @@ const Tray = () => {
                     ExitFlag(false)
                 }}
                 onClick={async () => {
-                    ExitFlag(false)
                     await exit(0)
                 }}>
                 退出

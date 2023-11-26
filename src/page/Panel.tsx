@@ -65,7 +65,8 @@ const Panel = () => {
                     await panel.hide()
                     Result(undefined)
                 }
-            }}>
+            }}
+        >
             <div class="result">
                 <Switch fallback={"翻译中..."}>
                     <Match when={result() == undefined}>翻译中...</Match>
@@ -99,7 +100,8 @@ const Panel = () => {
                         moveFlag = false
                         pinFlag = true
                         Pin(true)
-                    }}>
+                    }}
+                >
                     <div classList={{ "panel-control-pin": pin() }}>
                         <PinIcon size={14} />
                     </div>
@@ -121,7 +123,8 @@ const Panel = () => {
                             context,
                         })
                         Copy(true)
-                    }}>
+                    }}
+                >
                     <CopyIcon size={12} />
                 </div>
             </div>
