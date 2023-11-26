@@ -6,13 +6,13 @@
 
 # 功能
 
-|                                 划词翻译                                 |                              划过固定                               |
-| :----------------------------------------------------------------------: | :-----------------------------------------------------------------: |
-| <img src="https://i.pstorage.space/i/yo5R9JJ3n/original_translate.gif"/> | <img src="https://i.pstorage.space/i/Ll7YxqmW3/original_drag.gif"/> |
+|                                       划词翻译                                       |                                  划过固定                                  |
+| :----------------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
+| ![translate](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/translate.gif) | ![drag](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/drag.gif) |
 
-|                              划过关闭                               |                              划过复制                              |
-| :-----------------------------------------------------------------: | :----------------------------------------------------------------: |
-| <img src="https://i.pstorage.space/i/JwQDALlO/original_close.gif"/> | <img src="https://i.pstorage.space/i/MDd9XKW6/original_copy.gif"/> |
+|                                   划过关闭                                   |                                  划过复制                                  |
+| :--------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
+| ![close](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/close.gif) | ![copy](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/copy.gif) |
 
 **快捷键：** `Alt + X`
 
@@ -48,7 +48,7 @@
 
 vercel proxy google translate
 
-<a href="https://vercel.com/import/project?template=https://github.com/Borber/v2g" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="https://vercel.com/button" alt="Deploy to Vercel" ></a>
+[![vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/Borber/v2g)
 
 > 因 vercel 默认域名无法直接访问, 如果您没有域名,可以提 issue , 我将提供域名供您绑定。
 
