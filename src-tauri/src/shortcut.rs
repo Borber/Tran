@@ -1,6 +1,6 @@
 use anyhow::{anyhow, Context, Result};
 use mouse_position::mouse_position::Mouse;
-use tauri::{PhysicalPosition, Window};
+use tauri::Window;
 
 use selection::get_text;
 
