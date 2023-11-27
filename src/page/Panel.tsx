@@ -29,16 +29,18 @@ const Panel = () => {
     const [result, Result] = createSignal<TransVO>()
 
     // 监听事件， 显示panel
+    // Listen to events and display panel
     panel.listen<{ x: number; y: number; context: string }>(
         "show",
         async (pos) => {
             Result(undefined)
             if (!pinFlag) {
                 await panel.setPosition(
-                    new PhysicalPosition(pos.payload.x - 40, pos.payload.y + 20)
+                    new PhysicalPosition(pos.payload.x, pos.payload.y)
                 )
 
                 // 刷新 固定图标状态
+                // Refresh pin icon state
                 moveFlag = true
                 pinFlag = false
                 Pin(false)

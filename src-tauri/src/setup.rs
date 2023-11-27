@@ -15,7 +15,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn Error>> {
     // 全局快捷键
     // Global shortcut
     app.global_shortcut_manager()
-        .register("Alt + X", move || shortcut::show(&panel))
+        .register("Alt + X", move || shortcut::show(&panel).unwrap())
         .expect("Failed to register global shortcut");
     Ok(())
 }
