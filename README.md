@@ -40,6 +40,31 @@
 
 # 贡献
 
+## 参与开发
+
+### 准备环境
+
+-   [rust](https://www.rust-lang.org/tools/install)
+    -   最基本的开发环境
+-   [pnpm](https://pnpm.io/installation)
+    -   前端部分包管理
+-   [nodejs](https://nodejs.org/)
+    -   推荐使用 [fnm](https://github.com/Schniz/fnm) 进行管理
+    -   `tauri` 开发所需
+-   [just](https://github.com/casey/just) (可选)
+    -   便捷命令
+-   [deno](https://docs.deno.com/runtime/manual/getting_started/installation) (可选)
+    -   脚本工具
+-   [vscode](https://code.visualstudio.com/) (推荐)
+    -   推荐 `deno` 插件, `deno` 需要配置 `enablePaths` 避免识别前端部分 `ts` 代码
+
+### 提交
+
+1. 如果想新加一个功能, 请先提 `issue`, 讨论一下, 避免无效工作
+2. 对原有功能进行改进
+3. 添加测试与文档
+4. 升级, 更新依赖的提交也会被接受
+
 ## 积极使用
 
 理论上，更多人使用则 `tran` 翻译速度会保持在很快的速度，因为 `vercel` 冷启动耗时很长。频繁的请求能使它一直运行。所以鼓励您频繁使用 `tran`. **同理也拜托您推广 `tran`**
