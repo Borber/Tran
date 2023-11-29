@@ -21,7 +21,7 @@
         "all": true
       },
       "process": {
-        "all": true
+        "exit": true
       },
       "globalShortcut": {
         "all": true

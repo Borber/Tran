@@ -13,8 +13,8 @@ tauri-build = { version = "1.5", features = [] }
 
 [dependencies]
 tauri = { version = "1.5", features = [
+    "process-exit",
     "global-shortcut-all",
-    "process-all",
     "system-tray",
     "window-all",
     "shell-open",
