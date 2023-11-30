@@ -1,6 +1,6 @@
 [package]
 name = "tran"
-version = "0.1.4"
+version = "0.1.5"
 description = "Tran"
 authors = ["Borber"]
 license = "MIT"
