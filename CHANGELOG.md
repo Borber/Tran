@@ -2,6 +2,12 @@
 
 ## [0.1.5]
 
+### 直连模式
+
+新增直连模式
+
+![direct](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/direct.png)
+
 ### 实验性便携产物
 
 `portable` 尾缀的可执行文件需要自行确保 `webview` 运行环境
