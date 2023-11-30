@@ -26,8 +26,7 @@ anyhow = "1"
 parking_lot = { version = "0.12", features = ["nightly"] }
 
 tokio = { version = "1", features = ["full"] }
-reqwest = { version = "0.11", features = ["default", "gzip", "json"] }
-
+reqwest = { version = "0.11", features = ["rustls-tls", "gzip", "json"] }
 
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
@@ -58,9 +57,6 @@ custom-protocol = ["tauri/custom-protocol"]
 
 [build]
 rustflags = ["-Z", "threads=8"]
-
-[target.'cfg(unix)'.dependencies]
-openssl = { version = '0.10', features = ["vendored"] }
 
 [profile.release]
 opt-level = "z"
