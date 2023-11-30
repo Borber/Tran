@@ -12,10 +12,10 @@ use crate::util;
 /// Config
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Config {
-    /// 是否启用代理, 若不启用, 默认使用镜像
+    /// 模式, 0: 镜像模式, 1: 直连模式, 2: 代理模式
     ///
-    /// Whether to enable the proxy, if not enabled, the default is to use the mirror
-    pub proxy: bool,
+    /// Mode, 0: mirror mode, 1: direct mode, 2: proxy mode
+    pub mode: usize,
     /// 代理地址, 为空则直连
     ///
     /// Proxy address, empty means direct
@@ -41,7 +41,7 @@ pub fn load() -> Config {
         serde_json::from_str(&config).unwrap()
     } else {
         Config {
-            proxy: false,
+            mode: 0,
             url: "".to_string(),
         }
     }
@@ -58,19 +58,11 @@ fn save(config: &Config) -> Result<()> {
     Ok(())
 }
 
-/// 开启代理
+/// 切换模式
 ///
-/// enable proxy
-pub fn enable_proxy() {
-    CONFIG.lock().proxy = true;
-    save(&CONFIG.lock()).unwrap();
-}
-
-/// 关闭代理
-///
-/// disable proxy
-pub fn disable_proxy() {
-    CONFIG.lock().proxy = false;
+/// switch mode
+pub fn mode(mode: usize) {
+    CONFIG.lock().mode = mode;
     save(&CONFIG.lock()).unwrap();
 }
 

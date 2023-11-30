@@ -9,14 +9,14 @@ import TopBar from "../components/TopBar"
 import { Resp } from "../model/resp"
 
 interface ConfigProps {
-    proxy: boolean
+    mode: number
     url: string
 }
 
 const Setting = () => {
     const main = getCurrent()
 
-    const [proxy, Proxy] = createSignal(false)
+    const [mode, Mode] = createSignal(0)
     const [url, Url] = createSignal("")
 
     main.listen("tauri://close-requested", async () => {
@@ -25,7 +25,7 @@ const Setting = () => {
 
     onMount(async () => {
         const resp = await invoke<Resp<ConfigProps>>("get_config")
-        Proxy(resp.data.proxy)
+        Mode(resp.data.mode)
         Url(resp.data.url)
     })
 
@@ -40,28 +40,55 @@ const Setting = () => {
                 <div class="setting-option">
                     <div
                         class="setting-option-item"
-                        classList={{ "setting-option-item-selected": !proxy() }}
+                        classList={{
+                            "setting-option-item-selected": mode() == 0,
+                        }}
                         onClick={async () => {
-                            Proxy(false)
-                            await invoke("disable_proxy")
-                        }}>
+                            Mode(0)
+                            await invoke("switch_mode", {
+                                mode: 0,
+                            })
+                        }}
+                    >
                         镜像
                     </div>
                     <div
                         class="setting-option-item"
-                        classList={{ "setting-option-item-selected": proxy() }}
+                        classList={{
+                            "setting-option-item-selected": mode() == 1,
+                        }}
                         onClick={async () => {
-                            Proxy(true)
-                            await invoke("enable_proxy")
-                        }}>
+                            Mode(1)
+                            await invoke("switch_mode", {
+                                mode: 1,
+                            })
+                        }}
+                    >
+                        直连
+                    </div>
+                    <div
+                        class="setting-option-item"
+                        classList={{
+                            "setting-option-item-selected": mode() == 2,
+                        }}
+                        onClick={async () => {
+                            Mode(2)
+                            await invoke("switch_mode", {
+                                mode: 2,
+                            })
+                        }}
+                    >
                         代理
                     </div>
                 </div>
                 <Switch fallback={"Need fix"}>
-                    <Match when={!proxy()}>
-                        <div class="setting-mirror">🎉Enjoy </div>
+                    <Match when={mode() == 0}>
+                        <div class="setting-mirror">🎉Enjoy mirror </div>
                     </Match>
-                    <Match when={proxy()}>
+                    <Match when={mode() == 1}>
+                        <div class="setting-mirror">🎉Enjoy direct</div>
+                    </Match>
+                    <Match when={mode() == 2}>
                         <input
                             class="setting-proxy-url"
                             type="text"

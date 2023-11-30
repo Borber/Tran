@@ -30,13 +30,15 @@ pub async fn translate(context: &str) -> Result<TransVO> {
     let context = encode(context);
 
     let url = { CONFIG.lock().url.clone() };
-
-    if CONFIG.lock().proxy {
-        let proxy = reqwest::Proxy::all(&url)?;
-        let client = Client::builder().proxy(proxy).build().unwrap();
-        send(&client, "https://translate.googleapis.com", &lang, &context).await
-    } else {
-        send(&CLIENT, &mirror::one(), &lang, &context).await
+    let mode = CONFIG.lock().mode;
+    match mode {
+        0 => send(&CLIENT, mirror::one().as_str(), &lang, &context).await,
+        1 => send(&CLIENT, "https://translate.googleapis.com", &lang, &context).await,
+        _ => {
+            let proxy = reqwest::Proxy::all(&url)?;
+            let client = Client::builder().proxy(proxy).build().unwrap();
+            send(&client, "https://translate.googleapis.com", &lang, &context).await
+        }
     }
 }
 

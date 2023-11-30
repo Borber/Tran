@@ -41,20 +41,12 @@ fn get_config() -> Resp<Config> {
     Ok(CONFIG.lock().clone()).into()
 }
 
-/// 开启代理
+/// 切换模式
 ///
-/// Enable proxy
+/// Switch mode
 #[tauri::command]
-fn enable_proxy() {
-    config::enable_proxy();
-}
-
-/// 关闭代理
-///
-/// Disable proxy
-#[tauri::command]
-fn disable_proxy() {
-    config::disable_proxy();
+fn switch_mode(mode: usize) {
+    config::mode(mode);
 }
 
 /// 设置代理地址
@@ -79,8 +71,7 @@ async fn main() {
             copy,
             translate,
             get_config,
-            enable_proxy,
-            disable_proxy,
+            switch_mode,
             set_proxy_url
         ])
         .run(tauri::generate_context!())
