@@ -56,16 +56,24 @@ const Panel = () => {
         }
     )
 
+    panel.listen("hide", async () => {
+        await hide()
+    })
+
+    const hide = async () => {
+        moveFlag = true
+        pinFlag = false
+        Pin(false)
+        await panel.hide()
+        Result(undefined)
+    }
+
     return (
         <div
             class="panel"
             onMouseLeave={async () => {
                 if (moveFlag) {
-                    moveFlag = true
-                    pinFlag = false
-                    Pin(false)
-                    await panel.hide()
-                    Result(undefined)
+                    await hide()
                 }
             }}
         >

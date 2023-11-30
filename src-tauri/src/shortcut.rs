@@ -17,6 +17,11 @@ pub struct ShowVO {
 pub fn show(panel: &Window) -> Result<()> {
     let context = get_text();
 
+    if context.is_empty() {
+        panel.emit("hide", ()).unwrap();
+        return Ok(());
+    }
+
     // 获取当前屏幕宽高
     // Get the current screen width and height
     let monitor = panel
