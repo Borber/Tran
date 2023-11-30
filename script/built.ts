@@ -3,21 +3,33 @@ import { ensureDir } from "https://deno.land/std@0.207.0/fs/mod.ts";
 const dirs = ["msi", "nsis", "deb", "appimage", "dmg", "macos",]
 
 const lang = Deno.env.get("MATRIX_LANG")
-const root = "src-tauri/target/release/bundle"
+const root = "src-tauri/target/release"
+const bundle = root + "/bundle"
 
 await Deno.mkdir("release")
 
+// 上传 bundle产物
 for (const dir of dirs) {
-    ensureDir(`${root}/${dir}`).then(async () => {
-        if (Deno.statSync(`${root}/${dir}`).isDirectory) {
-            for await (const file of Deno.readDir(`${root}/${dir}`)) {
+    ensureDir(`${bundle}/${dir}`).then(async () => {
+        if (Deno.statSync(`${bundle}/${dir}`).isDirectory) {
+            for await (const file of Deno.readDir(`${bundle}/${dir}`)) {
                 if (file.isFile && file.name.startsWith("tran")) {
                     let name = file.name
                     name = name.replace("tran", "tran" + "_" + lang)
-                    await Deno.copyFile(`${root}/${dir}/${file.name}`, `release/${name}`)
+                    await Deno.copyFile(`${bundle}/${dir}/${file.name}`, `release/${name}`)
                     console.log(`release/${name}`)
                 }
             }
         }
     })
+}
+
+// 上传 便携产物
+for await (const file of Deno.readDir(root)) {
+    let name = file.name
+    if (name == "tran.exe" || name == "tran") {
+        name = name.replace("tran", "tran" + "_" + lang + "_portable")
+        await Deno.copyFile(`${root}/${file.name}`, `release/${name}`)
+        console.log(`release/${name}`)
+    }
 }
