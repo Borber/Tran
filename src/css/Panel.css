@@ -69,6 +69,8 @@
     overflow-y: scroll;
     user-select: text;
     line-height: 1.3;
+
+    font-size: 14px;
 }
 
 .dict {
