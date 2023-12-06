@@ -13,6 +13,7 @@ const Tray = () => {
     const tray = getCurrent()
 
     // 模拟 hover 效果, 解决 tauri 最小化/关闭 时, hover 效果不消失的问题
+    // mock hover, to solve the problem that the hover effect disappears when the window is minimized or closed
     const [settingFlag, SettingFlag] = createSignal(false)
     const [exitFlag, ExitFlag] = createSignal(false)
 
@@ -21,7 +22,6 @@ const Tray = () => {
             new PhysicalPosition(pos.payload.x, pos.payload.y)
         )
         await tray.show()
-        await tray.setFocus()
     })
 
     return (
@@ -29,7 +29,8 @@ const Tray = () => {
             class="tray compromise"
             onMouseLeave={async () => {
                 await tray.hide()
-            }}>
+            }}
+        >
             <div
                 class="tray-item"
                 classList={{ "tray-item-hover": settingFlag() }}
@@ -46,7 +47,8 @@ const Tray = () => {
                     if (await main?.isMinimized()) await main?.unminimize()
                     if (!(await main?.isVisible())) await main?.show()
                     await main?.setFocus()
-                }}>
+                }}
+            >
                 设置
             </div>
             <div
@@ -60,7 +62,8 @@ const Tray = () => {
                 }}
                 onClick={async () => {
                     await exit(0)
-                }}>
+                }}
+            >
                 退出
             </div>
         </div>
