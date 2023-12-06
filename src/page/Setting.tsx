@@ -6,6 +6,7 @@ import { createSignal, Match, onMount, Switch } from "solid-js"
 
 import Control from "../components/Control"
 import TopBar from "../components/TopBar"
+import { GithubIcon } from "../icon"
 import { Resp } from "../model/resp"
 
 interface ConfigProps {
@@ -82,11 +83,8 @@ const Setting = () => {
                     </div>
                 </div>
                 <Switch fallback={"Need fix"}>
-                    <Match when={mode() == 0}>
-                        <div class="setting-mirror">🎉Enjoy mirror </div>
-                    </Match>
-                    <Match when={mode() == 1}>
-                        <div class="setting-mirror">🎉Enjoy direct</div>
+                    <Match when={mode() < 2}>
+                        <div class="setting-enjoy">🎉</div>
                     </Match>
                     <Match when={mode() == 2}>
                         <input
@@ -103,6 +101,14 @@ const Setting = () => {
                         />
                     </Match>
                 </Switch>
+                <div
+                    class="github"
+                    onClick={async () => {
+                        await invoke("open_github")
+                    }}
+                >
+                    <GithubIcon size={30} />
+                </div>
             </div>
         </div>
     )

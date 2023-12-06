@@ -57,6 +57,16 @@ fn set_proxy_url(url: String) {
     config::set_proxy_url(url);
 }
 
+/// 打开Github
+///
+/// Open Github
+#[tauri::command]
+async fn open_github() -> Resp<()> {
+    open::that("https://github.com/Borber/tran")
+        .map_err(anyhow::Error::msg)
+        .into()
+}
+
 #[tokio::main]
 async fn main() {
     // 全局初始化
@@ -69,6 +79,7 @@ async fn main() {
         .setup(setup::handler)
         .invoke_handler(tauri::generate_handler![
             copy,
+            open_github,
             translate,
             get_config,
             switch_mode,

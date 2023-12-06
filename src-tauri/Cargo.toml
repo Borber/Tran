@@ -1,6 +1,6 @@
 [package]
 name = "tran"
-version = "0.1.6"
+version = "0.1.7"
 description = "Tran"
 authors = ["Borber"]
 license = "MIT"
@@ -50,6 +50,9 @@ lingua = { version = "1.6", default-features = false, features = [
 
 # For random
 fastrand = "2"
+
+# For browser
+open = "5"
 
 
 [features]
