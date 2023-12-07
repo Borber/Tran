@@ -1,7 +1,7 @@
 {
   "name": "tran",
   "version": "0.1.7",
-  "description": "",
+  "description": "简洁, 快速, 划词翻译",
   "scripts": {
     "start": "vite",
     "dev": "vite",
