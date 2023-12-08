@@ -64,6 +64,7 @@ const Panel = () => {
         moveFlag = true
         pinFlag = false
         Pin(false)
+        Copy(false)
         await panel.hide()
         Result(undefined)
     }
