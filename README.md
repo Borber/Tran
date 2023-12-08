@@ -4,6 +4,16 @@
 
 > **Keep it simple，stupid.**
 
+<h2 align="center">
+  <a href="https://github.com/Borber/tran">
+    <img src="https://img.shields.io/badge/github-Borber/tran-8da0cb.svg?style=for-the-badge&logo=github" alt="Github"/>
+  </a>
+  <a href="https://github.com/Borber/tran/releases/latest">
+    <img src="https://img.shields.io/github/downloads/Borber/tran/total.svg?style=for-the-badge&color=82E0AA&logo=github" alt="Downloads"/>
+  </a>
+  <img src="https://img.shields.io/github/license/borber/tran?color=%2398cbed&logo=rust&style=for-the-badge" alt="LICENSE"/>
+</h2>
+
 # 功能
 
 |                                       划词翻译                                       |                                  划过固定                                  |
