@@ -211,3 +211,7 @@ body {
 ::-webkit-scrollbar {
   width: 0;
 }
+
+.container {
+  height: 100%;
+}
