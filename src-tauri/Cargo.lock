@@ -1895,9 +1895,9 @@ dependencies = [
 
 [[package]]
 name = "lingua"
-version = "1.6.1"
+version = "1.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "73989d32b4cd00a69e78d979203fa3b87e43fae0236a29544331c2ccfa180fdd"
+checksum = "d109aef84956f04b8b5866db17e59f964152411915ad27b6e291b262d63a442c"
 dependencies = [
  "ahash",
  "brotli",
@@ -3217,9 +3217,9 @@ dependencies = [
 
 [[package]]
 name = "serde-wasm-bindgen"
-version = "0.6.2"
+version = "0.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "67d27afff48127b3edfe6ad379a2bd0795d2cfa56730ca2745e5b89386126404"
+checksum = "b9b713f70513ae1f8d92665bbbbda5c295c2cf1da5542881ae5eefe20c9af132"
 dependencies = [
  "js-sys",
  "serde",
