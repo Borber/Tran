@@ -16,7 +16,7 @@
     "solid-js": "^1.8.7"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "1.5.7",
+    "@tauri-apps/cli": "^1.5.8",
     "@types/node": "^20.10.5",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
