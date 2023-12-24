@@ -1,18 +1,18 @@
+<img width="200px" src="public/icon.png" align="left"/>
+
 # Tran
 
 简洁, 快速, 划词翻译
 
-> **Keep it simple，stupid.**
+![LICENSE](https://img.shields.io/github/license/borber/tran?color=%2398cbed&logo=rust&style=for-the-badge)
+![Downloads](https://img.shields.io/github/downloads/Borber/tran/total.svg?style=for-the-badge&color=82E0AA&logo=github)
+![Rust](https://img.shields.io/badge/-Rust-orange?logo=rust&style=for-the-badge&logoColor=white)
+![Tauri](https://img.shields.io/badge/Tauri-blue?logo=tauri&color=1B1B1D&style=for-the-badge)
+![Windows](https://img.shields.io/badge/-Windows-blue?logo=windows&style=for-the-badge&logoColor=white)
+![MacOS](https://img.shields.io/badge/-macOS-black?&logo=apple&style=for-the-badge&logoColor=white)
+![Linux](https://img.shields.io/badge/-Linux-yellow?logo=linux&style=for-the-badge&logoColor=white)
 
-<h2 align="center">
-  <a href="https://github.com/Borber/tran">
-    <img src="https://img.shields.io/badge/github-Borber/tran-8da0cb.svg?style=for-the-badge&logo=github" alt="Github"/>
-  </a>
-  <a href="https://github.com/Borber/tran/releases/latest">
-    <img src="https://img.shields.io/github/downloads/Borber/tran/total.svg?style=for-the-badge&color=82E0AA&logo=github" alt="Downloads"/>
-  </a>
-  <img src="https://img.shields.io/github/license/borber/tran?color=%2398cbed&logo=rust&style=for-the-badge" alt="LICENSE"/>
-</h2>
+> **Keep it simple，stupid.**
 
 # 功能
 
@@ -66,7 +66,7 @@
 -   [deno](https://docs.deno.com/runtime/manual/getting_started/installation) (可选)
     -   脚本工具
 -   [vscode](https://code.visualstudio.com/) (推荐)
-    -   推荐 `deno` 插件, `deno` 需要配置 `enablePaths` 避免识别前端部分 `ts` 代码
+    -   [`deno` 插件](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno)
 
 ### 提交
 
