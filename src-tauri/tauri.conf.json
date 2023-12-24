@@ -61,7 +61,7 @@
       {
         "label": "tray",
         "url": "/tray",
-        "width": 30,
+        "width": 140,
         "height": 60,
         "fullscreen": false,
         "resizable": false,
