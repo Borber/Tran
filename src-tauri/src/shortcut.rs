@@ -22,8 +22,8 @@ pub fn show(panel: &Window) -> Result<()> {
         return Ok(());
     }
 
-    // 获取当前屏幕宽高
-    // Get the current screen width and height
+    // 获取当前显示器的宽度和高度
+    // Get the current monitor width and height
     let monitor = panel
         .current_monitor()
         .context("Failed to get current monitor")?
@@ -50,31 +50,22 @@ pub fn show(panel: &Window) -> Result<()> {
             }
             // 计算偏移量
             // Calculate the offset
-            let mut x_offset = x - 40;
-            let mut y_offset = y + 20;
+            x -= 40;
+            y += 20;
 
             // 边界检查
             // Boundary check
-            if x_offset < 0 {
-                x_offset = 0;
+            if x < 0 {
+                x = 0;
             }
-            if x_offset > monitor_width - panel_width {
-                x_offset = monitor_width - panel_width;
+            if x > monitor_width - panel_width {
+                x = monitor_width - panel_width;
             }
-            if y_offset > monitor_height - panel_height {
-                y_offset = monitor_height - panel_height;
+            if y > monitor_height - panel_height {
+                y = monitor_height - panel_height;
             }
 
-            panel
-                .emit(
-                    "show",
-                    ShowVO {
-                        x: x_offset,
-                        y: y_offset,
-                        context,
-                    },
-                )
-                .unwrap();
+            panel.emit("show", ShowVO { x, y, context }).unwrap();
         }
         Mouse::Error => println!("Error getting mouse position"),
     };
