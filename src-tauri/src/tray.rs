@@ -15,6 +15,13 @@ pub fn handler(app: &AppHandle, event: SystemTrayEvent) {
             Mouse::Position { mut x, mut y } => {
                 let tray = app.get_window("tray").unwrap();
 
+                #[cfg(target_os = "macos")]
+                {
+                    let scale_factor = tray.scale_factor().unwrap_or(1.0);
+                    x = (x as f64 * scale_factor) as i32;
+                    y = (y as f64 * scale_factor) as i32;
+                }
+
                 // 获取窗口大小
                 // Get the window size
                 let (w_width, w_height) = match tray.outer_size() {
@@ -22,7 +29,8 @@ pub fn handler(app: &AppHandle, event: SystemTrayEvent) {
                     Err(_) => (140, 60),
                 };
 
-                // 获取窗口大小
+                // 获取显示器尺寸
+                // Get the monitor size
                 let (width, height) = match tray.current_monitor() {
                     Ok(Some(monitor)) => {
                         (monitor.size().width as i32, monitor.size().height as i32)

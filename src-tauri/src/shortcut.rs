@@ -41,7 +41,13 @@ pub fn show(panel: &Window) -> Result<()> {
 
     let position = Mouse::get_mouse_position();
     match position {
-        Mouse::Position { x, y } => {
+        Mouse::Position { mut x, mut y } => {
+            #[cfg(target_os = "macos")]
+            {
+                let scale_factor = monitor.scale_factor();
+                x = (x as f64 * scale_factor) as i32;
+                y = (y as f64 * scale_factor) as i32;
+            }
             // 计算偏移量
             // Calculate the offset
             let mut x_offset = x - 40;
