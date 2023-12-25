@@ -16,14 +16,8 @@ interface ConfigProps {
 }
 
 const Setting = () => {
-    const main = getCurrent()
-
     const [mode, Mode] = createSignal(0)
     const [url, Url] = createSignal("")
-
-    main.listen("tauri://close-requested", async () => {
-        await main.hide()
-    })
 
     onMount(async () => {
         const resp = await invoke<Resp<ConfigProps>>("get_config")
