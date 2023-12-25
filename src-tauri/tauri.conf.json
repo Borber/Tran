@@ -48,20 +48,6 @@
     },
     "windows": [
       {
-        "title": "Tran",
-        "label": "main",
-        "url": "/",
-        "width": 320,
-        "height": 320,
-        "fullscreen": false,
-        "resizable": false,
-        "minimizable": false,
-        "decorations": false,
-        "transparent": false,
-        "center": true,
-        "visible": false
-      },
-      {
         "label": "panel",
         "url": "/panel",
         "width": 256,

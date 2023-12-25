@@ -29,6 +29,12 @@ const Setting = () => {
         const resp = await invoke<Resp<ConfigProps>>("get_config")
         Mode(resp.data.mode)
         Url(resp.data.url)
+
+        // 100ms 后显示界面
+        setTimeout(async () => {
+            const current = getCurrent()
+            await current.show()
+        }, 100)
     })
 
     return (

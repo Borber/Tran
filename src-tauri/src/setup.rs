@@ -2,12 +2,11 @@ use std::error::Error;
 
 use tauri::{App, GlobalShortcutManager, Manager};
 
-use crate::{shortcut, window};
+use crate::{shortcut, util};
 
 pub fn handler(app: &mut App) -> Result<(), Box<dyn Error>> {
-    if cfg!(any(target_os = "macos", target_os = "windows")) {
-        window::decor(app, "main");
-        window::decor(app, "panel");
+    if cfg!(any(target_os = "windows", target_os = "macos")) {
+        util::decor(app, "panel");
     };
     let panel = app.get_window("panel").unwrap();
 

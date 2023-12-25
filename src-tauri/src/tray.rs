@@ -1,5 +1,7 @@
 use tauri::{AppHandle, Manager, SystemTray, SystemTrayEvent};
 
+use crate::window;
+
 pub fn new() -> SystemTray {
     SystemTray::new()
 }
@@ -8,12 +10,10 @@ pub fn new() -> SystemTray {
 ///
 /// Switch main window display state
 pub fn handler(app: &AppHandle, _: SystemTrayEvent) {
-    let window = app.get_window("main").expect("Failed to get main window");
-
-    if window.is_visible().unwrap_or_default() {
-        let _ = window.hide();
-    } else {
-        let _ = window.show();
-        let _ = window.set_focus();
+    match app.get_window("main") {
+        Some(window) => {
+            window.close().expect("Failed to close main window");
+        }
+        None => window::main(app),
     }
 }
