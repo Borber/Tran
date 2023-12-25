@@ -59,20 +59,6 @@
         "visible": false
       },
       {
-        "label": "tray",
-        "url": "/tray",
-        "width": 140,
-        "height": 60,
-        "fullscreen": false,
-        "resizable": false,
-        "decorations": false,
-        "transparent": true,
-        "center": false,
-        "visible": false,
-        "alwaysOnTop": true,
-        "skipTaskbar": true
-      },
-      {
         "label": "panel",
         "url": "/panel",
         "width": 256,

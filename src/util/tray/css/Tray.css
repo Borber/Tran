@@ -20,7 +20,7 @@
     height: 60px;
 }
 
-.tray-item-hover {
+.tray-item:hover {
     background-color: #fff;
     color: #000;
 }

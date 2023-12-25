@@ -14,6 +14,9 @@ pub fn decor_by_window(window: &tauri::Window) {
     };
 }
 
+/// 通过窗口名称增加窗口装饰 依赖于 `window_shadows`
+///
+/// Adds window decorations by window name, depends on `window_shadows`
 pub fn decor(app: &mut App, name: &str) {
     match app.get_window(name) {
         Some(window) => decor_by_window(&window),
