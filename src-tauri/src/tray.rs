@@ -4,6 +4,9 @@ pub fn new() -> SystemTray {
     SystemTray::new()
 }
 
+/// 切换 main窗口显示状态
+///
+/// Switch main window display state
 pub fn handler(app: &AppHandle, _: SystemTrayEvent) {
     let window = app.get_window("main").expect("Failed to get main window");
 
