@@ -17,10 +17,6 @@ onMount(async () => {
 const routes = [
     { path: "/", component: lazy(() => import("./page/Setting")) },
     {
-        path: "/tray",
-        component: lazy(() => import("./util/tray/page/Tray")),
-    },
-    {
         path: "/panel",
         component: lazy(() => import("./page/Panel")),
     },

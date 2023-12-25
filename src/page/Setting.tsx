@@ -1,6 +1,7 @@
 import "../css/Setting.css"
 
 import { invoke } from "@tauri-apps/api"
+import { exit } from "@tauri-apps/api/process"
 import { getCurrent } from "@tauri-apps/api/window"
 import { createSignal, Match, onMount, Switch } from "solid-js"
 
@@ -101,6 +102,9 @@ const Setting = () => {
                         />
                     </Match>
                 </Switch>
+                <div class="exit" onClick={async () => await exit(0)}>
+                    退出
+                </div>
                 <div
                     class="github"
                     onClick={async () => {
