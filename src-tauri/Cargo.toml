@@ -1,10 +1,10 @@
 [package]
 name = "tran"
 version = "0.1.9"
-description = "Tran"
+description = "Tran "
 authors = ["Borber"]
 license = "MIT"
-repository = ""
+repository = "https://github.com/Borber/tran"
 edition = "2021"
 
 
@@ -37,7 +37,7 @@ mouse_position = "0.1"
 selection = "1"
 
 # For URL
-urlencoding = "2"
+percent-encoding = "2"
 
 # For clipboard
 arboard = { version = "3", default-features = false }

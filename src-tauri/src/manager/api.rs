@@ -1,7 +1,7 @@
 use anyhow::Result;
+use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 use reqwest::Client;
 use serde::Serialize;
-use urlencoding::encode;
 
 use crate::{common::CLIENT, config::CONFIG, lang, manager::mirror};
 
@@ -27,7 +27,7 @@ pub async fn translate(context: &str) -> Result<TransVO> {
     let lang = lang::lang(context);
 
     // 转换为 url 编码
-    let context = encode(context);
+    let context = utf8_percent_encode(context, NON_ALPHANUMERIC).to_string();
 
     let url = { CONFIG.lock().url.clone() };
     let mode = CONFIG.lock().mode;
