@@ -6,6 +6,8 @@
 -   去除 Tray 将 退出 功能合并到面板中 ![tran-exit](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/tran-exit.png)
 -   设置界面, 按钮 hover 效果
 
+修改较大, 若有问题请提 issue
+
 ## [0.1.9]
 
 -   强势适配 MacOS 感谢 `冲击波` 大佬的帮助
