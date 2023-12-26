@@ -1,7 +1,11 @@
 import "../css/Panel.css"
 
 import { invoke } from "@tauri-apps/api"
-import { getCurrent, PhysicalPosition } from "@tauri-apps/api/window"
+import {
+    getCurrent,
+    LogicalSize,
+    PhysicalPosition,
+} from "@tauri-apps/api/window"
 import { createSignal, For, Match, Switch } from "solid-js"
 
 import { CopyIcon, PinIcon } from "../icon"
@@ -22,7 +26,6 @@ const Panel = () => {
     const panel = getCurrent()
 
     let pinFlag = false
-    let moveFlag = true
 
     const [pin, Pin] = createSignal(false)
     const [copy, Copy] = createSignal(false)
@@ -41,12 +44,11 @@ const Panel = () => {
 
                 // 刷新 固定图标状态
                 // Refresh pin icon state
-                moveFlag = true
                 pinFlag = false
                 Pin(false)
             }
-
             Copy(false)
+            await panel.setSize(new LogicalSize(256, 100))
             await panel.show()
             // TODO 错误处理
             const resp = await invoke<Resp<TransVO>>("translate", {
@@ -56,12 +58,7 @@ const Panel = () => {
         }
     )
 
-    panel.listen("hide", async () => {
-        await hide()
-    })
-
     const hide = async () => {
-        moveFlag = true
         pinFlag = false
         Pin(false)
         Copy(false)
@@ -73,7 +70,7 @@ const Panel = () => {
         <div
             class="panel"
             onMouseLeave={async () => {
-                if (moveFlag) {
+                if (!pinFlag) {
                     await hide()
                 }
             }}
@@ -103,12 +100,10 @@ const Panel = () => {
                     data-tauri-drag-region
                     class="panel-control-item panel-control-pin-conainer"
                     onMouseUp={() => {
-                        moveFlag = !moveFlag
                         pinFlag = !pinFlag
                         Pin(pinFlag)
                     }}
                     onMouseEnter={() => {
-                        moveFlag = false
                         pinFlag = true
                         Pin(true)
                     }}
