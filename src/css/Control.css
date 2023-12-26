@@ -22,12 +22,12 @@
     padding: 10px;
 }
 
-.control-item.hover {
+.control-item:hover {
     color: #fff;
     background-color: #373737;
 }
 
-.control-item.control-item-close.hover {
+.control-item.control-item-close:hover {
     color: #fff;
     background-color: #cd1a2b;
 }
