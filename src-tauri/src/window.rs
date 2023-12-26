@@ -1,7 +1,7 @@
 use tauri::AppHandle;
 
-pub fn main(app: &AppHandle) {
-    tauri::WindowBuilder::new(app, "main", tauri::WindowUrl::App("/".into()))
+pub fn setting(app: &AppHandle) {
+    tauri::WindowBuilder::new(app, "setting", tauri::WindowUrl::App("/".into()))
         .title("Tran")
         .inner_size(320.0, 320.0)
         .fullscreen(false)

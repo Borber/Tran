@@ -10,10 +10,10 @@ pub fn new() -> SystemTray {
 ///
 /// Switch main window display state
 pub fn handler(app: &AppHandle, _: SystemTrayEvent) {
-    match app.get_window("main") {
+    match app.get_window("setting") {
         Some(window) => {
             window.close().expect("Failed to close main window");
         }
-        None => window::main(app),
+        None => window::setting(app),
     }
 }
