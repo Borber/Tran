@@ -9,7 +9,6 @@ pub fn main(app: &AppHandle) {
         .minimizable(false)
         .maximizable(false)
         .decorations(false)
-        .transparent(false)
         .always_on_top(true)
         .visible(false)
         .focused(true)
