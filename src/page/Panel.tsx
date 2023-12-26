@@ -42,13 +42,15 @@ const Panel = () => {
                     new PhysicalPosition(pos.payload.x, pos.payload.y)
                 )
 
+                // 移动位置之后需要保证窗口大小不变
+                await panel.setSize(new LogicalSize(256, 100))
+
                 // 刷新 固定图标状态
                 // Refresh pin icon state
                 pinFlag = false
                 Pin(false)
             }
             Copy(false)
-            await panel.setSize(new LogicalSize(256, 100))
             await panel.show()
             // TODO 错误处理
             const resp = await invoke<Resp<TransVO>>("translate", {
