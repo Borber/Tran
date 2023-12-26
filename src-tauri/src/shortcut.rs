@@ -26,6 +26,10 @@ pub fn show(panel: &Window) -> Result<()> {
         Mouse::Position { mut x, mut y } => {
             #[cfg(target_os = "macos")]
             {
+                let monitor = panel
+                    .current_monitor()
+                    .expect("Failed to get panel current monitor")
+                    .expect("Panel is none");
                 let scale_factor = monitor.scale_factor();
                 x = (x as f64 * scale_factor) as i32;
                 y = (y as f64 * scale_factor) as i32;
