@@ -3,6 +3,7 @@
 ## [0.1.10]
 
 -   去除 Tray 将 退出 功能合并到面板中 ![tran-exit](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/tran-exit.png)
+-   设置界面, 按钮 hover 效果
 
 ## [0.1.9]
 
