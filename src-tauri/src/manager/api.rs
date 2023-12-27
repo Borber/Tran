@@ -36,7 +36,10 @@ pub async fn translate(context: &str) -> Result<TransVO> {
         1 => send(&CLIENT, "https://translate.googleapis.com", &lang, &context).await,
         _ => {
             let proxy = reqwest::Proxy::all(&url)?;
-            let client = Client::builder().proxy(proxy).build().unwrap();
+            let client = Client::builder()
+                .proxy(proxy)
+                .build()
+                .expect("Failed to build reqwest client");
             send(&client, "https://translate.googleapis.com", &lang, &context).await
         }
     }

@@ -6,9 +6,9 @@ use tauri::{App, Manager};
 /// Get executable file path
 pub fn get_exe_dir() -> PathBuf {
     std::env::current_exe()
-        .unwrap()
+        .expect("Failed to get current executable path")
         .parent()
-        .unwrap()
+        .expect("Failed to get current executable parent directory")
         .to_path_buf()
 }
 

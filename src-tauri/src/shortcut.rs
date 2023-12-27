@@ -45,7 +45,9 @@ pub fn show(panel: &Window) -> Result<()> {
             if x < 0 {
                 x = 0;
             }
-            panel.emit("show", ShowVO { x, y, context }).unwrap();
+            panel
+                .emit("show", ShowVO { x, y, context })
+                .expect("Failed to emit show event");
         }
         Mouse::Error => println!("Error getting mouse position"),
     };

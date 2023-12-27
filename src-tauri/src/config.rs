@@ -36,9 +36,9 @@ pub fn load() -> Config {
     // 检测文件是否存在
     // Check if file exists
     let exists = path.try_exists();
-    if exists.is_ok() && exists.unwrap() {
-        let config = std::fs::read_to_string(path).unwrap();
-        serde_json::from_str(&config).unwrap()
+    if exists.is_ok() && exists.expect("Failed to check if file exists") {
+        let config = std::fs::read_to_string(path).expect("Failed to read config");
+        serde_json::from_str(&config).expect("Failed to parse config")
     } else {
         Config {
             mode: 0,
@@ -53,8 +53,8 @@ pub fn load() -> Config {
 fn save(config: &Config) -> Result<()> {
     let exe_dir = util::get_exe_dir();
     let path = exe_dir.join("config.json");
-    let config = serde_json::to_string_pretty(config).unwrap();
-    std::fs::write(path, config).unwrap();
+    let config = serde_json::to_string_pretty(config).expect("Failed to serialize config");
+    std::fs::write(path, config).expect("Failed to write config");
     Ok(())
 }
 
@@ -63,7 +63,7 @@ fn save(config: &Config) -> Result<()> {
 /// switch mode
 pub fn mode(mode: usize) {
     CONFIG.lock().mode = mode;
-    save(&CONFIG.lock()).unwrap();
+    save(&CONFIG.lock()).expect("Failed to save config after switch mode");
 }
 
 /// 设置代理地址
@@ -71,5 +71,5 @@ pub fn mode(mode: usize) {
 /// set proxy url
 pub fn set_proxy_url(url: String) {
     CONFIG.lock().url = url;
-    save(&CONFIG.lock()).unwrap();
+    save(&CONFIG.lock()).expect("Failed to save config after set proxy url");
 }

@@ -36,7 +36,7 @@ async fn get() -> Result<Mirror> {
 }
 
 pub fn one() -> String {
-    let mirrors = { MIRRORS.get().unwrap().urls.clone() };
+    let mirrors = { MIRRORS.get().expect("Failed to get mirrors").urls.clone() };
     if mirrors.is_empty() {
         "https://v2g.borber.top".to_string()
     } else {
