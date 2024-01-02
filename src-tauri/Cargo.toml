@@ -54,8 +54,6 @@ fastrand = "2"
 # For browser
 open = "5"
 
-rdev = "0.5"
-
 
 [features]
 custom-protocol = ["tauri/custom-protocol"]

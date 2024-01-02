@@ -4201,7 +4201,6 @@ dependencies = [
  "open 5.0.1",
  "parking_lot",
  "percent-encoding",
- "rdev",
  "reqwest",
  "selection",
  "serde",
