@@ -13,8 +13,8 @@ tauri-build = { version = "1.5", features = [] }
 
 [dependencies]
 tauri = { version = "1.5", features = [
-    "process-exit",
     "global-shortcut-all",
+    "process-exit",
     "system-tray",
     "window-all",
     "shell-open",
@@ -34,7 +34,7 @@ serde_json = "1"
 # For window
 window-shadows = "0.2"
 mouse_position = "0.1"
-selection = "1"
+selection = { git = "https://github.com/Borber/selection" }
 
 # For URL
 percent-encoding = "2"
@@ -53,6 +53,8 @@ fastrand = "2"
 
 # For browser
 open = "5"
+
+rdev = "0.5"
 
 
 [features]

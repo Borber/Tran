@@ -4,8 +4,8 @@ use arboard::Clipboard;
 /// 写入剪贴板
 ///
 /// Write to clipboard
-pub fn set(context: String) -> Result<()> {
+pub fn set(content: String) -> Result<()> {
     let mut clipboard = Clipboard::new()?;
-    clipboard.set_text(context)?;
+    clipboard.set_text(content)?;
     Ok(())
 }

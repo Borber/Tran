@@ -11,13 +11,12 @@ use selection::get_text;
 pub struct ShowVO {
     pub x: i32,
     pub y: i32,
-    pub context: String,
+    pub content: String,
 }
 
 pub fn show(panel: &Window) -> Result<()> {
-    let context = get_text();
-
-    if context.is_empty() {
+    let content = get_text();
+    if content.is_empty() {
         return Ok(());
     }
 
@@ -46,7 +45,7 @@ pub fn show(panel: &Window) -> Result<()> {
                 x = 0;
             }
             panel
-                .emit("show", ShowVO { x, y, context })
+                .emit("show", ShowVO { x, y, content })
                 .expect("Failed to emit show event");
         }
         Mouse::Error => println!("Error getting mouse position"),

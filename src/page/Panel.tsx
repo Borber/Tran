@@ -33,7 +33,7 @@ const Panel = () => {
 
     // 监听事件， 显示panel
     // Listen to events and display panel
-    panel.listen<{ x: number; y: number; context: string }>(
+    panel.listen<{ x: number; y: number; content: string }>(
         "show",
         async (pos) => {
             Result(undefined)
@@ -54,7 +54,7 @@ const Panel = () => {
             await panel.show()
             // TODO 错误处理
             const resp = await invoke<Resp<TransVO>>("translate", {
-                context: pos.payload.context,
+                content: pos.payload.content,
             })
             Result(resp.data)
         }
@@ -119,16 +119,16 @@ const Panel = () => {
                     class="panel-control-item"
                     classList={{ "panel-control-copy": copy() }}
                     onMouseEnter={() => {
-                        let context
+                        let content
                         if (result() == undefined) {
                             return
                         } else if (!result()?.word) {
-                            context = result()!.trans
+                            content = result()!.trans
                         } else {
-                            context = result()!.dicts[0].terms[0]
+                            content = result()!.dicts[0].terms[0]
                         }
                         invoke("copy", {
-                            context,
+                            content,
                         })
                         Copy(true)
                     }}

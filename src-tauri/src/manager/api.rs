@@ -22,32 +22,32 @@ pub struct Dict {
     pub terms: Vec<String>,
 }
 
-pub async fn translate(context: &str) -> Result<TransVO> {
+pub async fn translate(content: &str) -> Result<TransVO> {
     // 翻译目标语言
-    let lang = lang::lang(context);
+    let lang = lang::lang(content);
 
     // 转换为 url 编码
-    let context = utf8_percent_encode(context, NON_ALPHANUMERIC).to_string();
+    let content = utf8_percent_encode(content, NON_ALPHANUMERIC).to_string();
 
     let url = { CONFIG.lock().url.clone() };
     let mode = CONFIG.lock().mode;
     match mode {
-        0 => send(&CLIENT, mirror::one().as_str(), &lang, &context).await,
-        1 => send(&CLIENT, "https://translate.googleapis.com", &lang, &context).await,
+        0 => send(&CLIENT, mirror::one().as_str(), &lang, &content).await,
+        1 => send(&CLIENT, "https://translate.googleapis.com", &lang, &content).await,
         _ => {
             let proxy = reqwest::Proxy::all(&url)?;
             let client = Client::builder()
                 .proxy(proxy)
                 .build()
                 .expect("Failed to build reqwest client");
-            send(&client, "https://translate.googleapis.com", &lang, &context).await
+            send(&client, "https://translate.googleapis.com", &lang, &content).await
         }
     }
 }
 
-async fn send(client: &Client, host: &str, lang: &str, context: &str) -> Result<TransVO> {
+async fn send(client: &Client, host: &str, lang: &str, content: &str) -> Result<TransVO> {
     let resp = client
-        .get(format!("{}/translate_a/single?client=gtx&sl=auto&tl={}&dj=1&dt=t&dt=bd&dt=qc&dt=rm&dt=ex&dt=at&dt=ss&dt=rw&dt=ld&q=%22{}%22", host, lang, context))
+        .get(format!("{}/translate_a/single?client=gtx&sl=auto&tl={}&dj=1&dt=t&dt=bd&dt=qc&dt=rm&dt=ex&dt=at&dt=ss&dt=rw&dt=ld&q=%22{}%22", host, lang, content))
         .header("Accept", "application/json, text/plain, */*")
         .header("Accept-Encoding", "gzip")
         .header("Accept-Language", "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6")

@@ -14,17 +14,17 @@ const second_short = langs[1]
 const second_long = lang_long[lang_short.indexOf(second_short)]
 const second_long_lower = second_long.toLowerCase()
 
-let context = await Deno.readTextFile("src-tauri/Cargo.toml");
-context = context.replace("chinese", first_long_lower);
-context = context.replace("english", second_long_lower);
-await Deno.writeTextFile("src-tauri/Cargo.toml", context);
+let content = await Deno.readTextFile("src-tauri/Cargo.toml");
+content = content.replace("chinese", first_long_lower);
+content = content.replace("english", second_long_lower);
+await Deno.writeTextFile("src-tauri/Cargo.toml", content);
 
-context = await Deno.readTextFile("src-tauri/src/lang.rs");
-context = context.replace("zh", first_short);
-context = context.replace("en", second_short);
-context = context.replaceAll("Chinese", first_long);
-context = context.replaceAll("English", second_long);
-await Deno.writeTextFile("src-tauri/src/lang.rs", context);
+content = await Deno.readTextFile("src-tauri/src/lang.rs");
+content = content.replace("zh", first_short);
+content = content.replace("en", second_short);
+content = content.replaceAll("Chinese", first_long);
+content = content.replaceAll("English", second_long);
+await Deno.writeTextFile("src-tauri/src/lang.rs", content);
 
 console.log("End confirm language");
 

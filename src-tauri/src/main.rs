@@ -21,16 +21,16 @@ mod window;
 ///
 /// Translate text
 #[tauri::command]
-async fn translate(context: String) -> Resp<TransVO> {
-    api::translate(&context).await.into()
+async fn translate(content: String) -> Resp<TransVO> {
+    api::translate(&content).await.into()
 }
 
 /// 写入剪贴板
 ///
 /// Write to clipboard
 #[tauri::command]
-fn copy(context: String) -> Resp<()> {
-    clip::set(context).into()
+fn copy(content: String) -> Resp<()> {
+    clip::set(content).into()
 }
 
 /// 获取配置

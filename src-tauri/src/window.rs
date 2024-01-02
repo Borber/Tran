@@ -10,6 +10,7 @@ pub fn setting(app: &AppHandle) {
         .maximizable(false)
         .decorations(false)
         .always_on_top(true)
+        .skip_taskbar(true)
         .visible(false)
         .focused(true)
         .center()
