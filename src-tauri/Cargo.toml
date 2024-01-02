@@ -14,7 +14,6 @@ tauri-build = { version = "1.5", features = [] }
 [dependencies]
 tauri = { version = "1.5", features = [
     "process-exit",
-    "global-shortcut-all",
     "system-tray",
     "window-all",
     "shell-open",
@@ -53,6 +52,8 @@ fastrand = "2"
 
 # For browser
 open = "5"
+
+rdev = "0.5"
 
 
 [features]

@@ -22,9 +22,6 @@
       },
       "process": {
         "exit": true
-      },
-      "globalShortcut": {
-        "all": true
       }
     },
     "bundle": {
@@ -56,7 +53,7 @@
         "resizable": false,
         "minimizable": false,
         "decorations": false,
-        "transparent": false,
+        "transparent": true,
         "center": true,
         "visible": false,
         "alwaysOnTop": true,
