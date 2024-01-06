@@ -13,9 +13,9 @@ for (const dir of dirs) {
     ensureDir(`${bundle}/${dir}`).then(async () => {
         if (Deno.statSync(`${bundle}/${dir}`).isDirectory) {
             for await (const file of Deno.readDir(`${bundle}/${dir}`)) {
-                if (file.isFile && file.name.startsWith("tran")) {
+                if (file.isFile && file.name.startsWith("Tran")) {
                     let name = file.name
-                    name = name.replace("tran", "tran" + "_" + lang)
+                    name = name.replace("Tran", "Tran" + "_" + lang)
                     await Deno.copyFile(`${bundle}/${dir}/${file.name}`, `release/${name}`)
                     console.log(`release/${name}`)
                 }
@@ -27,8 +27,8 @@ for (const dir of dirs) {
 // 上传 便携产物
 for await (const file of Deno.readDir(root)) {
     let name = file.name
-    if (name == "tran.exe" || name == "tran") {
-        name = name.replace("tran", "tran" + "_" + lang + "_portable")
+    if (name == "Tran.exe" || name == "Tran") {
+        name = name.replace("Tran", "Tran" + "_" + lang + "_portable")
         await Deno.copyFile(`${root}/${file.name}`, `release/${name}`)
         console.log(`release/${name}`)
     }
