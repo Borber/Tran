@@ -11,15 +11,15 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@solidjs/router": "^0.10.6",
+    "@solidjs/router": "^0.10.8",
     "@tauri-apps/api": "^1.5.3",
-    "solid-js": "^1.8.8"
+    "solid-js": "^1.8.10"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.9",
-    "@types/node": "^20.10.6",
-    "@typescript-eslint/eslint-plugin": "^6.17.0",
-    "@typescript-eslint/parser": "^6.17.0",
+    "@types/node": "^20.10.8",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
     "eslint": "^8.56.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-solid": "^0.13.1",
