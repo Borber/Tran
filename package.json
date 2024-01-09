@@ -19,7 +19,7 @@
     "@tauri-apps/cli": "^1.5.9",
     "@types/node": "^20.10.7",
     "@typescript-eslint/eslint-plugin": "^6.18.0",
-    "@typescript-eslint/parser": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.1",
     "eslint": "^8.56.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-solid": "^0.13.1",
