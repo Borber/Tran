@@ -1850,7 +1850,7 @@ dependencies = [
  "iana-time-zone-haiku",
  "js-sys",
  "wasm-bindgen",
- "windows-core 0.52.0",
+ "windows-core 0.51.1",
 ]
 
 [[package]]
@@ -4155,7 +4155,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-single-instance"
 version = "0.0.0"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v1#0cdbde386fd7225810a5a57b039d551d08995b29"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v1#c5e8cd31ec86ba7ddcd524f1377a5bf09229fb9e"
 dependencies = [
  "log",
  "serde",
