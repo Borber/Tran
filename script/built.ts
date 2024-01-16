@@ -32,8 +32,9 @@ for (const dir of dirs) {
 // 上传 便携产物
 for await (const file of Deno.readDir(root)) {
     let name = file.name
-    if (name == "Tran.exe" || name == "Tran") {
+    if (name == "Tran.exe" || name == "Tran" || name == "tran") {
         name = name.replace("Tran", "Tran" + "_" + lang + "_portable_" + system)
+        name = name.replace("tran", "Tran" + "_" + lang + "_portable_" + system)
         await Deno.copyFile(`${root}/${file.name}`, `release/${name}`)
         console.log(`release/${name}`)
     }
