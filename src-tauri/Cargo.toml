@@ -1,6 +1,6 @@
 [package]
 name = "tran"
-version = "0.1.10"
+version = "0.1.11"
 description = "Tran translate the selected word."
 authors = ["Borber"]
 license = "MIT"

@@ -1,6 +1,6 @@
 {
   "name": "tran",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "简洁, 快速, 划词翻译",
   "scripts": {
     "start": "vite",
