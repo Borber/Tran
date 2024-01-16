@@ -85,6 +85,7 @@ jobs:
       - name: Built
         env:
           MATRIX_LANG: ${{ matrix.lang }}
+          MATRIX_PLATFORM: ${{ matrix.platform }}
         run: deno run -A script/built.ts
 
       - name: Upload release assets
