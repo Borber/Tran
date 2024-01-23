@@ -56,10 +56,6 @@ fastrand = "2"
 # For browser
 open = "5"
 
-[target.'cfg(unix)'.dependencies]
-openssl = { version = '0.10', features = ["vendored"] }
-
-
 [features]
 custom-protocol = ["tauri/custom-protocol"]
 
