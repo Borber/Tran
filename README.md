@@ -4,6 +4,7 @@
 
 简洁, 快速, 划词翻译
 
+[![EN_README](https://img.shields.io/badge/-EN_README-yellow?color=%2307baf3&style=for-the-badge&logoColor=white)](./README_EN.md)
 [![LICENSE](https://img.shields.io/github/license/borber/tran?color=%2398cbed&logo=rust&style=for-the-badge)](https://github.com/Borber/tran?tab=GPL-3.0-1-ov-file)
 [![Downloads](https://img.shields.io/github/downloads/Borber/tran/total.svg?style=for-the-badge&color=82E0AA&logo=github)](https://github.com/Borber/tran/releases)
 [![Rust](https://img.shields.io/badge/-Rust-orange?logo=rust&style=for-the-badge&logoColor=white)](https://www.rust-lang.org/)
@@ -16,6 +17,12 @@
 
 # 功能
 
+-   开箱即用
+-   永久免费使用
+-   谷歌翻译镜像
+
+**快捷键：** `Alt + X`
+
 |                                       划词翻译                                       |                                  划过固定                                  |
 | :----------------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
 | ![translate](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/translate.gif) | ![drag](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/drag.gif) |
@@ -23,8 +30,6 @@
 |                                   划过关闭                                   |                                  划过复制                                  |
 | :--------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
 | ![close](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/close.gif) | ![copy](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/copy.gif) |
-
-**快捷键：** `Alt + X`
 
 # 构建
 
@@ -97,4 +102,4 @@ vercel proxy google translate
 
 # 感谢
 
--   **[Pot](https://github.com/pot-app/pot-desktop)** 划词功能模块 [Selection](https://github.com/pot-app/Selection)
+-   **[Pot](https://github.com/pot-app/pot-desktop)** : [Selection](https://github.com/pot-app/Selection)
