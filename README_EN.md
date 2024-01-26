@@ -21,7 +21,7 @@ Simple, fast, translate selected words
 -   Free forever
 -   Google Translate Mirror
 
-**Shortcut key：** `Alt + X`
+**Shortcut key：** Double-click `CapsLock`
 
 |                                      Translate                                       |                                    Pin                                     |
 | :----------------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
