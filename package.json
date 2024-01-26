@@ -1,6 +1,6 @@
 {
   "name": "tran",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "简洁, 快速, 划词翻译",
   "scripts": {
     "start": "vite",
@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.9",
-    "@types/node": "^20.11.6",
+    "@types/node": "^20.11.7",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
     "eslint": "^8.56.0",
