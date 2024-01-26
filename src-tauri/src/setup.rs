@@ -1,6 +1,11 @@
-use std::error::Error;
+use std::{
+    error::Error,
+    sync::{atomic::AtomicUsize, Arc},
+    time::SystemTime,
+};
 
-use tauri::{App, GlobalShortcutManager, Manager};
+use rdev::{listen, EventType::KeyRelease, Key::CapsLock};
+use tauri::{App, Manager};
 
 use crate::{shortcut, util};
 
@@ -10,12 +15,31 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn Error>> {
     };
     let panel = app.get_window("panel").expect("Failed to get panel window");
 
-    // 全局快捷键
-    // Global shortcut
-    app.global_shortcut_manager()
-        .register("Alt + X", move || {
-            shortcut::show(&panel).expect("Shortcut key call failed")
+    let cap = Arc::new(AtomicUsize::new(0));
+
+    std::thread::spawn(move || {
+        listen(move |event| {
+            if let KeyRelease(CapsLock) = event.event_type {
+                let now = SystemTime::now();
+                let timestamp = now
+                    .duration_since(SystemTime::UNIX_EPOCH)
+                    .expect("Time went backwards");
+                let now = timestamp.as_millis() as usize;
+                let old = cap.load(std::sync::atomic::Ordering::Relaxed);
+                if now - old < 1000 {
+                    shortcut::show(&panel).expect("Shortcut key call failed")
+                }
+                cap.store(now, std::sync::atomic::Ordering::Relaxed)
+            }
         })
-        .expect("Failed to register global shortcut");
+    });
+
+    // 全局快捷键
+    // Global shortc    ut
+    // app.global_shortcut_manager()
+    //     .register("Alt + X", move || {
+    //         shortcut::show(&panel).expect("Shortcut key call failed")
+    //     })
+    //     .expect("Failed to register global shortcut");
     Ok(())
 }

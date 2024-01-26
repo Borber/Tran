@@ -22,9 +22,6 @@
       },
       "process": {
         "exit": true
-      },
-      "globalShortcut": {
-        "all": true
       }
     },
     "bundle": {

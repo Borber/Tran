@@ -13,7 +13,6 @@ tauri-build = { version = "1.5", features = [] }
 
 [dependencies]
 tauri = { version = "1.5", features = [
-    "global-shortcut-all",
     "process-exit",
     "system-tray",
     "window-all",
@@ -55,6 +54,8 @@ fastrand = "2"
 
 # For browser
 open = "5"
+
+rdev = { git = "https://github.com/fufesou/rdev" }
 
 [features]
 custom-protocol = ["tauri/custom-protocol"]
