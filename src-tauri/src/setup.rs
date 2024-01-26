@@ -1,6 +1,9 @@
 use std::{
     error::Error,
-    sync::{atomic::AtomicUsize, Arc},
+    sync::{
+        atomic::{AtomicU32, AtomicU64},
+        Arc,
+    },
     time::SystemTime,
 };
 
@@ -15,31 +18,30 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn Error>> {
     };
     let panel = app.get_window("panel").expect("Failed to get panel window");
 
-    let cap = Arc::new(AtomicUsize::new(0));
+    let sec = Arc::new(AtomicU64::new(0));
+    let milli = Arc::new(AtomicU32::new(0));
 
     std::thread::spawn(move || {
         listen(move |event| {
             if let KeyRelease(CapsLock) = event.event_type {
+                let old_sec = sec.load(std::sync::atomic::Ordering::SeqCst);
+                let old_milli = milli.load(std::sync::atomic::Ordering::SeqCst);
+
                 let now = SystemTime::now();
                 let timestamp = now
                     .duration_since(SystemTime::UNIX_EPOCH)
                     .expect("Time went backwards");
-                let now = timestamp.as_millis() as usize;
-                let old = cap.load(std::sync::atomic::Ordering::Relaxed);
-                if now - old < 1000 {
+                let now_sec = timestamp.as_secs();
+                let now_milli = timestamp.subsec_millis();
+
+                if now_sec - old_sec == 0 || now_sec - old_sec == 1 && now_milli < old_milli {
                     shortcut::show(&panel).expect("Shortcut key call failed")
                 }
-                cap.store(now, std::sync::atomic::Ordering::Relaxed)
+
+                sec.store(now_sec, std::sync::atomic::Ordering::SeqCst);
+                milli.store(now_milli, std::sync::atomic::Ordering::SeqCst);
             }
         })
     });
-
-    // 全局快捷键
-    // Global shortc    ut
-    // app.global_shortcut_manager()
-    //     .register("Alt + X", move || {
-    //         shortcut::show(&panel).expect("Shortcut key call failed")
-    //     })
-    //     .expect("Failed to register global shortcut");
     Ok(())
 }
