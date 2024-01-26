@@ -34,7 +34,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn Error>> {
                 let now_sec = timestamp.as_secs();
                 let now_milli = timestamp.subsec_millis();
 
-                if now_sec - old_sec == 0 || now_sec - old_sec == 1 && now_milli < old_milli {
+                if now_sec == old_sec || now_sec == old_sec + 1 && now_milli < old_milli {
                     shortcut::show(&panel).expect("Shortcut key call failed")
                 }
 
