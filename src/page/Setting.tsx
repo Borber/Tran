@@ -3,11 +3,11 @@ import "../css/Setting.css"
 import { invoke } from "@tauri-apps/api"
 import { exit } from "@tauri-apps/api/process"
 import { getCurrent } from "@tauri-apps/api/window"
-import { createSignal, Match, onMount, Switch } from "solid-js"
+import { createSignal, Match, onMount, Show, Switch } from "solid-js"
 
 import Control from "../components/Control"
 import TopBar from "../components/TopBar"
-import { GithubIcon } from "../icon"
+import { GithubIcon, UpdateIcon } from "../icon"
 import { Resp } from "../model/resp"
 
 interface ConfigProps {
@@ -18,11 +18,16 @@ interface ConfigProps {
 const Setting = () => {
     const [mode, Mode] = createSignal(0)
     const [url, Url] = createSignal("")
+    const [update, Update] = createSignal(false)
 
     onMount(async () => {
         const resp = await invoke<Resp<ConfigProps>>("get_config")
         Mode(resp.data.mode)
         Url(resp.data.url)
+
+        await invoke<Resp<boolean>>("check_update").then((resp) =>
+            Update(resp.data)
+        )
 
         // 100ms 后显示界面
         setTimeout(async () => {
@@ -105,13 +110,29 @@ const Setting = () => {
                 <div class="exit" onClick={async () => await exit(0)}>
                     退出
                 </div>
+
+                <Show when={update()}>
+                    <div
+                        class="update"
+                        onClick={async () => {
+                            await invoke("open", {
+                                url: "https://github.com/Borber/tran/releases/latest",
+                            })
+                        }}
+                    >
+                        <UpdateIcon size={30} />
+                    </div>
+                </Show>
+
                 <div
                     class="github"
                     onClick={async () => {
-                        await invoke("open_github")
+                        await invoke("open", {
+                            url: "https://github.com/Borber/tran",
+                        })
                     }}
                 >
-                    <GithubIcon size={30} />
+                    <GithubIcon size={30} />S
                 </div>
             </div>
         </div>

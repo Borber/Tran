@@ -61,10 +61,15 @@ fn set_proxy_url(url: String) {
 ///
 /// Open Github
 #[tauri::command]
-async fn open_github() -> Resp<()> {
-    open::that("https://github.com/Borber/tran")
-        .map_err(anyhow::Error::msg)
-        .into()
+async fn open(url: String) -> Resp<()> {
+    // open::that("https://github.com/Borber/tran")
+    open::that(url).map_err(anyhow::Error::msg).into()
+}
+
+/// Check for update
+#[tauri::command]
+async fn check_update() -> Resp<bool> {
+    manager::update::check().await.into()
 }
 
 #[tokio::main]
@@ -80,11 +85,12 @@ async fn main() {
         .setup(setup::handler)
         .invoke_handler(tauri::generate_handler![
             copy,
-            open_github,
+            open,
             translate,
             get_config,
             switch_mode,
-            set_proxy_url
+            set_proxy_url,
+            check_update,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
