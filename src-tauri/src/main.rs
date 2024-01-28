@@ -72,6 +72,12 @@ async fn check_update() -> Resp<bool> {
     manager::update::check().await.into()
 }
 
+/// 固定窗口标识
+#[tauri::command]
+async fn pin(state: bool) {
+    common::PIN.store(state, std::sync::atomic::Ordering::SeqCst);
+}
+
 #[tokio::main]
 async fn main() {
     // 全局初始化
@@ -91,6 +97,7 @@ async fn main() {
             switch_mode,
             set_proxy_url,
             check_update,
+            pin,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

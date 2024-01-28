@@ -1,7 +1,7 @@
 [package]
 name = "tran"
 version = "0.1.12"
-description = "Tran translate the selected word."
+description = "Tran translate the selected words"
 authors = ["Borber"]
 license = "MIT"
 repository = "https://github.com/Borber/tran"

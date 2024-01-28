@@ -41,18 +41,12 @@ const Panel = () => {
                 await panel.setPosition(
                     new PhysicalPosition(pos.payload.x, pos.payload.y)
                 )
-
                 // 移动位置之后需要保证窗口大小不变
                 await panel.setSize(new LogicalSize(256, 100))
-
-                // 刷新 固定图标状态
-                // Refresh pin icon state
-                pinFlag = false
-                Pin(false)
             }
             Copy(false)
             await panel.show()
-            // TODO 错误处理
+
             const resp = await invoke<Resp<TransVO>>("translate", {
                 content: pos.payload.content,
             })
@@ -104,10 +98,12 @@ const Panel = () => {
                     onMouseUp={() => {
                         pinFlag = !pinFlag
                         Pin(pinFlag)
+                        invoke("pin", { state: pinFlag })
                     }}
                     onMouseEnter={() => {
                         pinFlag = true
                         Pin(true)
+                        invoke("pin", { state: true })
                     }}
                 >
                     <div classList={{ "panel-control-pin": pin() }}>
