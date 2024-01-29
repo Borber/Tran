@@ -143,7 +143,7 @@ const Setting = () => {
                         })
                     }}
                 >
-                    <GithubIcon size={30} />S
+                    <GithubIcon size={30} />
                 </div>
             </div>
         </div>
