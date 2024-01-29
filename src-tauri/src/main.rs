@@ -66,12 +66,6 @@ async fn open(url: String) -> Resp<()> {
     open::that(url).map_err(anyhow::Error::msg).into()
 }
 
-/// Check for update
-#[tauri::command]
-async fn check_update() -> Resp<bool> {
-    manager::update::check().await.into()
-}
-
 /// 固定窗口标识
 #[tauri::command]
 async fn pin(state: bool) {
@@ -96,7 +90,6 @@ async fn main() {
             get_config,
             switch_mode,
             set_proxy_url,
-            check_update,
             pin,
         ])
         .run(tauri::generate_context!())

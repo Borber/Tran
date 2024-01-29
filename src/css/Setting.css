@@ -79,6 +79,12 @@
     background-color: #fd6e4f;
 }
 
+.version {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
 .github {
     position: absolute;
     bottom: 10px;

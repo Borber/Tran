@@ -1,6 +1,7 @@
 import "../css/Setting.css"
 
 import { invoke } from "@tauri-apps/api"
+import { getVersion } from "@tauri-apps/api/app"
 import { exit } from "@tauri-apps/api/process"
 import { getCurrent } from "@tauri-apps/api/window"
 import { createSignal, Match, onMount, Show, Switch } from "solid-js"
@@ -19,15 +20,23 @@ const Setting = () => {
     const [mode, Mode] = createSignal(0)
     const [url, Url] = createSignal("")
     const [update, Update] = createSignal(false)
+    const [version, Version] = createSignal("")
 
     onMount(async () => {
+        const appVersion = await getVersion()
+        Version(appVersion)
+
+        await fetch(
+            "https://fastly.jsdelivr.net/gh/Borber/tran@master/package.json"
+        )
+            .then((res) => res.json())
+            .then((json) => {
+                Update(json.version != appVersion)
+            })
+
         const resp = await invoke<Resp<ConfigProps>>("get_config")
         Mode(resp.data.mode)
         Url(resp.data.url)
-
-        await invoke<Resp<boolean>>("check_update").then((resp) =>
-            Update(resp.data)
-        )
 
         // 100ms 后显示界面
         setTimeout(async () => {
@@ -110,6 +119,8 @@ const Setting = () => {
                 <div class="exit" onClick={async () => await exit(0)}>
                     退出
                 </div>
+
+                <div class="version">{version()}</div>
 
                 <Show when={update()}>
                     <div
