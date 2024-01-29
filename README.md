@@ -31,6 +31,10 @@
 | :--------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
 | ![close](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/close.gif) | ![copy](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/copy.gif) |
 
+**PS**
+
+1. 固定翻译面板后, 划词自动翻译, 无需按快捷键
+
 # 构建
 
 <div align="center">

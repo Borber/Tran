@@ -31,6 +31,10 @@ Simple, fast, translate selected words
 | :--------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
 | ![close](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/close.gif) | ![copy](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/copy.gif) |
 
+**PS**
+
+1. After it is pined, the words will be automatically translated without pressing shortcut keys.
+
 # Construct
 
 <div align="center">
