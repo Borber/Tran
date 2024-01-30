@@ -44,10 +44,10 @@
 
 .setting-enjoy {
     height: 40px;
-    font-size: 40px;
+    font-size: 50px;
     font-weight: bold;
     color: #ffffff;
-    margin-top: 15px;
+    margin-top: 20px;
     line-height: 40px;
 }
 
@@ -65,18 +65,20 @@
 }
 
 .exit {
-    margin-top: 30px;
+    margin-top: 25px;
+    height: 40px;
+    line-height: 30px;
     font-size: 20px;
     font-weight: bold;
     color: #f2eeee;
     padding: 5px 30px;
     background-color: #de512a;
-    border-radius: 8px;
+    border-radius: 17.2px;
     cursor: pointer;
 }
 
 .exit:hover {
-    background-color: #fd6e4f;
+    background-color: #fa7d61;
 }
 
 .version {

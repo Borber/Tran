@@ -11,19 +11,6 @@
     "version": "0.1.13"
   },
   "tauri": {
-    "allowlist": {
-      "all": false,
-      "shell": {
-        "all": false,
-        "open": true
-      },
-      "window": {
-        "all": true
-      },
-      "process": {
-        "exit": true
-      }
-    },
     "bundle": {
       "active": true,
       "targets": "all",
@@ -36,12 +23,13 @@
         "icons/icon.ico"
       ]
     },
+    "trayIcon": {
+      "title": "Tran",
+      "iconPath": "icons/icon.ico",
+      "iconAsTemplate": true
+    },
     "security": {
       "csp": null
-    },
-    "systemTray": {
-      "iconPath": "icons/icon.png",
-      "iconAsTemplate": true
     },
     "windows": [
       {
@@ -54,6 +42,7 @@
         "minimizable": false,
         "decorations": false,
         "transparent": false,
+        "shadow": true,
         "center": true,
         "visible": false,
         "alwaysOnTop": true,

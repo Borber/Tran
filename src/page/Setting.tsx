@@ -1,9 +1,9 @@
 import "../css/Setting.css"
 
-import { invoke } from "@tauri-apps/api"
 import { getVersion } from "@tauri-apps/api/app"
-import { exit } from "@tauri-apps/api/process"
+import { invoke } from "@tauri-apps/api/core"
 import { getCurrent } from "@tauri-apps/api/window"
+import { exit } from "@tauri-apps/plugin-process"
 import { createSignal, Match, onMount, Show, Switch } from "solid-js"
 
 import Control from "../components/Control"
@@ -17,6 +17,7 @@ interface ConfigProps {
 }
 
 const Setting = () => {
+    const current = getCurrent()
     const [mode, Mode] = createSignal(0)
     const [url, Url] = createSignal("")
     const [update, Update] = createSignal(false)
@@ -40,13 +41,12 @@ const Setting = () => {
 
         // 100ms 后显示界面
         setTimeout(async () => {
-            const current = getCurrent()
             await current.show()
         }, 100)
     })
 
     return (
-        <div data-tauri-drag-region class="container compromise">
+        <div data-tauri-drag-region class="container">
             <Control maximize={false} minimize={false} />
             <TopBar />
             <div data-tauri-drag-region class="content">
@@ -116,7 +116,13 @@ const Setting = () => {
                         />
                     </Match>
                 </Switch>
-                <div class="exit" onClick={async () => await exit(0)}>
+                <div
+                    class="exit"
+                    onClick={async () => {
+                        await current.hide()
+                        await exit(0)
+                    }}
+                >
                     退出
                 </div>
 

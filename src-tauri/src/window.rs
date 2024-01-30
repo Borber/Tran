@@ -12,7 +12,7 @@ pub fn setting(app: &AppHandle) {
         .always_on_top(true)
         .skip_taskbar(true)
         .visible(false)
-        .focused(true)
+        .shadow(true)
         .center()
         .build()
         .expect("Failed to build main window");

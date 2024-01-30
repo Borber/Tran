@@ -6,11 +6,6 @@
     justify-content: center;
 }
 
-.control-compromise {
-    top: 1px;
-    right: 1px;
-}
-
 .control-item {
     display: flex;
     align-items: center;

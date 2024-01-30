@@ -1,6 +1,6 @@
 import "../css/Control.css"
 
-import { appWindow } from "@tauri-apps/api/window"
+import { getCurrent } from "@tauri-apps/api/window"
 import { Show } from "solid-js"
 
 import { Close, Maximize, Minimize } from "../icon"
@@ -19,15 +19,16 @@ const defaultProps: BarProps = {
 
 const Control = (props: BarProps) => {
     const setting = { ...defaultProps, ...props }
+    const current = getCurrent()
 
     return (
-        <div class="control control-compromise">
+        <div class="control">
             <Show when={setting.minimize}>
                 <div
                     class="control-item"
                     title="最小化"
                     onClick={() => {
-                        appWindow.minimize()
+                        current.minimize()
                     }}
                 >
                     <Minimize size={10} />
@@ -38,10 +39,10 @@ const Control = (props: BarProps) => {
                     class="control-item"
                     title="最大化"
                     onClick={async () => {
-                        if (await appWindow.isMaximized()) {
-                            appWindow.unmaximize()
+                        if (await current.isMaximized()) {
+                            current.unmaximize()
                         } else {
-                            appWindow.maximize()
+                            current.maximize()
                         }
                     }}
                 >
@@ -53,7 +54,8 @@ const Control = (props: BarProps) => {
                     class="control-item control-item-close"
                     title="关闭"
                     onClick={async () => {
-                        await appWindow.close()
+                        await current.hide()
+                        await current.close()
                     }}
                 >
                     <Close size={10} />

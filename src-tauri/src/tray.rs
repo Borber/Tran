@@ -1,15 +1,11 @@
-use tauri::{AppHandle, Manager, SystemTray, SystemTrayEvent};
+use tauri::{tray::TrayIconEvent, AppHandle, Manager};
 
 use crate::window;
 
-pub fn new() -> SystemTray {
-    SystemTray::new()
-}
-
-/// 切换 main窗口显示状态
+/// 切换设置窗口显示状态
 ///
-/// Switch main window display state
-pub fn handler(app: &AppHandle, _: SystemTrayEvent) {
+/// Switch setting window display state
+pub fn handler(app: &AppHandle, _: TrayIconEvent) {
     match app.get_window("setting") {
         Some(window) => {
             window.close().expect("Failed to close main window");

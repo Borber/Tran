@@ -79,9 +79,8 @@ async fn main() {
     common::init().await;
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_single_instance::init(|_, _, _| {}))
-        .system_tray(tray::new())
-        .on_system_tray_event(tray::handler)
         .setup(setup::handler)
         .invoke_handler(tauri::generate_handler![
             copy,

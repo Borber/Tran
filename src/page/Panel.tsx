@@ -1,6 +1,6 @@
 import "../css/Panel.css"
 
-import { invoke } from "@tauri-apps/api"
+import { invoke } from "@tauri-apps/api/core"
 import {
     getCurrent,
     LogicalSize,

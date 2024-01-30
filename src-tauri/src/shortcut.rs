@@ -2,6 +2,7 @@ use std::sync::atomic::Ordering;
 
 use anyhow::Result;
 use mouse_position::mouse_position::Mouse;
+use tauri::Manager;
 use tauri::Window;
 
 use selection::get_text;

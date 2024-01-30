@@ -15,12 +15,11 @@ use rdev::{
 };
 use tauri::{App, Manager};
 
-use crate::{common, shortcut, util};
+use crate::{common, shortcut, tray};
 
 pub fn handler(app: &mut App) -> Result<(), Box<dyn Error>> {
-    if cfg!(any(target_os = "windows", target_os = "macos")) {
-        util::decor(app, "panel");
-    };
+    app.on_tray_icon_event(tray::handler);
+
     let key_panel = app.get_window("panel").expect("Failed to get panel window");
     let mouse_panel = key_panel.clone();
 
