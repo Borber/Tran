@@ -8,6 +8,7 @@ use crate::window;
 pub fn handler(app: &AppHandle, _: TrayIconEvent) {
     match app.get_window("setting") {
         Some(window) => {
+            window.hide().expect("Failed to hide main window");
             window.close().expect("Failed to close main window");
         }
         None => window::setting(app),
