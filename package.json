@@ -13,13 +13,13 @@
   "dependencies": {
     "@solidjs/router": "^0.10.10",
     "@tauri-apps/api": "^2.0.0-alpha.13",
-    "@tauri-apps/plugin-shell": "^2.0.0-alpha.3",
     "@tauri-apps/plugin-process": "^2.0.0-alpha.5",
+    "@tauri-apps/plugin-shell": "^2.0.0-alpha.3",
     "solid-js": "^1.8.12"
   },
   "devDependencies": {
     "@tauri-apps/cli": "2.0.0-alpha.21",
-    "@types/node": "^20.11.10",
+    "@types/node": "^20.11.14",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
     "@typescript-eslint/parser": "^6.20.0",
     "eslint": "^8.56.0",
