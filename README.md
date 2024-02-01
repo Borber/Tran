@@ -13,6 +13,7 @@
 [![LICENSE](https://img.shields.io/github/license/borber/tran?color=%2398cbed&logo=rust&style=for-the-badge)](https://github.com/Borber/tran?tab=GPL-3.0-1-ov-file)
 [![Downloads](https://img.shields.io/github/downloads/Borber/tran/total.svg?style=for-the-badge&color=82E0AA&logo=github)](https://github.com/Borber/tran/releases)
 [![Cloudflare](https://img.shields.io/badge/-Cloudflare-yellow?style=for-the-badge&color=555555&logo=cloudflare)](https://www.cloudflare.com/)
+[![Telegram](https://img.shields.io/badge/-Telegram-yellow?style=for-the-badge&color=555555&logo=telegram)](https://t.me/borber_tran)
 
 > **Keep it simple，stupid.**
 
