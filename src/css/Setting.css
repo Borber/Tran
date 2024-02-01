@@ -3,6 +3,8 @@
     flex-direction: column;
     align-items: center;
     overflow: hidden;
+    font-family: 'Segoe UI', 'San Francisco', 'Roboto', 'Arial', sans-serif;
+
 }
 
 .setting-title {
