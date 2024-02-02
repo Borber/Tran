@@ -53,7 +53,7 @@ pub fn show(panel: &Window) -> Result<()> {
 
                 // 计算偏移量
                 // Calculate the offset
-                x -= 40;
+                x -= 60;
                 y += 20;
 
                 // 边界检查

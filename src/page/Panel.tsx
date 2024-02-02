@@ -71,46 +71,7 @@ const Panel = () => {
                 }
             }}
         >
-            <div class="result">
-                <Switch fallback={"翻译中..."}>
-                    <Match when={result() == undefined}>翻译中...</Match>
-                    <Match when={result()?.word}>
-                        <For each={result()!.dicts}>
-                            {(dict) => (
-                                <div class="dict">
-                                    <div class="dict-pos">{dict.pos}</div>
-                                    <For each={dict.terms}>
-                                        {(term) => (
-                                            <div class="dict-term">{term}</div>
-                                        )}
-                                    </For>
-                                </div>
-                            )}
-                        </For>
-                    </Match>
-                    <Match when={!result()?.word}>{result()?.trans}</Match>
-                </Switch>
-            </div>
             <div class="panel-control">
-                <div
-                    data-tauri-drag-region
-                    class="panel-control-item panel-control-pin-conainer"
-                    onMouseUp={() => {
-                        pinFlag = !pinFlag
-                        Pin(pinFlag)
-                        invoke("pin", { state: pinFlag })
-                    }}
-                    onMouseEnter={() => {
-                        pinFlag = true
-                        Pin(true)
-                        invoke("pin", { state: true })
-                    }}
-                >
-                    <div classList={{ "panel-control-pin": pin() }}>
-                        <PinIcon size={14} />
-                    </div>
-                </div>
-
                 <div
                     class="panel-control-item"
                     classList={{ "panel-control-copy": copy() }}
@@ -131,6 +92,46 @@ const Panel = () => {
                 >
                     <CopyIcon size={12} />
                 </div>
+
+                <div
+                    data-tauri-drag-region
+                    class="panel-control-item panel-control-pin-conainer"
+                    onMouseUp={() => {
+                        pinFlag = !pinFlag
+                        Pin(pinFlag)
+                        invoke("pin", { state: pinFlag })
+                    }}
+                    onMouseEnter={() => {
+                        pinFlag = true
+                        Pin(true)
+                        invoke("pin", { state: true })
+                    }}
+                >
+                    <div classList={{ "panel-control-pin": pin() }}>
+                        <PinIcon size={14} />
+                    </div>
+                </div>
+            </div>
+
+            <div class="result">
+                <Switch fallback={"翻译中..."}>
+                    <Match when={result() == undefined}>翻译中...</Match>
+                    <Match when={result()?.word}>
+                        <For each={result()!.dicts}>
+                            {(dict) => (
+                                <div class="dict">
+                                    <div class="dict-pos">{dict.pos}</div>
+                                    <For each={dict.terms}>
+                                        {(term) => (
+                                            <div class="dict-term">{term}</div>
+                                        )}
+                                    </For>
+                                </div>
+                            )}
+                        </For>
+                    </Match>
+                    <Match when={!result()?.word}>{result()?.trans}</Match>
+                </Switch>
             </div>
         </div>
     )
