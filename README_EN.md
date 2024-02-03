@@ -17,27 +17,19 @@ Simple, fast, translate selected words
 
 > **Keep it simple，stupid.**
 
-# Feature
+# Hello
+
+<div align="center">
+    <a href="https://github.com/Borber/tran" target="_blank" alt="Tran">
+        <img src="https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/tran-new-panel.png">
+    </a>
+</div>
 
 -   No configuration required
 -   Free forever
 -   Google Translate Mirror
 
-**Shortcut key：** Double-click `CapsLock`
-
-|                                      Translate                                       |                                    Pin                                     |
-| :----------------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
-| ![translate](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/translate.gif) | ![drag](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/drag.gif) |
-
-|                                    Close                                     |                                    Copy                                    |
-| :--------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
-| ![close](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/close.gif) | ![copy](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/copy.gif) |
-
-**PS**
-
-1. After it is pined, the words will be automatically translated without pressing shortcut keys.
-
-# Construct
+# How to choose?
 
 <div align="center">
 
@@ -57,7 +49,18 @@ Simple, fast, translate selected words
 
 Because for each additional language type, the built package will increase. If most languages ​​are supported, the program will increase to tens of meters, and this is for people who only need two languages ​​​​~~that’s me~~ not very friendly, and will also cause more time spent in identifying the language type. So `tran` will be built separately
 
+If you are a Chinese user but need to read in English, you can choose the installation package of `zh_en`. Similarly, choose the installation package that suits you.
+
 **If you have needs in other languages, please raise an `issue` and I will add it to the build**
+
+# How to use?
+
+-   single translation
+    -   After selecting the text, quickly press the `CapsLock` key **twice**. You can make `Tran` lose focus and close automatically by clicking elsewhere.
+-   Multiple translations
+    -   After a single translation, drag the translation panel to make `Tran` automatically fixed
+    -   After fixing the panel, select other texts in turn and `Tran` will be automatically translated without pressing shortcut keys.
+-   Double-click the translation result to save the translation to the clipboard
 
 # Contribution
 

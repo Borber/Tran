@@ -17,27 +17,19 @@
 
 > **Keep it simple，stupid.**
 
-# 功能
+# 你好
+
+<div align="center">
+    <a href="https://github.com/Borber/tran" target="_blank" alt="Tran">
+        <img src="https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/tran.png">
+    </a>
+</div>
 
 -   开箱即用
 -   永久免费使用
 -   谷歌翻译镜像
 
-**快捷键：** `双击 CapsLock`
-
-|                                       划词翻译                                       |                                  划过固定                                  |
-| :----------------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
-| ![translate](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/translate.gif) | ![drag](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/drag.gif) |
-
-|                                   划过关闭                                   |                                  划过复制                                  |
-| :--------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
-| ![close](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/close.gif) | ![copy](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/copy.gif) |
-
-**PS**
-
-1. 固定翻译面板后, 划词自动翻译, 无需按快捷键
-
-# 构建
+# 如何选择?
 
 <div align="center">
 
@@ -57,7 +49,19 @@
 
 因为每多一种语言类型, 构建的包就会增大, 若支持大多数语言，程序将增大到数十 m,而这对于仅需要两种语言(~~就是我~~)的人不太友好, 并且也会导致识别语言类型时花费更多的时间. 所以`tran`将分别构建
 
+如果你是中文用户, 但需要进行英语阅读, 则对应的选择 `zh_en` 的安装包即可. 同理选择适合你的安装包
+
 **如果你有其他语言的需要, 请提 `issue` 我将添加构建**
+
+# 使用
+
+-   单次翻译
+    -   选中文本之后, 快速按下快捷键 `CapsLock` 键 **两次**. 你可以通过点击其他地方使 `Tran` 失去焦点, 自动关闭
+-   多次翻译
+    -   在单次翻译之后, 拖动翻译面板, 使 `Tran` 自动固定
+    -   固定面板后, 依次选中其它文本 `Tran` 将自动翻译, 无需按快捷键
+-   复制译文
+    -   双击翻译结果即可将译文到剪切板
 
 # 贡献
 

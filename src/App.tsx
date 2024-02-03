@@ -1,13 +1,15 @@
 import "./App.css"
 
+import { getVersion } from "@tauri-apps/api/app"
 import { invoke } from "@tauri-apps/api/core"
 import {
     getCurrent,
     LogicalSize,
     PhysicalPosition,
 } from "@tauri-apps/api/window"
-import { createSignal, For, Match, onMount, Switch } from "solid-js"
+import { createSignal, For, Match, onMount, Show, Switch } from "solid-js"
 
+import { UpdateIcon } from "./icon"
 import { Resp } from "./model/resp"
 
 interface TransVO {
@@ -24,6 +26,7 @@ interface Dict {
 const App = () => {
     const panel = getCurrent()
     const [result, Result] = createSignal<TransVO>()
+    const [update, Update] = createSignal(false)
 
     // 监听事件， 显示panel
     // Listen to events and display panel
@@ -69,6 +72,15 @@ const App = () => {
                 Result(undefined)
             }
         })
+
+        const appVersion = await getVersion()
+        await fetch(
+            "https://fastly.jsdelivr.net/gh/Borber/tran@master/package.json"
+        )
+            .then((res) => res.json())
+            .then((json) => {
+                Update(json.version != appVersion)
+            })
     })
 
     return (
@@ -121,6 +133,18 @@ const App = () => {
                     <Match when={!result()?.word}>{result()?.trans}</Match>
                 </Switch>
             </div>
+            <Show when={update()}>
+                <div
+                    class="update"
+                    onClick={async () => {
+                        await invoke("open", {
+                            url: "https://github.com/Borber/tran/releases/latest",
+                        })
+                    }}
+                >
+                    <UpdateIcon size={20} />
+                </div>
+            </Show>
         </div>
     )
 }

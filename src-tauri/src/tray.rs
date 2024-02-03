@@ -1,6 +1,6 @@
 use anyhow::Result;
 use tauri::{
-    menu::{Menu, MenuEvent, MenuItem},
+    menu::{Menu, MenuEvent, MenuItem, Submenu},
     tray::TrayIconBuilder,
     AppHandle, Manager, Wry,
 };
@@ -22,14 +22,19 @@ pub fn init(app: &AppHandle) -> Result<()> {
 }
 
 fn menu(handle: &AppHandle) -> Result<Menu<Wry>, tauri::Error> {
+    let github = MenuItem::with_id(handle, "github", "GitHub", true, None::<&str>);
     let mirror = MenuItem::with_id(handle, "mirror", "Mirror", true, None::<&str>);
     let google = MenuItem::with_id(handle, "google", "Google", true, None::<&str>);
+    let mode = Submenu::with_items(handle, "Mode", true, &[&mirror, &google])?;
     let exit = MenuItem::with_id(handle, "exit", "Exit", true, None::<&str>);
-    Menu::with_items(handle, &[&mirror, &google, &exit])
+    Menu::with_items(handle, &[&github, &mode, &exit])
 }
 
 fn handler(app: &AppHandle, event: MenuEvent) {
     match event.id.as_ref() {
+        "github" => {
+            let _ = open::that("https://github.com/Borber/Tran");
+        }
         "mirror" => config::mode(0),
         "google" => config::mode(1),
         "exit" => {
