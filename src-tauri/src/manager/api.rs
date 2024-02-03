@@ -29,23 +29,15 @@ pub async fn translate(content: &str) -> Result<TransVO> {
     // 转换为 url 编码
     let content = utf8_percent_encode(content, NON_ALPHANUMERIC).to_string();
 
-    let url = { CONFIG.lock().url.clone() };
     let mode = CONFIG.lock().mode;
-    match mode {
-        0 => send(&CLIENT, mirror::one().as_str(), &lang, &content).await,
-        1 => send(&CLIENT, "https://translate.googleapis.com", &lang, &content).await,
-        _ => {
-            let proxy = reqwest::Proxy::all(&url)?;
-            let client = Client::builder()
-                .proxy(proxy)
-                .build()
-                .expect("Failed to build reqwest client");
-            send(&client, "https://translate.googleapis.com", &lang, &content).await
-        }
-    }
+    let host = match mode {
+        0 => mirror::one(),
+        _ => "https://translate.googleapis.com".to_string(),
+    };
+    send(&CLIENT, host, &lang, &content).await
 }
 
-async fn send(client: &Client, host: &str, lang: &str, content: &str) -> Result<TransVO> {
+async fn send(client: &Client, host: String, lang: &str, content: &str) -> Result<TransVO> {
     let resp = client
         .get(format!("{}/translate_a/single?client=gtx&sl=auto&tl={}&dj=1&dt=t&dt=bd&dt=qc&dt=rm&dt=ex&dt=at&dt=ss&dt=rw&dt=ld&q=%22{}%22", host, lang, content))
         .header("Accept", "application/json, text/plain, */*")

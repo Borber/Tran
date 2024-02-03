@@ -1,6 +1,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use config::{Config, CONFIG};
 use manager::api;
 use manager::api::TransVO;
 use resp::Resp;
@@ -33,14 +32,6 @@ fn copy(content: String) -> Resp<()> {
     clip::set(content).into()
 }
 
-/// 获取配置
-///
-/// Get config
-#[tauri::command]
-fn get_config() -> Resp<Config> {
-    Ok(CONFIG.lock().clone()).into()
-}
-
 /// 切换模式
 ///
 /// Switch mode
@@ -49,20 +40,11 @@ fn switch_mode(mode: usize) {
     config::mode(mode);
 }
 
-/// 设置代理地址
+/// 打开指定链接
 ///
-/// Set proxy url
-#[tauri::command]
-fn set_proxy_url(url: String) {
-    config::set_proxy_url(url);
-}
-
-/// 打开Github
-///
-/// Open Github
+/// Open the specified link
 #[tauri::command]
 async fn open(url: String) -> Resp<()> {
-    // open::that("https://github.com/Borber/tran")
     open::that(url).map_err(anyhow::Error::msg).into()
 }
 
@@ -86,9 +68,7 @@ async fn main() {
             copy,
             open,
             translate,
-            get_config,
             switch_mode,
-            set_proxy_url,
             pin,
         ])
         .run(tauri::generate_context!())

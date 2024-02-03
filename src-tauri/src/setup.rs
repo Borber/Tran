@@ -1,5 +1,4 @@
 use std::{
-    error::Error,
     sync::{
         atomic::{AtomicU64, Ordering},
         Arc,
@@ -9,20 +8,24 @@ use std::{
 
 use crossbeam_channel::bounded;
 use rdev::{
-    listen, Button,
+    Button,
     EventType::{ButtonPress, ButtonRelease, KeyRelease},
     Key::CapsLock,
 };
 use tauri::{App, Manager};
+use tokio::time::sleep;
 
-use crate::{common, shortcut, tray, window};
+use crate::{
+    common::{self, PIN},
+    shortcut, tray, window,
+};
 
-pub fn handler(app: &mut App) -> Result<(), Box<dyn Error>> {
-    app.on_tray_icon_event(tray::handler);
-
+pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     let handle = app.handle();
 
-    window::panel(handle);
+    window::panel(handle)?;
+
+    tray::init(handle)?;
 
     let key_panel = app.get_window("panel").expect("Failed to get panel window");
     let mouse_panel = key_panel.clone();
@@ -47,8 +50,9 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn Error>> {
         }
     });
 
+    // 监听快捷键 和 鼠标操作
     tokio::spawn(async {
-        listen(move |event| match event.event_type {
+        rdev::listen(move |event| match event.event_type {
             KeyRelease(CapsLock) => {
                 if !common::PIN.load(Ordering::SeqCst) {
                     let old = key_cap.load(std::sync::atomic::Ordering::SeqCst);
@@ -94,6 +98,29 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn Error>> {
             }
             _ => (),
         })
+    });
+
+    let panel = app.get_window("panel").expect("Failed to get panel window");
+
+    // 监听panel移动
+    tokio::spawn(async move {
+        panel.listen("tauri://move", move |_| {
+            if !PIN.load(Ordering::SeqCst) {
+                PIN.store(true, Ordering::SeqCst)
+            }
+        })
+    });
+
+    let panel = app.get_window("panel").expect("Failed to get panel window");
+    // 监听panel焦点
+    tokio::spawn(async move {
+        loop {
+            if !PIN.load(Ordering::SeqCst) && !panel.is_focused().unwrap_or(false) {
+                let _ = panel.hide();
+                PIN.store(false, Ordering::SeqCst)
+            }
+            sleep(std::time::Duration::from_millis(100)).await;
+        }
     });
 
     Ok(())

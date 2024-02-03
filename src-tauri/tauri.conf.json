@@ -23,11 +23,6 @@
         "icons/icon.ico"
       ]
     },
-    "trayIcon": {
-      "title": "Tran",
-      "iconPath": "icons/icon.ico",
-      "iconAsTemplate": true
-    },
     "security": {
       "csp": null
     }

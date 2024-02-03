@@ -17,6 +17,7 @@ pub struct ShowVO {
     pub x: i32,
     pub y: i32,
     pub content: String,
+    pub pin: bool,
 }
 
 pub fn show(panel: &Window) -> Result<()> {
@@ -33,6 +34,7 @@ pub fn show(panel: &Window) -> Result<()> {
                     x: 0,
                     y: 0,
                     content,
+                    pin: true,
                 },
             )
             .expect("Failed to emit show event");
@@ -62,7 +64,15 @@ pub fn show(panel: &Window) -> Result<()> {
                     x = 0;
                 }
                 panel
-                    .emit("show", ShowVO { x, y, content })
+                    .emit(
+                        "show",
+                        ShowVO {
+                            x,
+                            y,
+                            content,
+                            pin: false,
+                        },
+                    )
                     .expect("Failed to emit show event");
             }
             Mouse::Error => println!("Error getting mouse position"),

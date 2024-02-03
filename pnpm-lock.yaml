@@ -5,18 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@solidjs/router':
-    specifier: ^0.11.2
-    version: 0.11.2(solid-js@1.8.12)
   '@tauri-apps/api':
     specifier: ^2.0.0-alpha.13
     version: 2.0.0-alpha.14
-  '@tauri-apps/plugin-process':
-    specifier: ^2.0.0-alpha.5
-    version: 2.0.0-alpha.5
-  '@tauri-apps/plugin-shell':
-    specifier: ^2.0.0-alpha.3
-    version: 2.0.0-alpha.5
   solid-js:
     specifier: ^1.8.12
     version: 1.8.12
@@ -705,19 +696,6 @@ packages:
     dev: true
     optional: true
 
-  /@solidjs/router@0.11.2(solid-js@1.8.12):
-    resolution: {integrity: sha512-fhhq6IR2hDKPGrD8rHp7C3/Lqf2dkuVtdFIbu0yiJKNqV/od3LVUEew3kDuOOdheUK31Fapm6alMtjatSNR88g==}
-    peerDependencies:
-      solid-js: ^1.8.6
-    dependencies:
-      solid-js: 1.8.12
-    dev: false
-
-  /@tauri-apps/api@2.0.0-alpha.13:
-    resolution: {integrity: sha512-sGgCkFahF3OZAHoGN5Ozt9WK7wJlbVZSgWpPQKNag4nSOX1+Py6VDRTEWriiJHDiV+gg31CWHnNXRy6TFoZmdA==}
-    engines: {node: '>= 18', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
-    dev: false
-
   /@tauri-apps/api@2.0.0-alpha.14:
     resolution: {integrity: sha512-j9WxOIsNqt+0CypY8wu0dSsTJJQw3H37yIdyYsgrjvHgJ/yQB0AAbOFBo6+v3C/fZ35ydswgeFCBEoeK9NC7QA==}
     engines: {node: '>= 18', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
@@ -833,18 +811,6 @@ packages:
       '@tauri-apps/cli-win32-ia32-msvc': 2.0.0-alpha.21
       '@tauri-apps/cli-win32-x64-msvc': 2.0.0-alpha.21
     dev: true
-
-  /@tauri-apps/plugin-process@2.0.0-alpha.5:
-    resolution: {integrity: sha512-GRCs45MPTVR4XiY2BSlctmSfI2z237vUbVe3qSbJMpPbtBHDHusOi4YOaBVoWTv3w3m0EtV9qqIXRYEp5WevsA==}
-    dependencies:
-      '@tauri-apps/api': 2.0.0-alpha.13
-    dev: false
-
-  /@tauri-apps/plugin-shell@2.0.0-alpha.5:
-    resolution: {integrity: sha512-iAurwn0z16NLOLaiuk3ETLtoG6x/mgFZo75YYKYLiOg70PYMr4LpcjvNPoIPvokdqWWPa7C/6N3eE9jtcbQiLg==}
-    dependencies:
-      '@tauri-apps/api': 2.0.0-alpha.13
-    dev: false
 
   /@types/babel__core@7.20.5:
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}

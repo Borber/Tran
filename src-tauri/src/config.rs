@@ -12,14 +12,10 @@ use crate::util;
 /// Config
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Config {
-    /// 模式, 0: 镜像模式, 1: 直连模式, 2: 代理模式
+    /// 模式, 0: 镜像模式, 1: 直连模式
     ///
-    /// Mode, 0: mirror mode, 1: direct mode, 2: proxy mode
+    /// Mode, 0: mirror mode, 1: direct mode
     pub mode: usize,
-    /// 代理地址, 为空则直连
-    ///
-    /// Proxy address, empty means direct
-    pub url: String,
 }
 
 /// 全局配置
@@ -40,10 +36,7 @@ pub fn load() -> Config {
         let config = std::fs::read_to_string(path).expect("Failed to read config");
         serde_json::from_str(&config).expect("Failed to parse config")
     } else {
-        Config {
-            mode: 0,
-            url: "".to_string(),
-        }
+        Config { mode: 0 }
     }
 }
 
@@ -64,12 +57,4 @@ fn save(config: &Config) -> Result<()> {
 pub fn mode(mode: usize) {
     CONFIG.lock().mode = mode;
     save(&CONFIG.lock()).expect("Failed to save config after switch mode");
-}
-
-/// 设置代理地址
-///
-/// set proxy url
-pub fn set_proxy_url(url: String) {
-    CONFIG.lock().url = url;
-    save(&CONFIG.lock()).expect("Failed to save config after set proxy url");
 }
