@@ -100,3 +100,9 @@ jobs:
           files: release/*
           draft: true
           prerelease: false
+
+  fresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fresh jsdelivr cdn
+        run: curl https://purge.jsdelivr.net/gh/Borber/tran/package.json
