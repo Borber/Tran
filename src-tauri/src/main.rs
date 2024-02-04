@@ -3,9 +3,12 @@
 use manager::api;
 use manager::api::TransVO;
 use resp::Resp;
-use tauri::utils::acl::{
-    resolved::{CommandKey, ResolvedCommand},
-    ExecutionContext,
+use tauri::{
+    utils::acl::{
+        resolved::{CommandKey, ResolvedCommand},
+        ExecutionContext,
+    },
+    AppHandle,
 };
 
 mod clip;
@@ -55,8 +58,14 @@ async fn open(url: String) -> Resp<()> {
 /// 固定窗口标识
 #[tauri::command]
 async fn pin(state: bool) {
-    println!("pin: {}", state);
     common::PIN.store(state, std::sync::atomic::Ordering::SeqCst);
+}
+
+/// 检测更新
+#[tauri::command]
+async fn update(app: AppHandle) -> Resp<bool> {
+    let old = app.package_info().version.to_string();
+    manager::check::update(&old).await.into()
 }
 
 #[tokio::main]
@@ -78,7 +87,6 @@ async fn main() {
         "plugin:window|internal_on_mousemove",
         "plugin:window|internal_on_mousedown",
         "plugin:window|start_dragging",
-        "plugin:window|version",
     ] {
         context.resolved_acl().allowed_commands.insert(
             CommandKey {
@@ -102,6 +110,7 @@ async fn main() {
             translate,
             switch_mode,
             pin,
+            update,
         ])
         .run(context)
         .expect("error while running tauri application");

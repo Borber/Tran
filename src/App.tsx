@@ -1,6 +1,5 @@
 import "./App.css"
 
-import { getVersion } from "@tauri-apps/api/app"
 import { invoke } from "@tauri-apps/api/core"
 import {
     getCurrent,
@@ -46,12 +45,9 @@ const App = () => {
             }
         })
 
-        const appVersion = await getVersion()
-        await fetch("https://fastly.jsdelivr.net/gh/Borber/tran/package.json")
-            .then((res) => res.json())
-            .then((json) => {
-                Update(json.version != appVersion)
-            })
+        await invoke<Resp<boolean>>("update").then(async (pos) => {
+            Update(pos.data)
+        })
 
         // 监听事件， 显示panel
         // Listen to events and display panel
@@ -81,10 +77,11 @@ const App = () => {
                 })
             }
 
-            const resp = await invoke<Resp<TransVO>>("translate", {
+            await invoke<Resp<TransVO>>("translate", {
                 content: pos.payload.content,
+            }).then((resp) => {
+                Result(resp.data)
             })
-            Result(resp.data)
         })
     })
 
