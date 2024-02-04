@@ -1,8 +1,7 @@
-use anyhow::Result;
 use tauri::AppHandle;
 
-pub fn panel(app: &AppHandle) -> Result<()> {
-    tauri::WindowBuilder::new(app, "panel", tauri::WindowUrl::App("/panel".into()))
+pub fn panel(app: &AppHandle) {
+    tauri::WebviewWindowBuilder::new(app, "panel", tauri::WebviewUrl::App("/".into()))
         .title("Tran")
         .inner_size(256.0, 100.0)
         .fullscreen(false)
@@ -15,6 +14,6 @@ pub fn panel(app: &AppHandle) -> Result<()> {
         .visible(false)
         .shadow(true)
         .center()
-        .build()?;
-    Ok(())
+        .build()
+        .expect("Failed to create panel window");
 }

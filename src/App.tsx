@@ -28,33 +28,6 @@ const App = () => {
     const [result, Result] = createSignal<TransVO>()
     const [update, Update] = createSignal(false)
 
-    // 监听事件， 显示panel
-    // Listen to events and display panel
-    panel.listen<{ x: number; y: number; content: string; pin: boolean }>(
-        "show",
-        async (pos) => {
-            Result(undefined)
-            if (!pos.payload.pin) {
-                await panel.setPosition(
-                    new PhysicalPosition(pos.payload.x, pos.payload.y)
-                )
-                await invoke("pin", {
-                    state: false,
-                })
-            }
-            // 移动位置之后需要保证窗口大小不变
-            await panel.setSize(new LogicalSize(256, 100))
-
-            await panel.show()
-            await panel.setFocus()
-
-            const resp = await invoke<Resp<TransVO>>("translate", {
-                content: pos.payload.content,
-            })
-            Result(resp.data)
-        }
-    )
-
     onMount(async () => {
         // 生产环境, 全局取消右键菜单;
         if (!import.meta.env.DEV) {
@@ -74,13 +47,44 @@ const App = () => {
         })
 
         const appVersion = await getVersion()
-        await fetch(
-            "https://fastly.jsdelivr.net/gh/Borber/tran@master/package.json"
-        )
+        await fetch("https://fastly.jsdelivr.net/gh/Borber/tran/package.json")
             .then((res) => res.json())
             .then((json) => {
                 Update(json.version != appVersion)
             })
+
+        // 监听事件， 显示panel
+        // Listen to events and display panel
+        await panel.listen<{
+            x: number
+            y: number
+            content: string
+            pin: boolean
+        }>("show", async (pos) => {
+            Result(undefined)
+            if (!pos.payload.pin) {
+                await panel.setPosition(
+                    new PhysicalPosition(pos.payload.x, pos.payload.y)
+                )
+            }
+            // 移动位置之后需要保证窗口大小不变
+            await panel.setSize(new LogicalSize(256, 100))
+
+            await panel.show()
+
+            const resp = await invoke<Resp<TransVO>>("translate", {
+                content: pos.payload.content,
+            })
+            Result(resp.data)
+            if (!pos.payload.pin) {
+                // pin when shortcut
+                // 在快捷键调用时, 接替 pin 达到不关闭的目的
+                await panel.setFocus()
+                await invoke("pin", {
+                    state: false,
+                })
+            }
+        })
     })
 
     return (

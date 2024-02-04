@@ -1,13 +1,9 @@
-use std::sync::atomic::Ordering;
-
 use anyhow::Result;
 use mouse_position::mouse_position::Mouse;
 use tauri::Manager;
-use tauri::Window;
+use tauri::WebviewWindow;
 
 use selection::get_text;
-
-use crate::common;
 
 /// 鼠标坐标与选中内容
 ///
@@ -20,13 +16,13 @@ pub struct ShowVO {
     pub pin: bool,
 }
 
-pub fn show(panel: &Window) -> Result<()> {
+pub fn show(panel: &WebviewWindow, pin: bool) -> Result<()> {
     let content = get_text();
     if content.is_empty() {
         return Ok(());
     }
 
-    if common::PIN.load(Ordering::SeqCst) {
+    if pin {
         panel
             .emit(
                 "show",
@@ -34,7 +30,7 @@ pub fn show(panel: &Window) -> Result<()> {
                     x: 0,
                     y: 0,
                     content,
-                    pin: true,
+                    pin,
                 },
             )
             .expect("Failed to emit show event");
@@ -64,15 +60,7 @@ pub fn show(panel: &Window) -> Result<()> {
                     x = 0;
                 }
                 panel
-                    .emit(
-                        "show",
-                        ShowVO {
-                            x,
-                            y,
-                            content,
-                            pin: false,
-                        },
-                    )
+                    .emit("show", ShowVO { x, y, content, pin })
                     .expect("Failed to emit show event");
             }
             Mouse::Error => println!("Error getting mouse position"),

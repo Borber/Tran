@@ -1,6 +1,6 @@
 [package]
 name = "tran"
-version = "0.2.0"
+version = "0.2.1"
 description = "Tran translate the selected words"
 authors = ["Borber"]
 license = "MIT"
@@ -9,12 +9,12 @@ edition = "2021"
 
 
 [build-dependencies]
-tauri-build = { version = "2.0.0-alpha.14", features = [] }
+tauri-build = { version = "2.0.0-beta.0", features = [] }
 
 [dependencies]
-tauri = { version = "2.0.0-alpha.21", features = ["tray-icon"] }
-tauri-plugin-process = "2.0.0-alpha.6"
-tauri-plugin-single-instance = "2.0.0-alpha.6"
+tauri = { version = "2.0.0-beta.1", features = ["tray-icon"] }
+tauri-plugin-process = "2.0.0-beta.0"
+tauri-plugin-single-instance = "2.0.0-beta.0"
 
 # For base
 once_cell = "1"

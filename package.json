@@ -1,6 +1,6 @@
 {
   "name": "tran",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "简洁, 快速, 划词翻译",
   "scripts": {
     "start": "vite",
@@ -11,11 +11,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@tauri-apps/api": "^2.0.0-alpha.13",
+    "@tauri-apps/api": "^2.0.0-beta.0",
     "solid-js": "^1.8.12"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "2.0.0-alpha.21",
+    "@tauri-apps/cli": "^2.0.0-beta.0",
     "@types/node": "^20.11.16",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
     "@typescript-eslint/parser": "^6.20.0",

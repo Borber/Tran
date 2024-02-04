@@ -23,11 +23,13 @@ use crate::{
 pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     let handle = app.handle();
 
-    window::panel(handle)?;
+    window::panel(handle);
 
     tray::init(handle)?;
 
-    let key_panel = app.get_window("panel").expect("Failed to get panel window");
+    let key_panel = app
+        .get_webview_window("panel")
+        .expect("Failed to get panel window");
     let mouse_panel = key_panel.clone();
 
     let key_cap = Arc::new(AtomicU64::new(0));
@@ -39,14 +41,17 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     // 监听快捷键
     tokio::spawn(async move {
         while let Ok(()) = key_r.recv() {
-            shortcut::show(&key_panel).expect("Shortcut key call failed")
+            // pin when shortcut
+            // 在快捷键调用时, 应该暂时保证窗口不被关闭
+            common::PIN.store(true, Ordering::SeqCst);
+            shortcut::show(&key_panel, false).expect("Shortcut key call failed")
         }
     });
 
     // 监听划词
     tokio::spawn(async move {
         while let Ok(()) = mouse_r.recv() {
-            shortcut::show(&mouse_panel).expect("Shortcut key call failed")
+            shortcut::show(&mouse_panel, true).expect("Shortcut key call failed")
         }
     });
 
@@ -100,7 +105,9 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
         })
     });
 
-    let panel = app.get_window("panel").expect("Failed to get panel window");
+    let panel = app
+        .get_webview_window("panel")
+        .expect("Failed to get panel window");
 
     // 监听panel移动
     tokio::spawn(async move {
@@ -111,7 +118,9 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
         })
     });
 
-    let panel = app.get_window("panel").expect("Failed to get panel window");
+    let panel = app
+        .get_webview_window("panel")
+        .expect("Failed to get panel window");
     // 监听panel焦点
     tokio::spawn(async move {
         loop {

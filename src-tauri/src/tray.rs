@@ -21,13 +21,19 @@ pub fn init(app: &AppHandle) -> Result<()> {
     Ok(())
 }
 
-fn menu(handle: &AppHandle) -> Result<Menu<Wry>, tauri::Error> {
-    let github = MenuItem::with_id(handle, "github", "GitHub", true, None::<&str>);
-    let mirror = MenuItem::with_id(handle, "mirror", "Mirror", true, None::<&str>);
-    let google = MenuItem::with_id(handle, "google", "Google", true, None::<&str>);
-    let mode = Submenu::with_items(handle, "Mode", true, &[&mirror, &google])?;
-    let exit = MenuItem::with_id(handle, "exit", "Exit", true, None::<&str>);
+fn menu(handle: &AppHandle) -> Result<Menu<Wry>> {
+    let github = MenuItem::with_id(handle, "github", "GitHub", true, None::<&str>)
+        .expect("Failed to create menu item github");
+    let mirror = MenuItem::with_id(handle, "mirror", "Mirror", true, None::<&str>)
+        .expect("Failed to create menu item mirror");
+    let google = MenuItem::with_id(handle, "google", "Google", true, None::<&str>)
+        .expect("Failed to create menu item google");
+    let mode = Submenu::with_items(handle, "Mode", true, &[&mirror, &google])
+        .expect("Failed to create submenu item google.");
+    let exit = MenuItem::with_id(handle, "exit", "Exit", true, None::<&str>)
+        .expect("Failed to create menu item exit");
     Menu::with_items(handle, &[&github, &mode, &exit])
+        .map_err(|_| anyhow::anyhow!("Failed to create menu"))
 }
 
 fn handler(app: &AppHandle, event: MenuEvent) {
@@ -38,7 +44,7 @@ fn handler(app: &AppHandle, event: MenuEvent) {
         "mirror" => config::mode(0),
         "google" => config::mode(1),
         "exit" => {
-            let panel = app.get_window("panel").unwrap();
+            let panel = app.get_webview_window("panel").unwrap();
             let _ = panel.hide();
             app.exit(0)
         }

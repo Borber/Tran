@@ -3,6 +3,10 @@
 use manager::api;
 use manager::api::TransVO;
 use resp::Resp;
+use tauri::utils::acl::{
+    resolved::{CommandKey, ResolvedCommand},
+    ExecutionContext,
+};
 
 mod clip;
 mod common;
@@ -51,6 +55,7 @@ async fn open(url: String) -> Resp<()> {
 /// 固定窗口标识
 #[tauri::command]
 async fn pin(state: bool) {
+    println!("pin: {}", state);
     common::PIN.store(state, std::sync::atomic::Ordering::SeqCst);
 }
 
@@ -59,6 +64,33 @@ async fn main() {
     // 全局初始化
     // Global initialization
     common::init().await;
+
+    let mut context = tauri::generate_context!("tauri.conf.json");
+
+    for cmd in [
+        "plugin:app|version",
+        "plugin:event|listen",
+        "plugin:window|show",
+        "plugin:window|hide",
+        "plugin:window|set_size",
+        "plugin:window|set_focus",
+        "plugin:window|set_position",
+        "plugin:window|internal_on_mousemove",
+        "plugin:window|internal_on_mousedown",
+        "plugin:window|start_dragging",
+        "plugin:window|version",
+    ] {
+        context.resolved_acl().allowed_commands.insert(
+            CommandKey {
+                name: cmd.into(),
+                context: ExecutionContext::Local,
+            },
+            ResolvedCommand {
+                windows: vec!["*".parse().unwrap()],
+                ..Default::default()
+            },
+        );
+    }
 
     tauri::Builder::default()
         .plugin(tauri_plugin_process::init())
@@ -71,6 +103,6 @@ async fn main() {
             switch_mode,
             pin,
         ])
-        .run(tauri::generate_context!())
+        .run(context)
         .expect("error while running tauri application");
 }
