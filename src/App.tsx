@@ -72,10 +72,6 @@ const App = () => {
 
             await panel.show()
 
-            const resp = await invoke<Resp<TransVO>>("translate", {
-                content: pos.payload.content,
-            })
-            Result(resp.data)
             if (!pos.payload.pin) {
                 // pin when shortcut
                 // 在快捷键调用时, 接替 pin 达到不关闭的目的
@@ -84,6 +80,11 @@ const App = () => {
                     state: false,
                 })
             }
+
+            const resp = await invoke<Resp<TransVO>>("translate", {
+                content: pos.payload.content,
+            })
+            Result(resp.data)
         })
     })
 
