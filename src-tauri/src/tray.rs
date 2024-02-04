@@ -7,9 +7,9 @@ use tauri::{
 
 use crate::config;
 
-/// 切换设置窗口显示状态
+/// 初始化托盘菜单
 ///
-/// Switch setting window display state
+/// Initialize tray menu
 pub fn init(app: &AppHandle) -> Result<()> {
     let menu = menu(app)?;
     let _ = TrayIconBuilder::with_id("menu")
@@ -29,7 +29,7 @@ fn menu(handle: &AppHandle) -> Result<Menu<Wry>> {
     let google = MenuItem::with_id(handle, "google", "Google", true, None::<&str>)
         .expect("Failed to create menu item google");
     let mode = Submenu::with_items(handle, "Mode", true, &[&mirror, &google])
-        .expect("Failed to create submenu item google.");
+        .expect("Failed to create submenu item mod.");
     let exit = MenuItem::with_id(handle, "exit", "Exit", true, None::<&str>)
         .expect("Failed to create menu item exit");
     Menu::with_items(handle, &[&github, &mode, &exit])
