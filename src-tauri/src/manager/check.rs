@@ -5,7 +5,7 @@ use crate::common::CLIENT;
 
 pub async fn update(old: &str) -> Result<bool> {
     let resp = CLIENT
-        .get("https://fastly.jsdelivr.net/gh/Borber/tran/package.json")
+        .get("https://cdn.jsdelivr.net/gh/Borber/tran/package.json")
         .send()
         .await?
         .json::<Value>()
