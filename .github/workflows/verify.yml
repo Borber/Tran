@@ -1,15 +1,12 @@
-name: "Release"
-
-permissions:
-  contents: write
-
+name: "Verify"
 on:
   push:
-    tags:
-      - v.*
+    branches: ["master"]
 
 jobs:
   changelog:
+    strategy:
+      fail-fast: true
     runs-on: ubuntu-latest
     outputs:
       changes: ${{ steps.changelog_reader.outputs.changes }}
@@ -30,12 +27,9 @@ jobs:
           version: ${{ steps.get_version.outputs.VERSION }}
 
   windows:
-    needs: changelog
     strategy:
-      fail-fast: false
-      matrix:
-        lang: [zh_en, zh_ja, ja_zh]
-
+      fail-fast: true
+    needs: changelog
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -64,43 +58,15 @@ jobs:
         with:
           deno-version: canary
 
-      - name: Confirm language
-        env:
-          MATRIX_LANG: ${{ matrix.lang }}
-        run: deno run -A  script/lang.ts
-
       - name: Build
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Built
-        env:
-          MATRIX_LANG: ${{ matrix.lang }}
-          TRAN_VERSION: ${{ needs.changelog.outputs.version }}
-          TRAN_PLATFORM: "windows"
-        run: deno run -A script/built-windows.ts
-
-      - name: Upload release assets
-        id: action_gh_release
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          name: Tran ${{ needs.changelog.outputs.version }}
-          body: |
-            ${{ needs.changelog.outputs.changes }}
-          files: release/*
-          draft: true
-          prerelease: false
-
   linux:
-    needs: changelog
     strategy:
-      fail-fast: false
-      matrix:
-        lang: [zh_en, zh_ja, ja_zh]
-
+      fail-fast: true
+    needs: changelog
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -131,42 +97,16 @@ jobs:
         with:
           deno-version: canary
 
-      - name: Confirm language
-        env:
-          MATRIX_LANG: ${{ matrix.lang }}
-        run: deno run -A  script/lang.ts
-
       - name: Build
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Built
-        env:
-          MATRIX_LANG: ${{ matrix.lang }}
-          TRAN_VERSION: ${{ needs.changelog.outputs.version }}
-          TRAN_PLATFORM: "linux"
-        run: deno run -A script/built-linux.ts
-
-      - name: Upload release assets
-        id: action_gh_release
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          name: Tran ${{ needs.changelog.outputs.version }}
-          body: |
-            ${{ needs.changelog.outputs.changes }}
-          files: release/*
-          draft: true
-          prerelease: false
-
   macos:
     needs: changelog
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
-        lang: [zh_en, zh_ja, ja_zh]
         arch: [aarch64, x86_64]
 
     runs-on: macos-latest
@@ -199,41 +139,9 @@ jobs:
         with:
           deno-version: canary
 
-      - name: Confirm language
-        env:
-          MATRIX_LANG: ${{ matrix.lang }}
-        run: deno run -A  script/lang.ts
-
       - name: Build
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           args: --target ${{ matrix.arch }}-apple-darwin"
-
-      - name: Built
-        env:
-          MATRIX_LANG: ${{ matrix.lang }}
-          MATRIX_ARCH: ${{ matrix.arch }}
-          TRAN_VERSION: ${{ needs.changelog.outputs.version }}
-          TRAN_PLATFORM: "macos"
-        run: deno run -A script/built-macos.ts
-
-      - name: Upload release assets
-        id: action_gh_release
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          name: Tran ${{ needs.changelog.outputs.version }}
-          body: |
-            ${{ needs.changelog.outputs.changes }}
-          files: release/*
-          draft: true
-          prerelease: false
-
-  fresh:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Fresh jsdelivr cdn
-        run: curl https://purge.jsdelivr.net/gh/Borber/tran/package.json

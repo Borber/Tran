@@ -1,12 +1,12 @@
 import { ensureDir } from "https://deno.land/std@0.207.0/fs/mod.ts";
 
-const dirs = ["msi", "nsis", "deb", "appimage", "dmg", "macos",]
+const dirs = ["msi", "nsis", "deb", "rpm", "appimage", "dmg", "macos"]
 
-let system = Deno.env.get("MATRIX_PLATFORM")
-system = system?.split("-")[0]
-
+const system = Deno.env.get("TRAN_PLATFORM")
 const lang = Deno.env.get("MATRIX_LANG")
-const root = "src-tauri/target/release"
+const target = Deno.env.get("MATRIX_TARGET") ?? ""
+
+const root = "src-tauri/target" + target + "/release"
 const bundle = root + "/bundle"
 
 await Deno.mkdir("release")
@@ -16,7 +16,8 @@ for (const dir of dirs) {
     ensureDir(`${bundle}/${dir}`).then(async () => {
         if (Deno.statSync(`${bundle}/${dir}`).isDirectory) {
             for await (const file of Deno.readDir(`${bundle}/${dir}`)) {
-                if (file.isFile && (file.name.startsWith("Tran") || file.name.startsWith("tran"))) {
+                console.log(`${bundle}/${dir}/${file.name}`)
+                if (file.isFile && (file.name == "Tran" || file.name.startsWith("Tran") || file.name.startsWith("tran"))) {
                     let name = file.name
                     console.log("old:" + `${bundle}/${dir}/${file.name}`)
                     name = name.replace("Tran", "Tran" + "_" + lang)

@@ -9,10 +9,10 @@ edition = "2021"
 
 
 [build-dependencies]
-tauri-build = { version = "2.0.0-beta.0", features = [] }
+tauri-build = { version = "2.0.0-beta.1", features = [] }
 
 [dependencies]
-tauri = { version = "2.0.0-beta.1", features = ["tray-icon"] }
+tauri = { version = "2.0.0-beta.2", features = ["tray-icon"] }
 tauri-plugin-process = "2.0.0-beta.0"
 tauri-plugin-single-instance = "2.0.0-beta.0"
 
