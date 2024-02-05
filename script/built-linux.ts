@@ -1,9 +1,10 @@
 const lang = Deno.env.get("MATRIX_LANG")
 const version = Deno.env.get("TRAN_VERSION")
+const platform = Deno.env.get("TRAN_PLATFORM")
 
-const root = "src-tauri/target/release";
+const root = "src-tauri/target/release/";
 
-const bundle = root + "/bundle/"
+const bundle = root + "bundle/"
 const deb = bundle + "deb/tran_" + version + "_amd64.deb"
 const rpm = bundle + "rpm/tran-" + version + "-1.x86_64.rpm"
 const appimage = bundle + "appimage/tran_" + version + "_amd64.AppImage"
@@ -17,6 +18,7 @@ await Deno.copyFile(deb, `release/${new_deb}`)
 await Deno.copyFile(rpm, `release/${new_rpm}`)
 await Deno.copyFile(appimage, `release/${new_appimage}`)
 
-for await (const file of Deno.readDir(root)) {
-    console.log(file.name)
-}
+const portable = root + "tran"
+const new_portable = "Tran_" + lang + "_" + platform + "_portable"
+
+await Deno.copyFile(portable, `release/${new_portable}`)
