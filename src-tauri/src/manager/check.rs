@@ -11,5 +11,5 @@ pub async fn update(old: &str) -> Result<bool> {
         .json::<Value>()
         .await?;
     let version = resp["version"].as_str().unwrap_or_default();
-    Ok(version == old)
+    Ok(version != old)
 }
