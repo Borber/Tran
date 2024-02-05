@@ -62,13 +62,12 @@ const App = () => {
                 await panel.setPosition(
                     new PhysicalPosition(pos.payload.x, pos.payload.y)
                 )
-            }
-            // 移动位置之后需要保证窗口大小不变
-            await panel.setSize(new LogicalSize(256, 100))
 
-            await panel.show()
+                // 移动位置之后需要保证窗口大小不变
+                await panel.setSize(new LogicalSize(256, 100))
 
-            if (!pos.payload.pin) {
+                await panel.show()
+
                 // pin when shortcut
                 // 在快捷键调用时, 接替 pin 达到不关闭的目的
                 await panel.setFocus()
