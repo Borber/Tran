@@ -1,6 +1,6 @@
 {
   "productName": "Tran",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "identifier": "com.borber.tran",
   "build": {
     "frontendDist": "../dist",
