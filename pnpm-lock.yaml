@@ -17,8 +17,8 @@ devDependencies:
     specifier: ^2.0.0-beta.1
     version: 2.0.0-beta.1
   '@types/node':
-    specifier: ^20.11.16
-    version: 20.11.16
+    specifier: ^20.11.17
+    version: 20.11.17
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.21.0
     version: 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -29,8 +29,8 @@ devDependencies:
     specifier: ^8.56.0
     version: 8.56.0
   eslint-plugin-simple-import-sort:
-    specifier: ^10.0.0
-    version: 10.0.0(eslint@8.56.0)
+    specifier: ^11.0.0
+    version: 11.0.0(eslint@8.56.0)
   eslint-plugin-solid:
     specifier: ^0.13.1
     version: 0.13.1(eslint@8.56.0)(typescript@5.3.3)
@@ -39,7 +39,7 @@ devDependencies:
     version: 5.3.3
   vite:
     specifier: ^5.1.0
-    version: 5.1.0(@types/node@20.11.16)
+    version: 5.1.0(@types/node@20.11.17)
   vite-plugin-solid:
     specifier: ^2.9.1
     version: 2.9.1(solid-js@1.8.14)(vite@5.1.0)
@@ -840,8 +840,8 @@ packages:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: true
 
-  /@types/node@20.11.16:
-    resolution: {integrity: sha512-gKb0enTmRCzXSSUJDq6/sPcqrfCv2mkkG6Jt/clpn5eiCbKTY+SgZUxo+p8ZKMof5dCp9vHQUAB7wOUTod22wQ==}
+  /@types/node@20.11.17:
+    resolution: {integrity: sha512-QmgQZGWu1Yw9TDyAP9ZzpFJKynYNeOvwMJmaxABfieQoVoiVOS6MN1WSpqpRcbeA5+RW82kraAVxCCJg+780Qw==}
     dependencies:
       undici-types: 5.26.5
     dev: true
@@ -1303,8 +1303,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /eslint-plugin-simple-import-sort@10.0.0(eslint@8.56.0):
-    resolution: {integrity: sha512-AeTvO9UCMSNzIHRkg8S6c3RPy5YEwKWSQPx3DYghLedo2ZQxowPFLGDN1AZ2evfg6r6mjBSZSLxLFsWSu3acsw==}
+  /eslint-plugin-simple-import-sort@11.0.0(eslint@8.56.0):
+    resolution: {integrity: sha512-3zxeF/0piwHA7/JlbpOmMJ1/1tc1dSRiir4DwpEnP747alKwZbj5xX+ZxroShMBU6LNDkpquo7FsXHCBc0HgCA==}
     peerDependencies:
       eslint: '>=5.0.0'
     dependencies:
@@ -2117,13 +2117,13 @@ packages:
       merge-anything: 5.1.7
       solid-js: 1.8.14
       solid-refresh: 0.6.3(solid-js@1.8.14)
-      vite: 5.1.0(@types/node@20.11.16)
+      vite: 5.1.0(@types/node@20.11.17)
       vitefu: 0.2.5(vite@5.1.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /vite@5.1.0(@types/node@20.11.16):
+  /vite@5.1.0(@types/node@20.11.17):
     resolution: {integrity: sha512-STmSFzhY4ljuhz14bg9LkMTk3d98IO6DIArnTY6MeBwiD1Za2StcQtz7fzOUnRCqrHSD5+OS2reg4HOz1eoLnw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -2151,7 +2151,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.11.16
+      '@types/node': 20.11.17
       esbuild: 0.19.12
       postcss: 8.4.35
       rollup: 4.9.6
@@ -2167,7 +2167,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.1.0(@types/node@20.11.16)
+      vite: 5.1.0(@types/node@20.11.17)
     dev: true
 
   /which@2.0.2:

@@ -59,21 +59,19 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     tokio::spawn(async {
         rdev::listen(move |event| match event.event_type {
             KeyRelease(CapsLock) => {
-                if !common::PIN.load(Ordering::SeqCst) {
-                    let old = key_cap.load(std::sync::atomic::Ordering::SeqCst);
+                let old = key_cap.load(std::sync::atomic::Ordering::SeqCst);
 
-                    let now = SystemTime::now();
-                    let timestamp = now
-                        .duration_since(SystemTime::UNIX_EPOCH)
-                        .expect("Time went backwards");
-                    let now = timestamp.as_millis() as u64;
+                let now = SystemTime::now();
+                let timestamp = now
+                    .duration_since(SystemTime::UNIX_EPOCH)
+                    .expect("Time went backwards");
+                let now = timestamp.as_millis() as u64;
 
-                    if now < old + 1000 {
-                        key_s.send(()).expect("Channel send failed");
-                        key_cap.store(0, std::sync::atomic::Ordering::SeqCst);
-                    } else {
-                        key_cap.store(now, std::sync::atomic::Ordering::SeqCst);
-                    }
+                if now < old + 1000 {
+                    key_s.send(()).expect("Channel send failed");
+                    key_cap.store(0, std::sync::atomic::Ordering::SeqCst);
+                } else {
+                    key_cap.store(now, std::sync::atomic::Ordering::SeqCst);
                 }
             }
             ButtonPress(Button::Left) => {
@@ -95,7 +93,6 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                     let now = timestamp.as_millis() as u64;
 
                     let old = mouse_cap.load(Ordering::SeqCst);
-                    // TODO This time may need to be adjusted
                     if now > old + 500 {
                         mouse_s.send(()).expect("Channel send failed");
                     }
