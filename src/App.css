@@ -59,6 +59,7 @@
     background-color: #262a30;
     overflow-x: hidden;
     overflow-y: scroll;
+    word-wrap: break-word;
     hyphens: auto;
 
     line-height: 1.2;

@@ -39,14 +39,6 @@ fn copy(content: String) -> Resp<()> {
     clip::set(content).into()
 }
 
-/// 切换模式
-///
-/// Switch mode
-#[tauri::command]
-fn switch_mode(mode: usize) {
-    config::mode(mode);
-}
-
 /// 打开指定链接
 ///
 /// Open the specified link
@@ -104,14 +96,7 @@ async fn main() {
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_single_instance::init(|_, _, _| {}))
         .setup(setup::handler)
-        .invoke_handler(tauri::generate_handler![
-            copy,
-            open,
-            translate,
-            switch_mode,
-            pin,
-            update,
-        ])
+        .invoke_handler(tauri::generate_handler![copy, open, translate, pin, update,])
         .run(context)
         .expect("error while running tauri application");
 }

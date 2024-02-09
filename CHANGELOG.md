@@ -2,8 +2,12 @@
 
 ## [0.2.3]
 
+### 新年快乐! Happy New Year!
+
 -   调整翻译界面样式
-    -   安装 Fire Code 字体将使英语结果更加美观
+    -   (可选) 安装 Fire Code 字体将使英语结果更加美观
+-   尽量维持原格式, 对换行和空格进行特殊处理
+    -   ![tran](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/tran-new-line.png)
 
 ## [0.2.2]
 

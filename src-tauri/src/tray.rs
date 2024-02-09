@@ -41,8 +41,8 @@ fn handler(app: &AppHandle, event: MenuEvent) {
         "github" => {
             let _ = open::that("https://github.com/Borber/Tran");
         }
-        "mirror" => config::mode(0),
-        "google" => config::mode(1),
+        "mirror" => config::mode(true),
+        "google" => config::mode(false),
         "exit" => {
             let panel = app.get_webview_window("panel").unwrap();
             let _ = panel.hide();

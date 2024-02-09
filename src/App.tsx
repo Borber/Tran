@@ -13,13 +13,18 @@ import { Resp } from "./model/resp"
 
 interface TransVO {
     word: boolean
-    trans: string
+    trans: Tran[]
     dicts: Dict[]
 }
 
 interface Dict {
     pos: string
     terms: string[]
+}
+
+interface Tran {
+    typ: number
+    data: string
 }
 
 const App = () => {
@@ -90,13 +95,15 @@ const App = () => {
                 data-tauri-drag-region
                 class="result"
                 // 因为全局的可拖拽导致双击正好能触发点击事件
-                onClick={async () => {
+                onClick={async (e) => {
                     console.log("copy")
                     let content
                     if (result() == undefined) {
                         return
                     } else if (!result()?.word) {
-                        content = result()!.trans
+                        content = e.target.innerHTML
+                            .replace(/<br>/g, "\r\n")
+                            .replace(/&nbsp;/g, " ")
                     } else {
                         content = result()!.dicts[0].terms[0]
                     }
@@ -131,7 +138,19 @@ const App = () => {
                             )}
                         </For>
                     </Match>
-                    <Match when={!result()?.word}>{result()?.trans}</Match>
+                    <Match when={!result()?.word}>
+                        <For each={result()!.trans}>
+                            {(tran) => {
+                                if (tran.typ == 0) {
+                                    return tran.data
+                                } else if (tran.typ == 1) {
+                                    return <br />
+                                } else {
+                                    return `\u00A0`
+                                }
+                            }}
+                        </For>
+                    </Match>
                 </Switch>
             </div>
             <Show when={update()}>
