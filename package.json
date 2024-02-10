@@ -20,10 +20,10 @@
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "eslint": "^8.56.0",
-    "eslint-plugin-simple-import-sort": "^11.0.0",
+    "eslint-plugin-simple-import-sort": "^12.0.0",
     "eslint-plugin-solid": "^0.13.1",
     "typescript": "^5.3.3",
-    "vite": "^5.1.0",
+    "vite": "^5.1.1",
     "vite-plugin-solid": "^2.9.1"
   }
 }
