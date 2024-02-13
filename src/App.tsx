@@ -7,6 +7,7 @@ import {
     PhysicalPosition,
 } from "@tauri-apps/api/window"
 import { createSignal, For, Match, onMount, Show, Switch } from "solid-js"
+import { ThreeDots } from "solid-spinner"
 
 import { UpdateIcon } from "./icon"
 import { Resp } from "./model/resp"
@@ -112,8 +113,13 @@ const App = () => {
                     })
                 }}
             >
-                <Switch fallback={"翻译中..."}>
-                    <Match when={result() == undefined}>翻译中...</Match>
+                <Switch>
+                    <Match when={result() == undefined}>
+                        <div data-tauri-drag-region>
+                            翻译中
+                            <ThreeDots width={20} height={10} />
+                        </div>
+                    </Match>
                     <Match when={result()?.word}>
                         <For each={result()!.dicts}>
                             {(dict) => (

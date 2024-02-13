@@ -1,3 +1,3 @@
 pub mod api;
-pub mod mirror;
 pub mod check;
+pub mod mirror;
