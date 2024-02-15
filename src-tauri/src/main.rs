@@ -3,13 +3,7 @@
 use manager::api;
 use manager::api::TransVO;
 use resp::Resp;
-use tauri::{
-    utils::acl::{
-        resolved::{CommandKey, ResolvedCommand},
-        ExecutionContext,
-    },
-    AppHandle,
-};
+use tauri::{utils::acl::ExecutionContext, AppHandle};
 
 mod clip;
 mod common;
@@ -80,16 +74,9 @@ async fn main() {
         "plugin:window|internal_on_mousedown",
         "plugin:window|start_dragging",
     ] {
-        context.resolved_acl().allowed_commands.insert(
-            CommandKey {
-                name: cmd.into(),
-                context: ExecutionContext::Local,
-            },
-            ResolvedCommand {
-                windows: vec!["*".parse().unwrap()],
-                ..Default::default()
-            },
-        );
+        context
+            .runtime_authority_mut()
+            .__allow_command(cmd.to_string(), ExecutionContext::Local);
     }
 
     tauri::Builder::default()

@@ -1,6 +1,7 @@
 import "./App.css"
 
 import { invoke } from "@tauri-apps/api/core"
+import { listen } from "@tauri-apps/api/event"
 import {
     getCurrent,
     LogicalSize,
@@ -57,7 +58,7 @@ const App = () => {
 
         // 监听事件， 显示panel
         // Listen to events and display panel
-        await panel.listen<{
+        await listen<{
             x: number
             y: number
             content: string
