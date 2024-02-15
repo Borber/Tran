@@ -9,11 +9,11 @@ dependencies:
     specifier: ^2.0.0-beta.0
     version: 2.0.0-beta.0
   solid-js:
-    specifier: ^1.8.14
-    version: 1.8.14
+    specifier: ^1.8.15
+    version: 1.8.15
   solid-spinner:
     specifier: ^0.2.0
-    version: 0.2.0(solid-js@1.8.14)
+    version: 0.2.0(solid-js@1.8.15)
 
 devDependencies:
   '@tauri-apps/cli':
@@ -45,7 +45,7 @@ devDependencies:
     version: 5.1.2(@types/node@20.11.17)
   vite-plugin-solid:
     specifier: ^2.10.0
-    version: 2.10.0(solid-js@1.8.14)(vite@5.1.2)
+    version: 2.10.0(solid-js@1.8.15)(vite@5.1.2)
 
 packages:
 
@@ -1976,30 +1976,30 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /solid-js@1.8.14:
-    resolution: {integrity: sha512-kDfgHBm+ROVLDVuqaXh/jYz0ZVJ29TYfVsKsgDPtNcjoyaPtOvDX2l0tVnthjLdEXr7vDTYeqEYFfMkZakDsOQ==}
+  /solid-js@1.8.15:
+    resolution: {integrity: sha512-d0QP/efr3UVcwGgWVPveQQ0IHOH6iU7yUhc2piy8arNG8wxKmvUy1kFxyF8owpmfCWGB87usDKMaVnsNYZm+Vw==}
     dependencies:
       csstype: 3.1.3
       seroval: 1.0.4
       seroval-plugins: 1.0.4(seroval@1.0.4)
 
-  /solid-refresh@0.7.4(solid-js@1.8.14):
+  /solid-refresh@0.7.4(solid-js@1.8.15):
     resolution: {integrity: sha512-bYiIEAhsKb6IZbNR6RNr1dB8MrjR7nYW/57Ow3kyeEJ6mL/Q6XtORodffsdUIsSNyPI2KYH2aNNgsiHJy7vsHw==}
     peerDependencies:
       solid-js: ^1.3
     dependencies:
       '@babel/generator': 7.23.6
       '@babel/types': 7.23.9
-      solid-js: 1.8.14
+      solid-js: 1.8.15
     dev: true
 
-  /solid-spinner@0.2.0(solid-js@1.8.14):
+  /solid-spinner@0.2.0(solid-js@1.8.15):
     resolution: {integrity: sha512-xLTYFljnvtp8evg9H1Cs4UlIwFelO9HYmRF/bfByhlrcilHJwyQgSus9ICbu8Gt/CUubpT4LsADWxJ9rYg8VHA==}
     engines: {node: '>=16'}
     peerDependencies:
       solid-js: '*'
     dependencies:
-      solid-js: 1.8.14
+      solid-js: 1.8.15
     dev: false
 
   /source-map-js@1.0.2:
@@ -2116,7 +2116,7 @@ packages:
     resolution: {integrity: sha512-hGdgQozCsQJMyfK5urgFcWEqsSSrK63Awe0t/IMR0bZ0QMtnuaiHzThW81guu3qx9abLi99NEuiaN6P9gVYsNg==}
     dev: true
 
-  /vite-plugin-solid@2.10.0(solid-js@1.8.14)(vite@5.1.2):
+  /vite-plugin-solid@2.10.0(solid-js@1.8.15)(vite@5.1.2):
     resolution: {integrity: sha512-Hatl76PQt+Xtewq1o9WVSVwu0UGnOKx6iH3ieb0gm3+TqHw6rzeTwWNY5kw6wvubOWtTTNbxiXG51hbzeaC/mQ==}
     peerDependencies:
       '@testing-library/jest-dom': ^5.16.6 || ^5.17.0 || ^6.*
@@ -2130,8 +2130,8 @@ packages:
       '@types/babel__core': 7.20.5
       babel-preset-solid: 1.8.12(@babel/core@7.23.9)
       merge-anything: 5.1.7
-      solid-js: 1.8.14
-      solid-refresh: 0.7.4(solid-js@1.8.14)
+      solid-js: 1.8.15
+      solid-refresh: 0.7.4(solid-js@1.8.15)
       vite: 5.1.2(@types/node@20.11.17)
       vitefu: 0.2.5(vite@5.1.2)
     transitivePeerDependencies:
