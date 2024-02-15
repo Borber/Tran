@@ -20,8 +20,8 @@ devDependencies:
     specifier: ^2.0.0-beta.1
     version: 2.0.0-beta.1
   '@types/node':
-    specifier: ^20.11.17
-    version: 20.11.17
+    specifier: ^20.11.18
+    version: 20.11.18
   '@typescript-eslint/eslint-plugin':
     specifier: ^7.0.1
     version: 7.0.1(@typescript-eslint/parser@7.0.1)(eslint@8.56.0)(typescript@5.3.3)
@@ -42,7 +42,7 @@ devDependencies:
     version: 5.3.3
   vite:
     specifier: ^5.1.2
-    version: 5.1.2(@types/node@20.11.17)
+    version: 5.1.2(@types/node@20.11.18)
   vite-plugin-solid:
     specifier: ^2.10.1
     version: 2.10.1(solid-js@1.8.15)(vite@5.1.2)
@@ -843,8 +843,8 @@ packages:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: true
 
-  /@types/node@20.11.17:
-    resolution: {integrity: sha512-QmgQZGWu1Yw9TDyAP9ZzpFJKynYNeOvwMJmaxABfieQoVoiVOS6MN1WSpqpRcbeA5+RW82kraAVxCCJg+780Qw==}
+  /@types/node@20.11.18:
+    resolution: {integrity: sha512-ABT5VWnnYneSBcNWYSCuR05M826RoMyMSGiFivXGx6ZUIsXb9vn4643IEwkg2zbEOSgAiSogtapN2fgc4mAPlw==}
     dependencies:
       undici-types: 5.26.5
     dev: true
@@ -2133,13 +2133,13 @@ packages:
       merge-anything: 5.1.7
       solid-js: 1.8.15
       solid-refresh: 0.6.3(solid-js@1.8.15)
-      vite: 5.1.2(@types/node@20.11.17)
+      vite: 5.1.2(@types/node@20.11.18)
       vitefu: 0.2.5(vite@5.1.2)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /vite@5.1.2(@types/node@20.11.17):
+  /vite@5.1.2(@types/node@20.11.18):
     resolution: {integrity: sha512-uwiFebQbTWRIGbCaTEBVAfKqgqKNKMJ2uPXsXeLIZxM8MVMjoS3j0cG8NrPxdDIadaWnPSjrkLWffLSC+uiP3Q==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -2167,7 +2167,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.11.17
+      '@types/node': 20.11.18
       esbuild: 0.19.12
       postcss: 8.4.35
       rollup: 4.10.0
@@ -2183,7 +2183,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.1.2(@types/node@20.11.17)
+      vite: 5.1.2(@types/node@20.11.18)
     dev: true
 
   /which@2.0.2:
