@@ -116,7 +116,7 @@ const App = () => {
                 <Switch>
                     <Match when={result() == undefined}>
                         <div data-tauri-drag-region>
-                            翻译中
+                            翻译中{`\u00A0`}
                             <ThreeDots width={20} height={10} />
                         </div>
                     </Match>
