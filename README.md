@@ -65,6 +65,13 @@
 -   复制译文
     -   双击翻译结果即可将译文到剪切板
 
+## 推荐
+
+推荐安装以下字体:
+
+-   [FiraCode Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.zip)
+-   [LXGW WenKai](https://github.com/lxgw/LxgwWenKai)
+
 # 贡献
 
 ## 参与开发
