@@ -78,19 +78,11 @@
 
 ### 准备环境
 
--   [rust](https://www.rust-lang.org/tools/install)
-    -   最基本的开发环境
--   [pnpm](https://pnpm.io/installation)
-    -   前端部分包管理
--   [nodejs](https://nodejs.org/)
-    -   推荐使用 [fnm](https://github.com/Schniz/fnm) 进行管理
-    -   `tauri` 开发所需
--   [just](https://github.com/casey/just) (可选)
-    -   便捷命令
--   [deno](https://docs.deno.com/runtime/manual/getting_started/installation) (可选)
-    -   脚本工具
--   [vscode](https://code.visualstudio.com/) (推荐)
-    -   [`deno` 插件](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno)
+| 工具                                            | 备注       |
+| ----------------------------------------------- | ---------- |
+| [rust](https://www.rust-lang.org/tools/install) | Rust 开发  |
+| [pnpm](https://pnpm.io/installation)            | 前端包管理 |
+| [nodejs](https://nodejs.org/)                   | 前端开发   |
 
 ### 提交
 

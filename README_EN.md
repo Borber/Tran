@@ -62,25 +62,24 @@ If you are a Chinese user but need to read in English, you can choose the instal
     -   After fixing the panel, select other texts in turn and `Tran` will be automatically translated without pressing shortcut keys.
 -   Double-click the translation result to save the translation to the clipboard
 
+## Recommend
+
+It is recommended to install the following fonts:
+
+-   [FiraCode Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.zip)
+-   [LXGW WenKai](https://github.com/lxgw/LxgwWenKai)
+
 # Contribution
 
 ## Develop
 
 ### Prepare
 
--   [rust](https://www.rust-lang.org/tools/install)
-    -   Basic development environment
--   [pnpm](https://pnpm.io/installation)
-    -   Package management
--   [nodejs](https://nodejs.org/)
-    -   Recommended to use [fnm](https://github.com/Schniz/fnm) for management
-    -   required by `tauri`
--   [just](https://github.com/casey/just) (optional)
-    -   convenient commands
--   [deno](https://docs.deno.com/runtime/manual/getting_started/installation) (optional)
-    -   script
--   [vscode](https://code.visualstudio.com/) (recommend)
-    -   [`deno` plugin](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno)
+| Tool                                            | Note                         |
+| ----------------------------------------------- | ---------------------------- |
+| [rust](https://www.rust-lang.org/tools/install) | Rust development             |
+| [pnpm](https://pnpm.io/installation)            | Front-end package management |
+| [nodejs](https://nodejs.org/)                   | Front-end development        |
 
 ### Notice
 
