@@ -147,7 +147,7 @@ jobs:
           args: --target ${{ matrix.arch }}-apple-darwin"
 
   fresh:
-    needs: changelog, windows, linux, macos
+    needs: [changelog, windows, linux, macos]
     runs-on: ubuntu-latest
     steps:
       - name: Fresh version
