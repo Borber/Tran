@@ -35,27 +35,6 @@ const App = () => {
     const [update, Update] = createSignal(false)
 
     onMount(async () => {
-        // 生产环境, 全局取消右键菜单;
-        if (!import.meta.env.DEV) {
-            document.oncontextmenu = (event) => {
-                event.preventDefault()
-            }
-        }
-
-        window.addEventListener("keydown", async (e) => {
-            if (e.key == "Escape") {
-                await invoke("pin", {
-                    state: false,
-                })
-                await panel.hide()
-                Result(undefined)
-            }
-        })
-
-        await invoke<Resp<boolean>>("update").then(async (pos) => {
-            Update(pos.data)
-        })
-
         // 监听事件， 显示panel
         // Listen to events and display panel
         await listen<{
@@ -89,6 +68,30 @@ const App = () => {
                 Result(resp.data)
             })
         })
+
+        // 生产环境, 全局取消右键菜单;
+        if (!import.meta.env.DEV) {
+            document.oncontextmenu = (event) => {
+                event.preventDefault()
+            }
+        }
+
+        window.addEventListener("keydown", async (e) => {
+            if (e.key == "Escape") {
+                await invoke("pin", {
+                    state: false,
+                })
+                await panel.hide()
+                Result(undefined)
+            }
+        })
+
+        await fetch("https://key.borber.top/TRAN_VERSION").then(
+            async (resp) => {
+                const version = await resp.text()
+                Update(version != "0.2.3")
+            }
+        )
     })
 
     return (

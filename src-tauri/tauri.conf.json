@@ -3,10 +3,10 @@
   "version": "0.2.3",
   "identifier": "com.borber.tran",
   "build": {
-    "frontendDist": "../dist",
-    "devUrl": "http://localhost:5046",
     "beforeDevCommand": "pnpm dev",
-    "beforeBuildCommand": "pnpm build"
+    "devUrl": "http://localhost:5046",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist"
   },
   "app": {
     "withGlobalTauri": false,

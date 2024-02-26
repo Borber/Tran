@@ -1,9 +1,9 @@
-import { defineConfig, type UserConfigExport } from "vite";
-import solidPlugin from "vite-plugin-solid";
+import { defineConfig } from "vite";
+import solid from "vite-plugin-solid";
 
 // https://vitejs.dev/config/
-const config: UserConfigExport = async () => ({
-  plugins: [solidPlugin()],
+export default defineConfig(async () => ({
+  plugins: [solid()],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //
@@ -13,10 +13,13 @@ const config: UserConfigExport = async () => ({
   server: {
     port: 5046,
     strictPort: true,
+    host: "0.0.0.0",
+    watch: {
+      // 3. tell vite to ignore watching `src-tauri`
+      ignored: ["**/src-tauri/**"],
+    },
+    envPrefix: ["VITE_", "TAURI_"],
   },
-  // 3. to make use of `TAURI_DEBUG` and other env variables
-  // https://tauri.studio/v1/api/config#buildconfig.beforedevcommand
-  envPrefix: ["VITE_", "TAURI_"],
-});
+}));
 
-export default defineConfig(config);
+
