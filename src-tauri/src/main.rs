@@ -3,7 +3,7 @@
 use manager::api;
 use manager::api::TransVO;
 use resp::Resp;
-use tauri::{utils::acl::ExecutionContext, AppHandle};
+use tauri::utils::acl::ExecutionContext;
 
 mod clip;
 mod common;
@@ -47,13 +47,6 @@ async fn pin(state: bool) {
     common::PIN.store(state, std::sync::atomic::Ordering::SeqCst);
 }
 
-/// 检测更新
-#[tauri::command]
-async fn update(app: AppHandle) -> Resp<bool> {
-    let old = app.package_info().version.to_string();
-    manager::check::update(&old).await.into()
-}
-
 #[tokio::main]
 async fn main() {
     // 全局初始化
@@ -83,7 +76,7 @@ async fn main() {
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_single_instance::init(|_, _, _| {}))
         .setup(setup::handler)
-        .invoke_handler(tauri::generate_handler![copy, open, translate, pin, update,])
+        .invoke_handler(tauri::generate_handler![copy, open, translate, pin,])
         .run(context)
         .expect("error while running tauri application");
 }
