@@ -54,11 +54,6 @@ pub fn show(panel: &WebviewWindow, pin: bool) -> Result<()> {
                 x -= 60;
                 y += 20;
 
-                // 边界检查
-                // Boundary check
-                if x < 0 {
-                    x = 0;
-                }
                 panel
                     .emit("show", ShowVO { x, y, content, pin })
                     .expect("Failed to emit show event");
