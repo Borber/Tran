@@ -19,9 +19,9 @@ checksum = "f26201604c87b1e01bd3d98f8d5d9a8fcbb815e8cedb41ffccbeb4bf593a35fe"
 
 [[package]]
 name = "ahash"
-version = "0.8.9"
+version = "0.8.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d713b3834d76b85304d4d525563c1276e2e30dc97cc67bfb4585a4a29fc2c89f"
+checksum = "8b79b82693f705137f8fb9b37871d99e4f9a7df12b917eed79c3d3954830a60b"
 dependencies = [
  "cfg-if",
  "const-random",
@@ -1185,9 +1185,9 @@ dependencies = [
 
 [[package]]
 name = "error-code"
-version = "3.1.0"
+version = "3.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "26a147e1a6641a55d994b3e4e9fa4d9b180c8d652c09b363af8c9bf1b8e04139"
+checksum = "a0474425d51df81997e2f90a21591180b38eccf27292d755f3e30750225c175b"
 
 [[package]]
 name = "event-listener"
@@ -3335,9 +3335,9 @@ checksum = "42a9830a0e1b9fb145ebb365b8bc4ccd75f290f98c0247deafbbe2c75cefb544"
 
 [[package]]
 name = "rayon"
-version = "1.8.1"
+version = "1.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fa7237101a77a10773db45d62004a272517633fbcc3df19d96455ede1122e051"
+checksum = "e4963ed1bc86e4f3ee217022bd855b297cef07fb9eac5dfa1f788b220b49b3bd"
 dependencies = [
  "either",
  "rayon-core",
@@ -3681,9 +3681,9 @@ dependencies = [
 
 [[package]]
 name = "serde-wasm-bindgen"
-version = "0.6.4"
+version = "0.6.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4c1432112bce8b966497ac46519535189a3250a3812cd27a999678a69756f79f"
+checksum = "8302e169f0eddcc139c70f139d19d6467353af16f9fce27e8c30158036a1e16b"
 dependencies = [
  "js-sys",
  "serde",
