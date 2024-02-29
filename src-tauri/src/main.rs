@@ -3,7 +3,6 @@
 use manager::api;
 use manager::api::TransVO;
 use resp::Resp;
-use tauri::utils::acl::ExecutionContext;
 
 mod clip;
 mod common;
@@ -53,30 +52,11 @@ async fn main() {
     // Global initialization
     common::init().await;
 
-    let mut context = tauri::generate_context!("tauri.conf.json");
-
-    for cmd in [
-        "plugin:app|version",
-        "plugin:event|listen",
-        "plugin:window|show",
-        "plugin:window|hide",
-        "plugin:window|set_size",
-        "plugin:window|set_focus",
-        "plugin:window|set_position",
-        "plugin:window|internal_on_mousemove",
-        "plugin:window|internal_on_mousedown",
-        "plugin:window|start_dragging",
-    ] {
-        context
-            .runtime_authority_mut()
-            .__allow_command(cmd.to_string(), ExecutionContext::Local);
-    }
-
     tauri::Builder::default()
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_single_instance::init(|_, _, _| {}))
         .setup(setup::handler)
         .invoke_handler(tauri::generate_handler![copy, open, translate, pin,])
-        .run(context)
+        .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
