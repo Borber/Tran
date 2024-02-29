@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.6]
+
+-   托盘菜单模式选项显示当前模式
+    -   ![tran-mode](https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/tran-mode.png)
+
 ## [0.2.5]
 
 -   修复副屏在左侧时的错误边界检测

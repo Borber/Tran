@@ -1,11 +1,13 @@
+use std::sync::atomic::Ordering;
+
 use anyhow::Result;
 use tauri::{
-    menu::{Menu, MenuEvent, MenuItem, Submenu},
+    menu::{CheckMenuItem, Menu, MenuEvent, MenuItem, Submenu},
     tray::TrayIconBuilder,
     AppHandle, Manager, Wry,
 };
 
-use crate::config;
+use crate::config::{self, MODE};
 
 /// 初始化托盘菜单
 ///
@@ -22,11 +24,12 @@ pub fn init(app: &AppHandle) -> Result<()> {
 }
 
 fn menu(handle: &AppHandle) -> Result<Menu<Wry>> {
+    let flag = MODE.load(Ordering::SeqCst);
     let github = MenuItem::with_id(handle, "github", "GitHub", true, None::<&str>)
         .expect("Failed to create menu item github");
-    let mirror = MenuItem::with_id(handle, "mirror", "Mirror", true, None::<&str>)
+    let mirror = CheckMenuItem::with_id(handle, "mirror", "Mirror", true, flag, None::<&str>)
         .expect("Failed to create menu item mirror");
-    let google = MenuItem::with_id(handle, "google", "Google", true, None::<&str>)
+    let google = CheckMenuItem::with_id(handle, "google", "Google", true, !flag, None::<&str>)
         .expect("Failed to create menu item google");
     let mode = Submenu::with_items(handle, "Mode", true, &[&mirror, &google])
         .expect("Failed to create submenu item mod.");
@@ -36,13 +39,23 @@ fn menu(handle: &AppHandle) -> Result<Menu<Wry>> {
         .map_err(|_| anyhow::anyhow!("Failed to create menu"))
 }
 
+fn fresh(app: &AppHandle) {
+    let _ = app.tray().unwrap().set_menu(Some(menu(app).unwrap()));
+}
+
 fn handler(app: &AppHandle, event: MenuEvent) {
     match event.id.as_ref() {
         "github" => {
             let _ = open::that("https://github.com/Borber/Tran");
         }
-        "mirror" => config::mode(true),
-        "google" => config::mode(false),
+        "mirror" => {
+            config::mode(true);
+            fresh(app);
+        }
+        "google" => {
+            config::mode(false);
+            fresh(app);
+        }
         "exit" => {
             let panel = app.get_webview_window("panel").unwrap();
             let _ = panel.hide();
