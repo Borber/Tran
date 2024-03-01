@@ -1,10 +1,4 @@
-use std::{
-    sync::{
-        atomic::{AtomicI32, AtomicU64, Ordering},
-        Arc,
-    },
-    time::SystemTime,
-};
+use std::{sync::atomic::Ordering, time::SystemTime};
 
 use crossbeam_channel::bounded;
 use mouse_position::mouse_position::Mouse;
@@ -56,17 +50,17 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     // 监听快捷键 和 鼠标操作
     tokio::spawn(async {
         // 双击capslock
-        let double_capslock_cap = Arc::new(AtomicU64::new(0));
+        let mut double_capslock_cap = 0;
         // 划词翻译
-        let selected_cap = Arc::new(AtomicU64::new(0));
+        let mut selected_cap = 0;
         // 双击鼠标左键
-        let double_click_cap = Arc::new(AtomicU64::new(0));
-        let double_click_x = Arc::new(AtomicI32::new(0));
-        let double_click_y = Arc::new(AtomicI32::new(0));
+        let mut double_click_cap = 0;
+        let mut double_click_x = 0;
+        let mut double_click_y = 0;
 
         rdev::listen(move |event| match event.event_type {
             KeyRelease(CapsLock) => {
-                let old = double_capslock_cap.load(std::sync::atomic::Ordering::SeqCst);
+                let old = double_capslock_cap;
 
                 let now = SystemTime::now();
                 let timestamp = now
@@ -76,9 +70,9 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
 
                 if now < old + 1000 {
                     key_s.send(()).expect("Channel send failed");
-                    double_capslock_cap.store(0, std::sync::atomic::Ordering::SeqCst);
+                    double_capslock_cap = 0;
                 } else {
-                    double_capslock_cap.store(now, std::sync::atomic::Ordering::SeqCst);
+                    double_capslock_cap = now;
                 }
             }
             ButtonPress(Button::Left) => {
@@ -88,7 +82,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                         .duration_since(SystemTime::UNIX_EPOCH)
                         .expect("Time went backwards");
                     let now = timestamp.as_millis() as u64;
-                    selected_cap.store(now, Ordering::SeqCst);
+                    selected_cap = now;
                 }
             }
             ButtonRelease(Button::Left) => {
@@ -99,16 +93,16 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                         .expect("Time went backwards");
                     let now = timestamp.as_millis() as u64;
 
-                    let old = selected_cap.load(Ordering::SeqCst);
+                    let old = selected_cap;
                     if now >= old + 500 {
                         mouse_s.send(()).expect("Channel send failed");
                         return;
                     }
 
                     // 检测双击
-                    let old = double_click_cap.load(Ordering::SeqCst);
-                    let x = double_click_x.load(Ordering::SeqCst);
-                    let y = double_click_y.load(Ordering::SeqCst);
+                    let old = double_click_cap;
+                    let x = double_click_x;
+                    let y = double_click_y;
 
                     let position = Mouse::get_mouse_position();
                     match position {
@@ -118,9 +112,9 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                             if now < old + 500 && x == x1 && y == y1 {
                                 mouse_s.send(()).expect("Channel send failed");
                             } else {
-                                double_click_cap.store(now, Ordering::SeqCst);
-                                double_click_x.store(x1, Ordering::SeqCst);
-                                double_click_y.store(y1, Ordering::SeqCst);
+                                double_click_cap = now;
+                                double_click_x = x1;
+                                double_click_y = y1;
                             }
                         }
                         Mouse::Error => println!("Error getting mouse position"),
