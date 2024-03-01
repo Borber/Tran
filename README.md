@@ -72,6 +72,10 @@
 -   [FiraCode Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.zip)
 -   [LXGW WenKai](https://github.com/lxgw/LxgwWenKai)
 
+## 已知问题
+
+-   无法在福昕阅读器中使用
+
 # 贡献
 
 ## 参与开发

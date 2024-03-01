@@ -69,6 +69,10 @@ It is recommended to install the following fonts:
 -   [FiraCode Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.zip)
 -   [LXGW WenKai](https://github.com/lxgw/LxgwWenKai)
 
+## Known issues
+
+-   Cannot be used in Foxit Reader
+
 # Contribution
 
 ## Develop
