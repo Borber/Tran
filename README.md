@@ -59,8 +59,8 @@
     -   选中文本之后, 快速按下快捷键 `CapsLock` 键 **两次**. 你可以通过点击其他地方使 `Tran` 失去焦点, 自动关闭
         -   双击 CapsLock. 我知道这可能会一些非常出色的工具产生不可调和的快捷键冲突, 在此提前抱歉.
 -   多次翻译
-    -   在单次翻译之后, 拖动翻译面板, 使 `Tran` 自动固定
-    -   固定面板后, 依次选中其它文本 `Tran` 将自动翻译, 无需按快捷键
+    -   在单次翻译之后, 拖动翻译面板, 使 `Tran` 固定
+    -   固定面板后, 双击单词或选中长文本 `Tran` 将自动翻译
     -   选中面板， 按 `Esc` 键关闭
 -   复制译文
     -   双击翻译结果即可将译文到剪切板
@@ -104,6 +104,8 @@
 ### [V2G](https://github.com/Borber/v2g)
 
 vercel proxy google translate
+
+-   仅消耗流量, 不消耗函数运行次数
 
 [![vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/Borber/v2g)
 

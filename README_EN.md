@@ -58,8 +58,8 @@ If you are a Chinese user but need to read in English, you can choose the instal
 -   single translation
     -   After selecting the text, quickly press the `CapsLock` key **twice**. You can make `Tran` lose focus and close automatically by clicking elsewhere.
 -   Multiple translations
-    -   After a single translation, drag the translation panel to make `Tran` automatically fixed
-    -   After fixing the panel, select other texts in turn and `Tran` will be automatically translated without pressing shortcut keys.
+    -   After a single translation, drag the translation panel to make `Tran` fixed
+    -   After pinning the panel, double-click a word or select long text `Tran` will be automatically translated
 -   Double-click the translation result to save the translation to the clipboard
 
 ## Recommend
@@ -101,6 +101,8 @@ More mirrors can support more people, so you are encouraged to create mirrors.
 ### [V2G](https://github.com/Borber/v2g)
 
 vercel proxy google translate
+
+-   Only consumes traffic, not the number of function runs
 
 [![vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/Borber/v2g)
 

@@ -2,6 +2,7 @@
 
 ## [0.2.6]
 
+-   支持固定时双击选词翻译
 -   托盘菜单模式选项显示当前模式
     -   ![tran-mode](https://cdn.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/tran-mode.png)
 
