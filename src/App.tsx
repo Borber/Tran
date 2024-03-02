@@ -69,6 +69,12 @@ const App = () => {
             })
         })
 
+        // 监听事件， 显示panel
+        // Listen to events and display panel
+        await listen("clean", async () => {
+            Result(undefined)
+        })
+
         // 生产环境, 全局取消右键菜单;
         if (!import.meta.env.DEV) {
             document.oncontextmenu = (event) => {
@@ -101,7 +107,6 @@ const App = () => {
                 class="result"
                 // 因为全局的可拖拽导致双击正好能触发点击事件
                 onClick={async (e) => {
-                    console.log("copy")
                     let content
                     if (result() == undefined) {
                         return
@@ -128,12 +133,14 @@ const App = () => {
                         <For each={result()!.dicts}>
                             {(dict) => (
                                 <div data-tauri-drag-region class="dict">
-                                    <div
-                                        data-tauri-drag-region
-                                        class="dict-pos"
-                                    >
-                                        {dict.pos}
-                                    </div>
+                                    <Show when={dict.pos != ""}>
+                                        <div
+                                            data-tauri-drag-region
+                                            class="dict-pos"
+                                        >
+                                            {dict.pos}
+                                        </div>
+                                    </Show>
                                     <For each={dict.terms}>
                                         {(term) => (
                                             <div
