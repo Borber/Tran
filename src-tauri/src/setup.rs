@@ -141,6 +141,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     let panel = app
         .get_webview_window("panel")
         .expect("Failed to get panel window");
+
     // 监听panel焦点
     tokio::spawn(async move {
         loop {
