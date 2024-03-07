@@ -55,10 +55,6 @@ async fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_single_instance::init(|_, _, _| {}))
-        .plugin(tauri_plugin_autostart::init(
-            tauri_plugin_autostart::MacosLauncher::LaunchAgent,
-            Some(vec![]),
-        ))
         .setup(setup::handler)
         .invoke_handler(tauri::generate_handler![copy, open, translate, pin,])
         .run(tauri::generate_context!())

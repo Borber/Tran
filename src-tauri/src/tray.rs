@@ -6,7 +6,6 @@ use tauri::{
     tray::TrayIconBuilder,
     AppHandle, Manager, Wry,
 };
-use tauri_plugin_autostart::AutoLaunchManager;
 
 use crate::config::{self, MODE};
 
@@ -26,19 +25,6 @@ pub fn init(app: &AppHandle) -> Result<()> {
 
 fn menu(handle: &AppHandle) -> Result<Menu<Wry>> {
     let flag = MODE.load(Ordering::SeqCst);
-
-    let manager = handle.state::<AutoLaunchManager>();
-    let autostart_flag = manager.is_enabled().unwrap_or_default();
-
-    let autostart = CheckMenuItem::with_id(
-        handle,
-        "autostart",
-        "AutoStart",
-        true,
-        autostart_flag,
-        None::<&str>,
-    )
-    .expect("Failed to create menu item autostart");
     let mirror = CheckMenuItem::with_id(handle, "mirror", "Mirror", true, flag, None::<&str>)
         .expect("Failed to create menu item mirror");
     let google = CheckMenuItem::with_id(handle, "google", "Google", true, !flag, None::<&str>)
@@ -55,7 +41,7 @@ fn menu(handle: &AppHandle) -> Result<Menu<Wry>> {
         .expect("Failed to create submenu item mod.");
     let exit = MenuItem::with_id(handle, "exit", "Exit", true, None::<&str>)
         .expect("Failed to create menu item exit");
-    Menu::with_items(handle, &[&autostart, &mode, &about, &exit])
+    Menu::with_items(handle, &[&mode, &about, &exit])
         .map_err(|_| anyhow::anyhow!("Failed to create menu"))
 }
 
@@ -65,15 +51,6 @@ fn fresh(app: &AppHandle) {
 
 fn handler(app: &AppHandle, event: MenuEvent) {
     match event.id.as_ref() {
-        "autostart" => {
-            let manager = app.state::<AutoLaunchManager>();
-            let autostart_flag = manager.is_enabled().unwrap_or_default();
-            if autostart_flag {
-                let _ = manager.disable();
-            } else {
-                let _ = manager.enable();
-            }
-        }
         "mirror" => {
             config::mode(true);
         }
