@@ -6,10 +6,10 @@ settings:
 
 dependencies:
   '@tauri-apps/api':
-    specifier: '>=2.0.0-beta.3'
+    specifier: '>=2.0.0-beta.0'
     version: 2.0.0-beta.3
   '@tauri-apps/plugin-shell':
-    specifier: '>=2.0.0-beta.1'
+    specifier: '>=2.0.0-beta.0'
     version: 2.0.0-beta.1
   solid-js:
     specifier: ^1.8.15
@@ -20,7 +20,7 @@ dependencies:
 
 devDependencies:
   '@tauri-apps/cli':
-    specifier: '>=2.0.0-beta.6'
+    specifier: '>=2.0.0-beta.0'
     version: 2.0.0-beta.6
   '@types/node':
     specifier: ^20.11.25
@@ -744,7 +744,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -754,7 +753,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -764,7 +762,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -774,7 +771,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
