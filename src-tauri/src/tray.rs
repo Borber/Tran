@@ -39,17 +39,23 @@ fn menu(handle: &AppHandle) -> Result<Menu<Wry>> {
         None::<&str>,
     )
     .expect("Failed to create menu item autostart");
-    let github = MenuItem::with_id(handle, "github", "GitHub", true, None::<&str>)
-        .expect("Failed to create menu item github");
     let mirror = CheckMenuItem::with_id(handle, "mirror", "Mirror", true, flag, None::<&str>)
         .expect("Failed to create menu item mirror");
     let google = CheckMenuItem::with_id(handle, "google", "Google", true, !flag, None::<&str>)
         .expect("Failed to create menu item google");
     let mode = Submenu::with_items(handle, "Mode", true, &[&mirror, &google])
         .expect("Failed to create submenu item mod.");
+    let github = MenuItem::with_id(handle, "github", "GitHub", true, None::<&str>)
+        .expect("Failed to create menu item github");
+    let telegram = MenuItem::with_id(handle, "telegram", "Telegram", true, None::<&str>)
+        .expect("Failed to create menu item telegram");
+    let version = MenuItem::with_id(handle, "version", "v.0.2.6", false, None::<&str>)
+        .expect("Failed to create menu item version");
+    let about = Submenu::with_items(handle, "About", true, &[&github, &telegram, &version])
+        .expect("Failed to create submenu item mod.");
     let exit = MenuItem::with_id(handle, "exit", "Exit", true, None::<&str>)
         .expect("Failed to create menu item exit");
-    Menu::with_items(handle, &[&autostart, &github, &mode, &exit])
+    Menu::with_items(handle, &[&autostart, &mode, &about, &exit])
         .map_err(|_| anyhow::anyhow!("Failed to create menu"))
 }
 
@@ -68,14 +74,17 @@ fn handler(app: &AppHandle, event: MenuEvent) {
                 let _ = manager.enable();
             }
         }
-        "github" => {
-            let _ = open::that("https://github.com/Borber/Tran");
-        }
         "mirror" => {
             config::mode(true);
         }
         "google" => {
             config::mode(false);
+        }
+        "github" => {
+            let _ = open::that("https://github.com/Borber/Tran");
+        }
+        "telegram" => {
+            let _ = open::that("https://t.me/tran_rust");
         }
         "exit" => {
             let panel = app.get_webview_window("panel").unwrap();
