@@ -9,12 +9,13 @@ edition = "2021"
 
 
 [build-dependencies]
-tauri-build = { version = "2.0.0-beta.6", features = [] }
+tauri-build = { version = "2.0.0-beta", features = [] }
 
 [dependencies]
-tauri = { version = "2.0.0-beta.8", features = ["tray-icon"] }
-tauri-plugin-process = "2.0.0-beta.1"
-tauri-plugin-single-instance = "2.0.0-beta.2"
+tauri = { version = "2.0.0-beta", features = ["tray-icon"] }
+tauri-plugin-process = "2.0.0-beta"
+tauri-plugin-single-instance = "2.0.0-beta"
+tauri-plugin-autostart = "2.0.0-beta"
 
 # For base
 once_cell = "1"

@@ -6,6 +6,7 @@ use tauri::{
     tray::TrayIconBuilder,
     AppHandle, Manager, Wry,
 };
+use tauri_plugin_autostart::AutoLaunchManager;
 
 use crate::config::{self, MODE};
 
@@ -25,6 +26,19 @@ pub fn init(app: &AppHandle) -> Result<()> {
 
 fn menu(handle: &AppHandle) -> Result<Menu<Wry>> {
     let flag = MODE.load(Ordering::SeqCst);
+
+    let manager = handle.state::<AutoLaunchManager>();
+    let autostart_flag = manager.is_enabled().unwrap_or_default();
+
+    let autostart = CheckMenuItem::with_id(
+        handle,
+        "autostart",
+        "AutoStart",
+        true,
+        autostart_flag,
+        None::<&str>,
+    )
+    .expect("Failed to create menu item autostart");
     let github = MenuItem::with_id(handle, "github", "GitHub", true, None::<&str>)
         .expect("Failed to create menu item github");
     let mirror = CheckMenuItem::with_id(handle, "mirror", "Mirror", true, flag, None::<&str>)
@@ -35,7 +49,7 @@ fn menu(handle: &AppHandle) -> Result<Menu<Wry>> {
         .expect("Failed to create submenu item mod.");
     let exit = MenuItem::with_id(handle, "exit", "Exit", true, None::<&str>)
         .expect("Failed to create menu item exit");
-    Menu::with_items(handle, &[&github, &mode, &exit])
+    Menu::with_items(handle, &[&autostart, &github, &mode, &exit])
         .map_err(|_| anyhow::anyhow!("Failed to create menu"))
 }
 
@@ -45,16 +59,23 @@ fn fresh(app: &AppHandle) {
 
 fn handler(app: &AppHandle, event: MenuEvent) {
     match event.id.as_ref() {
+        "autostart" => {
+            let manager = app.state::<AutoLaunchManager>();
+            let autostart_flag = manager.is_enabled().unwrap_or_default();
+            if autostart_flag {
+                let _ = manager.disable();
+            } else {
+                let _ = manager.enable();
+            }
+        }
         "github" => {
             let _ = open::that("https://github.com/Borber/Tran");
         }
         "mirror" => {
             config::mode(true);
-            fresh(app);
         }
         "google" => {
             config::mode(false);
-            fresh(app);
         }
         "exit" => {
             let panel = app.get_webview_window("panel").unwrap();
@@ -63,4 +84,5 @@ fn handler(app: &AppHandle, event: MenuEvent) {
         }
         _ => {}
     }
+    fresh(app);
 }
