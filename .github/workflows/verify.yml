@@ -21,7 +21,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
       - name: Changelog Reader
         id: changelog_reader
-        uses: mindsers/changelog-reader-action@v2.2.2
+        uses: mindsers/changelog-reader-action@v2.2.3
         with:
           path: "CHANGELOG.md"
           version: ${{ steps.get_version.outputs.VERSION }}
