@@ -21,7 +21,7 @@ Simple, fast, translate selected words
 
 <div align="center">
     <a href="https://github.com/Borber/tran" target="_blank" alt="Tran">
-        <img src="https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/tran-new-panel.png">
+        <img src="https://fastly.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/tran.png">
     </a>
 </div>
 

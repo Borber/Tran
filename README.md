@@ -1,4 +1,4 @@
-<a href="https://github.com/Borber/tran"><img width="200px" src="https://fastly.jsdelivr.net/gh/Borber/tran/public/icon.png" align="left"/></a>
+<a href="https://github.com/Borber/tran"><img width="200px" src="https://cdn.jsdelivr.net/gh/Borber/tran/public/icon.png" align="left"/></a>
 
 # Tran
 
