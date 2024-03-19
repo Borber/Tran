@@ -46,7 +46,10 @@ fn menu(handle: &AppHandle) -> Result<Menu<Wry>> {
 }
 
 fn fresh(app: &AppHandle) {
-    let _ = app.tray().unwrap().set_menu(Some(menu(app).unwrap()));
+    let _ = app
+        .tray_by_id("menu")
+        .unwrap()
+        .set_menu(Some(menu(app).unwrap()));
 }
 
 fn handler(app: &AppHandle, event: MenuEvent) {
