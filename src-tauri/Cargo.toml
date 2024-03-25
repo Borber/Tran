@@ -3,7 +3,7 @@ name = "tran"
 version = "0.2.8"
 description = "Tran translate the selected words"
 authors = ["Borber"]
-license = "MIT"
+license = "GPLv3"
 repository = "https://github.com/Borber/tran"
 edition = "2021"
 
