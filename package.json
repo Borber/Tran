@@ -17,15 +17,15 @@
     "solid-spinner": "^0.2.0"
   },
   "devDependencies": {
-    "@tauri-apps/cli": ">=2.0.0-beta.11",
+    "@tauri-apps/cli": "2.0.0-beta.11",
     "@types/node": "^20.11.30",
     "@typescript-eslint/eslint-plugin": "^7.3.1",
     "@typescript-eslint/parser": "^7.3.1",
     "eslint": "^8.57.0",
     "eslint-plugin-simple-import-sort": "^12.0.0",
     "eslint-plugin-solid": "^0.13.2",
-    "typescript": "^5.4.2",
-    "vite": "^5.2.3",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.6",
     "vite-plugin-solid": "^2.10.2"
   }
 }
