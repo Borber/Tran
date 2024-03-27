@@ -25,5 +25,5 @@ await Deno.writeTextFile("src/App.tsx", content);
 
 // 更新 App.tsx 文件中的版本号
 content = await Deno.readTextFile("src-tauri/src/tray.rs");
-content = content.replace(/v\.([\d+.]*\d+)/, `v.${new_version}`);
+content = content.replace(/v([\d+.]*\d+)/, `v${new_version}`);
 await Deno.writeTextFile("src-tauri/src/tray.rs", content);
