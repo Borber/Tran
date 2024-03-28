@@ -9,3 +9,23 @@ pub fn set(content: String) -> Result<()> {
     clipboard.set_text(content)?;
     Ok(())
 }
+
+/// 读取剪贴板文本
+///
+/// Read clipboard text
+pub fn get() -> Result<String> {
+    let mut clipboard = Clipboard::new()?;
+    Ok(clipboard.get_text()?)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_clip() {
+        let content = "test".to_string();
+        assert!(set(content.clone()).is_ok());
+        assert_eq!(get().unwrap(), content);
+    }
+}

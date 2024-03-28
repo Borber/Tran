@@ -1,9 +1,13 @@
+use std::thread::sleep;
+
 use anyhow::Result;
 use mouse_position::mouse_position::Mouse;
 use tauri::Manager;
 use tauri::WebviewWindow;
 
 use selection::get_text;
+
+use crate::clip;
 
 /// 鼠标坐标与选中内容
 ///
@@ -17,10 +21,22 @@ pub struct ShowVO {
 }
 
 pub fn show(panel: &WebviewWindow, pin: bool) -> Result<()> {
-    let content = get_text();
-    if content.is_empty() {
-        return Ok(());
-    }
+    let s_copy = get_text();
+
+    let content = if s_copy.is_empty() {
+        // 等待 50ms 剪贴板更新
+        sleep(std::time::Duration::from_millis(50));
+
+        // 获取系统剪贴板内容
+        let copy = clip::get().unwrap_or_default();
+        if copy.is_empty() {
+            return Ok(());
+        } else {
+            copy
+        }
+    } else {
+        s_copy
+    };
 
     if pin {
         panel
