@@ -56,7 +56,7 @@ If you are a Chinese user but need to read in English, you can choose the instal
 # How to use?
 
 -   single translation
-    -   After selecting the text, quickly press the `CapsLock` key **twice**. You can make `Tran` lose focus and close automatically by clicking elsewhere.
+    -   After selecting the text, quickly press the `Shift` key **twice**. You can make `Tran` lose focus and close automatically by clicking elsewhere.
 -   Multiple translations
     -   After a single translation, drag the translation panel to make `Tran` fixed
     -   After pinning the panel, double-click a word or select long text `Tran` will be automatically translated
