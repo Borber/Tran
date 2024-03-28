@@ -75,10 +75,6 @@ It is recommended to install the following fonts:
 -   [MacOS](https://support.apple.com/guide/mac-help/mh15189/mac)
 -   Linux: wiki is your best tutorial
 
-## Known issues
-
--   Cannot be used in Foxit Reader
-
 # Contribution
 
 ## Develop

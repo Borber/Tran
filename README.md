@@ -78,10 +78,6 @@
 -   [MacOS](https://support.apple.com/zh-cn/guide/mac-help/mh15189/mac)
 -   Linux wiki 是你最好的教程
 
-## 已知问题
-
--   无法在福昕阅读器中使用
-
 # 贡献
 
 ## 参与开发
