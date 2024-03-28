@@ -1,5 +1,4 @@
 use std::sync::atomic::Ordering;
-use std::thread::sleep;
 
 use active_win_pos_rs::get_active_window;
 use anyhow::Result;
@@ -39,10 +38,9 @@ pub fn show(panel: &WebviewWindow, pin: bool) -> Result<()> {
     let s_copy = get_text();
 
     let content = if s_copy.is_empty() {
-        // 等待 50ms 剪贴板可能的更新
-        sleep(std::time::Duration::from_millis(50));
         // 获取系统剪贴板内容
-        let copy = clip::get().unwrap_or_default();
+        let copy = clip::get()?;
+
         if copy.is_empty() {
             return Ok(());
         } else {
@@ -91,6 +89,10 @@ pub fn show(panel: &WebviewWindow, pin: bool) -> Result<()> {
                 // Calculate the offset
                 x -= 60;
                 y += 20;
+
+                // 应该暂时保证窗口不被关闭
+                // pin when shortcut
+                PIN.store(true, Ordering::SeqCst);
 
                 panel
                     .emit("show", ShowVO { x, y, content, pin })

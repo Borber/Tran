@@ -33,6 +33,7 @@ const App = () => {
     const panel = getCurrent()
     const [result, Result] = createSignal<TransVO>()
     const [update, Update] = createSignal(false)
+    let pin = false
 
     onMount(async () => {
         // 监听事件， 显示panel
@@ -44,7 +45,9 @@ const App = () => {
             pin: boolean
         }>("show", async (pos) => {
             Result(undefined)
-            if (!pos.payload.pin) {
+            pin = pos.payload.pin
+
+            if (!pin) {
                 await panel.setPosition(
                     new PhysicalPosition(pos.payload.x, pos.payload.y)
                 )
@@ -121,9 +124,11 @@ const App = () => {
                     await invoke("copy", {
                         content,
                     })
-
-                    await panel.hide()
-                    Result(undefined)
+                    // 未固定则直接关闭
+                    if (!pin) {
+                        await panel.hide()
+                        Result(undefined)
+                    }
                 }}
             >
                 <Switch>

@@ -36,12 +36,6 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     // 监听快捷键
     spawn(move || {
         while let Ok(()) = key_r.recv() {
-            if common::PIN.load(Ordering::SeqCst) {
-                continue;
-            }
-            // 在快捷键调用时, 应该暂时保证窗口不被关闭
-            // pin when shortcut
-            common::PIN.store(true, Ordering::SeqCst);
             shortcut::show(&key_panel, false).expect("Shortcut key call failed")
         }
     });

@@ -15,7 +15,16 @@ pub fn set(content: String) -> Result<()> {
 /// Read clipboard text
 pub fn get() -> Result<String> {
     let mut clipboard = Clipboard::new()?;
-    Ok(clipboard.get_text()?)
+    for _ in 0..100 {
+        if let Ok(text) = clipboard.get_text() {
+            println!("get clipboard text: {}", text);
+            return Ok(text);
+        } else {
+            println!("Failed to get clipboard");
+            std::thread::sleep(std::time::Duration::from_millis(10));
+        }
+    }
+    Err(anyhow::anyhow!("Failed to get clipboard text"))
 }
 
 #[cfg(test)]
