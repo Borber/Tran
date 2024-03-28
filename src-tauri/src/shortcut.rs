@@ -1,5 +1,7 @@
+use std::sync::atomic::Ordering;
 use std::thread::sleep;
 
+use active_win_pos_rs::get_active_window;
 use anyhow::Result;
 use mouse_position::mouse_position::Mouse;
 use tauri::Manager;
@@ -8,6 +10,7 @@ use tauri::WebviewWindow;
 use selection::get_text;
 
 use crate::clip;
+use crate::common::{OLD, PIN};
 
 /// 鼠标坐标与选中内容
 ///
@@ -21,12 +24,23 @@ pub struct ShowVO {
 }
 
 pub fn show(panel: &WebviewWindow, pin: bool) -> Result<()> {
+    // 避免拖动翻译窗口导致触发翻译
+    match get_active_window() {
+        Ok(active_window) => {
+            if active_window.title == "Tran" {
+                return Ok(());
+            }
+        }
+        Err(_) => {
+            println!("error occurred while getting the active window");
+        }
+    }
+
     let s_copy = get_text();
 
     let content = if s_copy.is_empty() {
-        // 等待 30ms 剪贴板可能的更新
-        sleep(std::time::Duration::from_millis(30));
-
+        // 等待 50ms 剪贴板可能的更新
+        sleep(std::time::Duration::from_millis(50));
         // 获取系统剪贴板内容
         let copy = clip::get().unwrap_or_default();
         if copy.is_empty() {
@@ -37,6 +51,14 @@ pub fn show(panel: &WebviewWindow, pin: bool) -> Result<()> {
     } else {
         s_copy
     };
+
+    if PIN.load(Ordering::SeqCst) && content == OLD.read().as_str() {
+        // 避免重复翻译
+        return Ok(());
+    } else {
+        let mut old = OLD.write();
+        *old = content.clone();
+    }
 
     if pin {
         panel

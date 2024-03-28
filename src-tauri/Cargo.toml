@@ -1,6 +1,6 @@
 [package]
 name = "tran"
-version = "0.2.9"
+version = "0.2.10"
 description = "Tran translate the selected words"
 authors = ["Borber"]
 license = "GPLv3"
@@ -51,6 +51,8 @@ open = "5"
 
 rdev = { git = "https://github.com/fufesou/rdev.git" }
 crossbeam-channel = "0.5"
+
+active-win-pos-rs = "0.8"
 
 
 [features]

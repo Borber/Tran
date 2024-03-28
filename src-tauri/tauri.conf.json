@@ -1,6 +1,6 @@
 {
   "productName": "Tran",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "identifier": "com.borber.tran",
   "build": {
     "beforeDevCommand": "pnpm dev",
