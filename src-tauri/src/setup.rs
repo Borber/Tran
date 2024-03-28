@@ -36,7 +36,9 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     // 监听快捷键
     spawn(move || {
         while let Ok(()) = key_r.recv() {
-            shortcut::show(&key_panel, false).expect("Shortcut key call failed")
+            if !PIN.load(Ordering::SeqCst) {
+                shortcut::show(&key_panel, false).expect("Shortcut key call failed")
+            }
         }
     });
 
