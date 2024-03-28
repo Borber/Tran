@@ -117,9 +117,13 @@ const App = () => {
                     } else {
                         content = result()!.dicts[0].terms[0]
                     }
-                    invoke("copy", {
+
+                    await invoke("copy", {
                         content,
                     })
+
+                    await panel.hide()
+                    Result(undefined)
                 }}
             >
                 <Switch>

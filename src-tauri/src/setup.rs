@@ -1,14 +1,17 @@
-use std::{sync::atomic::Ordering, time::SystemTime};
+use std::{
+    sync::atomic::Ordering,
+    thread::{sleep, spawn},
+    time::SystemTime,
+};
 
 use crossbeam_channel::bounded;
 use mouse_position::mouse_position::Mouse;
 use rdev::{
     Button,
     EventType::{ButtonPress, ButtonRelease, KeyRelease},
-    Key::CapsLock,
+    Key,
 };
 use tauri::{App, Manager};
-use tokio::time::sleep;
 
 use crate::{
     common::{self, PIN},
@@ -31,7 +34,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     let (mouse_s, mouse_r) = bounded(1);
 
     // 监听快捷键
-    tokio::spawn(async move {
+    spawn(move || {
         while let Ok(()) = key_r.recv() {
             // pin when shortcut
             // 在快捷键调用时, 应该暂时保证窗口不被关闭
@@ -41,14 +44,14 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     });
 
     // 监听划词
-    tokio::spawn(async move {
+    spawn(move || {
         while let Ok(()) = mouse_r.recv() {
             shortcut::show(&mouse_panel, true).expect("Shortcut key call failed")
         }
     });
 
     // 监听快捷键 和 鼠标操作
-    tokio::spawn(async {
+    spawn(move || {
         // 双击capslock
         let mut double_capslock_cap = 0;
         // 划词翻译
@@ -59,7 +62,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
         let mut double_click_y = 0;
 
         rdev::listen(move |event| match event.event_type {
-            KeyRelease(CapsLock) => {
+            KeyRelease(Key::ShiftLeft) => {
                 let old = double_capslock_cap;
 
                 let now = SystemTime::now();
@@ -130,7 +133,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
         .expect("Failed to get panel window");
 
     // 监听panel移动
-    tokio::spawn(async move {
+    spawn(move || {
         panel.listen("tauri://move", move |_| {
             if !PIN.load(Ordering::SeqCst) {
                 PIN.store(true, Ordering::SeqCst)
@@ -143,7 +146,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
         .expect("Failed to get panel window");
 
     // 监听panel焦点
-    tokio::spawn(async move {
+    spawn(move || {
         loop {
             if !PIN.load(Ordering::SeqCst) && !panel.is_focused().unwrap_or(false) {
                 let _ = panel.hide();
@@ -151,7 +154,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                 let _ = panel.emit("clean", ());
                 PIN.store(false, Ordering::SeqCst)
             }
-            sleep(std::time::Duration::from_millis(100)).await;
+            sleep(std::time::Duration::from_millis(100));
         }
     });
 

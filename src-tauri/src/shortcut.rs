@@ -24,8 +24,8 @@ pub fn show(panel: &WebviewWindow, pin: bool) -> Result<()> {
     let s_copy = get_text();
 
     let content = if s_copy.is_empty() {
-        // 等待 50ms 剪贴板更新
-        sleep(std::time::Duration::from_millis(50));
+        // 等待 30ms 剪贴板可能的更新
+        sleep(std::time::Duration::from_millis(30));
 
         // 获取系统剪贴板内容
         let copy = clip::get().unwrap_or_default();
