@@ -22,7 +22,7 @@ pub async fn init() {
 // 从网络获取镜像地址
 async fn get() -> Result<Mirror> {
     let mirror = match CLIENT
-        .get("https://fastly.jsdelivr.net/gh/Borber/tran@master/resource/mirror.json")
+        .get("https://cdn.jsdelivr.net/gh/Borber/tran@master/resource/mirror.json")
         .send()
         .await
     {

@@ -35,7 +35,23 @@ const App = () => {
     const [update, Update] = createSignal(false)
     let pin = false
 
+    const close = async () => {
+        await invoke("pin", {
+            state: false,
+        })
+        await panel.hide()
+        Result(undefined)
+    }
+
     onMount(async () => {
+        // 生产环境, 全局取消右键菜单
+        // Production environment, cancel right-click menu
+        if (!import.meta.env.DEV) {
+            document.oncontextmenu = (event) => {
+                event.preventDefault()
+            }
+        }
+
         // 监听事件， 显示panel
         // Listen to events and display panel
         await listen<{
@@ -54,11 +70,10 @@ const App = () => {
 
                 // 移动位置之后需要保证窗口大小不变
                 await panel.setSize(new LogicalSize(256, 100))
-
                 await panel.show()
 
-                // pin when shortcut
                 // 在快捷键调用时, 接替 pin 达到不关闭的目的
+                // pin when shortcut
                 await panel.setFocus()
                 await invoke("pin", {
                     state: false,
@@ -72,38 +87,28 @@ const App = () => {
             })
         })
 
-        // 监听事件， 显示panel
-        // Listen to events and display panel
+        // 监听事件，清空翻译结果
+        // Listen to events and clear translation results
         await listen("clean", async () => {
             Result(undefined)
         })
 
-        // 监听事件, 固定
+        // 监听事件, 改变固定状态
+        // Listen to events and change pin state
         await listen("pin", () => {
             pin = true
         })
 
-        // 生产环境, 全局取消右键菜单;
-        if (!import.meta.env.DEV) {
-            document.oncontextmenu = (event) => {
-                event.preventDefault()
-            }
-        }
-
         window.addEventListener("keydown", async (e) => {
             if (e.key == "Escape") {
-                await invoke("pin", {
-                    state: false,
-                })
-                await panel.hide()
-                Result(undefined)
+                await close()
             }
         })
 
         await fetch("https://key.borber.top/TRAN_VERSION").then(
             async (resp) => {
                 const version = await resp.text()
-                Update(version != "0.2.11")
+                Update(version != "0.2.12")
             }
         )
     })
@@ -114,6 +119,7 @@ const App = () => {
                 data-tauri-drag-region
                 class="result"
                 // 因为全局的可拖拽导致双击正好能触发点击事件
+                // Because the draggable global causes the double click to trigger the click event
                 onClick={async (e) => {
                     let content
                     if (result() == undefined) {
@@ -129,13 +135,10 @@ const App = () => {
                     await invoke("copy", {
                         content,
                     })
+
                     // 未固定则直接关闭
                     if (!pin) {
-                        await invoke("pin", {
-                            state: false,
-                        })
-                        await panel.hide()
-                        Result(undefined)
+                        await close()
                     }
                 }}
             >

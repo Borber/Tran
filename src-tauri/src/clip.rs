@@ -15,6 +15,9 @@ pub fn set(content: String) -> Result<()> {
 /// Read clipboard text
 pub fn get() -> Result<String> {
     let mut clipboard = Clipboard::new()?;
+
+    // 因为有时因为电脑的电源策略, 你可能会需要长时间的等待劫持复制的程序写入剪贴板
+    // Because of the power policy of the computer, you may need to wait for long periods of time to write to the clipboard
     for _ in 0..100 {
         if let Ok(text) = clipboard.get_text() {
             println!("get clipboard text: {}", text);

@@ -21,8 +21,12 @@ use crate::{
 pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     let handle = app.handle();
 
+    // 初始化窗口
+    // Initialize the window
     window::panel(handle);
 
+    // 初始化托盘
+    // Initialize the tray
     tray::init(handle)?;
 
     let paneld = app
@@ -36,6 +40,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     let (mouse_s, mouse_r) = bounded(1);
 
     // 监听快捷键
+    // Listen for shortcut keys
     spawn(move || {
         while let Ok(()) = key_r.recv() {
             if !PIN.load(Ordering::SeqCst) {
@@ -45,16 +50,19 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     });
 
     // 监听划词
+    // Listen for word selection
     spawn(move || {
         while let Ok(()) = mouse_r.recv() {
-            shortcut::show(&mouse_panel, true).expect("Shortcut key call failed")
+            if PIN.load(Ordering::SeqCst) {
+                shortcut::show(&mouse_panel, true).expect("Selection call failed")
+            }
         }
     });
 
     // 监听快捷键 和 鼠标操作
     spawn(move || {
-        // 双击capslock
-        let mut double_capslock_cap = 0;
+        // 双击
+        let mut double_cap = 0;
         // 划词翻译
         let mut selected_cap = 0;
         // 双击鼠标左键
@@ -64,7 +72,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
 
         rdev::listen(move |event| match event.event_type {
             KeyRelease(Key::ShiftLeft) => {
-                let old = double_capslock_cap;
+                let old = double_cap;
 
                 let now = SystemTime::now();
                 let timestamp = now
@@ -74,9 +82,9 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
 
                 if now < old + 1000 {
                     key_s.send(()).expect("Channel send failed");
-                    double_capslock_cap = 0;
+                    double_cap = 0;
                 } else {
-                    double_capslock_cap = now;
+                    double_cap = now;
                 }
             }
             ButtonPress(Button::Left) => {
@@ -125,6 +133,12 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                     };
                 }
             }
+            KeyRelease(_) => {
+                // 仅处理连续双击按键的情况, 时间满足但中间若有其他按键按下则忽略
+                // Only handle continuous double clicks
+                double_cap = 0;
+            }
+
             _ => (),
         })
     });
@@ -138,6 +152,9 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
         panel.listen("tauri://move", move |_| {
             if !PIN.load(Ordering::SeqCst) {
                 PIN.store(true, Ordering::SeqCst);
+
+                // 发送通知, 避免拖动翻译窗口后直接双击关闭固定窗口
+                // Send notification to avoid dragging the translation window to close the pinned window
                 sender.emit("pin", ()).expect("Failed to emit pin event");
             }
         })
@@ -146,11 +163,13 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     let panel = paneld.clone();
 
     // 监听panel焦点
+    // Listen for panel focus
     spawn(move || {
         loop {
             if !PIN.load(Ordering::SeqCst) && !panel.is_focused().unwrap_or(false) {
                 let _ = panel.hide();
                 // 窗口隐藏后, 清空翻译结果
+                // Clear the translation result after the window is hidden
                 let _ = panel.emit("clean", ());
                 PIN.store(false, Ordering::SeqCst)
             }

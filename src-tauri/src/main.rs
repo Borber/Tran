@@ -41,6 +41,8 @@ async fn open(url: String) -> Resp<()> {
 }
 
 /// 固定窗口标识
+///
+/// Pin the window
 #[tauri::command]
 async fn pin(state: bool) {
     common::PIN.store(state, std::sync::atomic::Ordering::SeqCst);
