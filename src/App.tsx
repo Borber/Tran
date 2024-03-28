@@ -78,6 +78,11 @@ const App = () => {
             Result(undefined)
         })
 
+        // 监听事件, 固定
+        await listen("pin", () => {
+            pin = true
+        })
+
         // 生产环境, 全局取消右键菜单;
         if (!import.meta.env.DEV) {
             document.oncontextmenu = (event) => {
@@ -126,6 +131,9 @@ const App = () => {
                     })
                     // 未固定则直接关闭
                     if (!pin) {
+                        await invoke("pin", {
+                            state: false,
+                        })
                         await panel.hide()
                         Result(undefined)
                     }

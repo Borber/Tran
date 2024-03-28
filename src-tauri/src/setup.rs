@@ -25,10 +25,12 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
 
     tray::init(handle)?;
 
-    let key_panel = app
+    let paneld = app
         .get_webview_window("panel")
         .expect("Failed to get panel window");
-    let mouse_panel = key_panel.clone();
+
+    let key_panel = paneld.clone();
+    let mouse_panel = paneld.clone();
 
     let (key_s, key_r) = bounded(1);
     let (mouse_s, mouse_r) = bounded(1);
@@ -127,22 +129,21 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
         })
     });
 
-    let panel = app
-        .get_webview_window("panel")
-        .expect("Failed to get panel window");
+    let panel = paneld.clone();
+
+    let sender = paneld.clone();
 
     // 监听panel移动
     spawn(move || {
         panel.listen("tauri://move", move |_| {
             if !PIN.load(Ordering::SeqCst) {
-                PIN.store(true, Ordering::SeqCst)
+                PIN.store(true, Ordering::SeqCst);
+                sender.emit("pin", ()).expect("Failed to emit pin event");
             }
         })
     });
 
-    let panel = app
-        .get_webview_window("panel")
-        .expect("Failed to get panel window");
+    let panel = paneld.clone();
 
     // 监听panel焦点
     spawn(move || {
