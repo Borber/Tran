@@ -103,7 +103,7 @@ const App = () => {
         await fetch("https://key.borber.top/TRAN_VERSION").then(
             async (resp) => {
                 const version = await resp.text()
-                Update(version != "0.2.10")
+                Update(version != "0.2.11")
             }
         )
     })

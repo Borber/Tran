@@ -4992,7 +4992,7 @@ dependencies = [
 
 [[package]]
 name = "tran"
-version = "0.2.10"
+version = "0.2.11"
 dependencies = [
  "active-win-pos-rs",
  "anyhow",
