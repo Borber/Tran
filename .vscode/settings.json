@@ -1,5 +1,6 @@
 {
     "deno.enablePaths": ["./script"],
     "deno.lint": true,
-    "deno.unstable": true
+    "deno.unstable": true,
+    "rust-analyzer.linkedProjects": [".\\src-tauri\\Cargo.toml"]
 }
