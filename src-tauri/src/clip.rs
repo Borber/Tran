@@ -20,10 +20,8 @@ pub fn get() -> Result<String> {
     // Because of the power policy of the computer, you may need to wait for long periods of time to write to the clipboard
     for _ in 0..100 {
         if let Ok(text) = clipboard.get_text() {
-            println!("get clipboard text: {}", text);
             return Ok(text);
         } else {
-            println!("Failed to get clipboard");
             std::thread::sleep(std::time::Duration::from_millis(10));
         }
     }

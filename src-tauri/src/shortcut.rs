@@ -57,7 +57,7 @@ pub fn show(panel: &WebviewWindow, pin: bool) -> Result<()> {
         return Ok(());
     } else {
         let mut old = OLD.write();
-        *old = content.clone();
+        old.clone_from(&content);
     }
 
     // 如果固定则直接显示
