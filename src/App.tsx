@@ -2,44 +2,21 @@ import "./App.css"
 
 import { invoke } from "@tauri-apps/api/core"
 import { listen } from "@tauri-apps/api/event"
-import {
-    getCurrent,
-    LogicalSize,
-    PhysicalPosition,
-} from "@tauri-apps/api/window"
+import { getCurrent } from "@tauri-apps/api/window"
 import { createSignal, For, Match, onMount, Show, Switch } from "solid-js"
 import { ThreeDots } from "solid-spinner"
 
 import { UpdateIcon } from "./icon"
-import { Resp } from "./model/resp"
-
-interface TransVO {
-    word: boolean
-    trans: Tran[]
-    dicts: Dict[]
-}
-
-interface Dict {
-    pos: string
-    terms: string[]
-}
-
-interface Tran {
-    typ: number
-    data: string
-}
+import { Resp, TransVO } from "./model/resp"
 
 const App = () => {
     const panel = getCurrent()
     const [result, Result] = createSignal<TransVO>()
     const [update, Update] = createSignal(false)
-    let pin = false
 
     const close = async () => {
-        await invoke("pin", {
-            state: false,
-        })
         await panel.hide()
+        await invoke("unpin")
         Result(undefined)
     }
 
@@ -52,51 +29,21 @@ const App = () => {
             }
         }
 
-        // 监听事件， 显示panel
+        // 监听事件， 显示翻译结果
         // Listen to events and display panel
-        await listen<{
-            x: number
-            y: number
-            content: string
-            pin: boolean
-        }>("show", async (pos) => {
-            Result(undefined)
-            pin = pos.payload.pin
-
-            if (!pin) {
-                await panel.setPosition(
-                    new PhysicalPosition(pos.payload.x, pos.payload.y)
-                )
-
-                // 移动位置之后需要保证窗口大小不变
-                await panel.setSize(new LogicalSize(256, 100))
-                await panel.show()
-
-                // 在快捷键调用时, 接替 pin 达到不关闭的目的
-                // pin when shortcut
-                await panel.setFocus()
-                await invoke("pin", {
-                    state: false,
-                })
-            }
-
-            await invoke<Resp<TransVO>>("translate", {
-                content: pos.payload.content,
-            }).then((resp) => {
-                Result(resp.data)
-            })
+        await listen<Resp<TransVO>>("show", async (pos) => {
+            Result(pos.payload.data)
+            // 显示完成后取消临时固定
+            // After displaying, cancel temporary pin
+            await invoke("untmp")
         })
 
         // 监听事件，清空翻译结果
         // Listen to events and clear translation results
-        await listen("clean", async () => {
+        await listen("reset", async () => {
             Result(undefined)
-        })
-
-        // 监听事件, 改变固定状态
-        // Listen to events and change pin state
-        await listen("pin", () => {
-            pin = true
+            await panel.show()
+            await panel.setFocus()
         })
 
         window.addEventListener("keydown", async (e) => {
@@ -134,6 +81,10 @@ const App = () => {
 
                     await invoke("copy", {
                         content,
+                    })
+
+                    let pin = await invoke<Resp<boolean>>("pin").then((pos) => {
+                        return pos.data
                     })
 
                     // 未固定则直接关闭

@@ -1,7 +1,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use manager::api;
-use manager::api::TransVO;
+use std::sync::atomic::Ordering;
+
 use resp::Resp;
 
 mod clip;
@@ -15,14 +15,6 @@ mod shortcut;
 mod tray;
 mod util;
 mod window;
-
-/// 翻译文本
-///
-/// Translate text
-#[tauri::command]
-async fn translate(content: String) -> Resp<TransVO> {
-    api::translate(&content).await.into()
-}
 
 /// 写入剪贴板
 ///
@@ -44,8 +36,24 @@ async fn open(url: String) -> Resp<()> {
 ///
 /// Pin the window
 #[tauri::command]
-async fn pin(state: bool) {
-    common::PIN.store(state, std::sync::atomic::Ordering::SeqCst);
+async fn pin() -> Resp<bool> {
+    Resp::success(common::PIN.load(Ordering::SeqCst))
+}
+
+/// 取消固定窗口标识
+///
+/// Unpin the window
+#[tauri::command]
+async fn unpin() {
+    common::PIN.store(false, Ordering::SeqCst);
+}
+
+/// 取消临时固定窗口标识
+///
+/// Unpin the temporary window
+#[tauri::command]
+async fn untmp() {
+    common::TMP_PIN.store(false, Ordering::SeqCst);
 }
 
 #[tokio::main]
@@ -58,7 +66,7 @@ async fn main() {
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_single_instance::init(|_, _, _| {}))
         .setup(setup::handler)
-        .invoke_handler(tauri::generate_handler![copy, open, translate, pin,])
+        .invoke_handler(tauri::generate_handler![copy, open, pin, unpin, untmp])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

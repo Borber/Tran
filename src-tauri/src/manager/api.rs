@@ -8,7 +8,7 @@ use serde::Serialize;
 use crate::{common::CLIENT, config::MODE, lang, manager::mirror};
 
 /// 翻译结果
-#[derive(Debug, Serialize)]
+#[derive(Debug, Clone, Serialize)]
 pub struct TransVO {
     /// 是否为单词
     pub word: bool,
@@ -18,13 +18,13 @@ pub struct TransVO {
     pub dicts: Option<Vec<Dict>>,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Dict {
     pub pos: String,
     pub terms: Vec<String>,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Tran {
     // 0: 文本
     // 1: 换行

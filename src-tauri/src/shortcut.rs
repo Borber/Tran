@@ -1,111 +1,88 @@
 use std::sync::atomic::Ordering;
 
-use active_win_pos_rs::get_active_window;
 use anyhow::Result;
 use mouse_position::mouse_position::Mouse;
-use selection::get_text;
+use tauri::LogicalSize;
 use tauri::Manager;
+use tauri::PhysicalPosition;
 use tauri::WebviewWindow;
 
-use crate::clip;
-use crate::common::{OLD, PIN};
+use crate::common::PIN;
+use crate::manager::api::translate;
+use crate::manager::api::TransVO;
+use crate::resp::Resp;
 
 /// 鼠标坐标与选中内容
 ///
 /// Mouse coordinates and selected content
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct ShowVO {
-    pub x: i32,
-    pub y: i32,
     pub content: String,
-    pub pin: bool,
 }
 
-pub fn show(panel: &WebviewWindow, pin: bool) -> Result<()> {
-    // 避免拖动翻译窗口导致触发翻译
-    // Avoid triggering translation when dragging the translation window
-    match get_active_window() {
-        Ok(active_window) => {
-            if active_window.title == "Tran" {
-                return Ok(());
-            }
-        }
-        Err(_) => {
-            println!("error occurred while getting the active window");
-        }
-    }
-
-    // 模拟复制获取文本
-    // Simulate copy and get text
-    let content = get_text();
-
-    let content = if content.is_empty() {
-        // 获取系统剪贴板内容
-        match clip::get() {
-            Ok(copy) => copy,
-            Err(e) => {
-                println!("error occurred while getting clipboard content: {:?}", e);
-                return Ok(());
-            }
-        }
-    } else {
-        content
-    };
-
-    // 固定时避免重复翻译
-    if PIN.load(Ordering::SeqCst) && content == OLD.read().as_str() {
+pub fn show(panel: &WebviewWindow, content: String) -> Result<()> {
+    // 如果内容为空则直接返回
+    // If the content is empty, return directly
+    if content.is_empty() {
         return Ok(());
-    } else {
-        let mut old = OLD.write();
-        old.clone_from(&content);
     }
 
-    // 如果固定则直接显示
-    // Show if pinned
-    if pin {
-        panel
-            .emit(
-                "show",
-                ShowVO {
-                    x: 0,
-                    y: 0,
-                    content,
-                    pin,
-                },
-            )
+    // 将 content 翻译, 翻译结束发送到前端显示事件
+    // Translate the content and send it to the front end display event
+    let sander = panel.clone();
+    tauri::async_runtime::spawn(async move {
+        let result = translate(&content).await;
+        sander
+            .emit::<Resp<TransVO>>("show", result.into())
             .expect("Failed to emit show event");
-        return Ok(());
+    });
+
+    // 如果固定则完成
+    // If pined, complete
+    if !PIN.load(Ordering::SeqCst) {
+        // 未固定则发送事件
+        // If not pined, send event
+        let position = Mouse::get_mouse_position();
+        let (x, y) = match position {
+            Mouse::Position { mut x, mut y } => {
+                #[cfg(target_os = "macos")]
+                {
+                    let monitor = panel
+                        .current_monitor()
+                        .expect("Failed to get panel current monitor")
+                        .expect("Panel is none");
+                    let scale_factor = monitor.scale_factor();
+                    x = (x as f64 * scale_factor) as i32;
+                    y = (y as f64 * scale_factor) as i32;
+                }
+
+                // 计算偏移量
+                // Calculate the offset
+                x -= 60;
+                y += 20;
+                (x, y)
+            }
+            Mouse::Error => {
+                println!("Error getting mouse position");
+                (0, 0)
+            }
+        };
+
+        // 设置窗口位置
+        // Set the window position
+        panel.set_position(PhysicalPosition { x, y })?;
+
+        // 设置窗口大小
+        // Set the window size
+        panel.set_size(LogicalSize {
+            width: 256,
+            height: 100,
+        })?;
     }
 
-    let position = Mouse::get_mouse_position();
-    match position {
-        Mouse::Position { mut x, mut y } => {
-            #[cfg(target_os = "macos")]
-            {
-                let monitor = panel
-                    .current_monitor()
-                    .expect("Failed to get panel current monitor")
-                    .expect("Panel is none");
-                let scale_factor = monitor.scale_factor();
-                x = (x as f64 * scale_factor) as i32;
-                y = (y as f64 * scale_factor) as i32;
-            }
-
-            // 计算偏移量
-            // Calculate the offset
-            x -= 60;
-            y += 20;
-
-            // 应该暂时保证窗口不被关闭
-            // pin when shortcut
-            PIN.store(true, Ordering::SeqCst);
-
-            panel
-                .emit("show", ShowVO { x, y, content, pin })
-                .expect("Failed to emit show event");
-        }
-        Mouse::Error => println!("Error getting mouse position"),
-    };
+    // 发送清除事件
+    // Send clean event
+    panel.emit("reset", ()).expect("Failed to emit clean event");
 
     Ok(())
 }

@@ -52,8 +52,6 @@ open = "5"
 rdev = { git = "https://github.com/fufesou/rdev.git" }
 crossbeam-channel = "0.5"
 
-active-win-pos-rs = "0.8"
-
 
 [features]
 custom-protocol = ["tauri/custom-protocol"]
@@ -64,4 +62,3 @@ lto = true
 codegen-units = 1
 panic = "abort"
 strip = "symbols"
-
