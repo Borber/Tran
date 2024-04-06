@@ -42,8 +42,6 @@ const App = () => {
         // Listen to events and clear translation results
         await listen("reset", async () => {
             Result(undefined)
-            await panel.show()
-            await panel.setFocus()
         })
 
         window.addEventListener("keydown", async (e) => {

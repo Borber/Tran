@@ -27,6 +27,10 @@ pub fn show(panel: &WebviewWindow, content: String) -> Result<()> {
         return Ok(());
     }
 
+    // 重置窗口
+    // Reset the window
+    panel.emit("reset", ())?;
+
     // 将 content 翻译, 翻译结束发送到前端显示事件
     // Translate the content and send it to the front end display event
     let sander = panel.clone();
@@ -78,6 +82,14 @@ pub fn show(panel: &WebviewWindow, content: String) -> Result<()> {
             width: 256,
             height: 100,
         })?;
+
+        // 设置窗口可见
+        // Set the window visible
+        panel.show()?;
+
+        // 窗口获得焦点
+        // Get the window focus
+        panel.set_focus()?;
     }
 
     // 发送清除事件
