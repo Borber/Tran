@@ -199,7 +199,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                 let _ = panel.hide();
                 // 窗口隐藏后, 清空翻译结果
                 // Clear the translation result after the window is hidden
-                let _ = panel.emit("clean", ());
+                let _ = panel.emit("reset", ());
                 PIN.store(false, Ordering::SeqCst)
             }
             sleep(std::time::Duration::from_millis(100));
