@@ -35,7 +35,7 @@ fn menu(handle: &AppHandle) -> Result<Menu<Wry>> {
         .expect("Failed to create menu item github");
     let telegram = MenuItem::with_id(handle, "telegram", "Telegram", true, None::<&str>)
         .expect("Failed to create menu item telegram");
-    let version = MenuItem::with_id(handle, "version", "v0.2.12", false, None::<&str>)
+    let version = MenuItem::with_id(handle, "version", "v0.2.13", false, None::<&str>)
         .expect("Failed to create menu item version");
     let about = Submenu::with_items(handle, "About", true, &[&github, &telegram, &version])
         .expect("Failed to create submenu item mod.");

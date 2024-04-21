@@ -1,20 +1,19 @@
 use std::{
     sync::atomic::Ordering,
     thread::{sleep, spawn},
-    time::SystemTime,
 };
 
 use crossbeam_channel::bounded;
 use mouse_position::mouse_position::Mouse;
 use rdev::{
     Button,
-    EventType::{ButtonPress, ButtonRelease, KeyRelease},
+    EventType::{ButtonPress, ButtonRelease, KeyPress, KeyRelease},
     Key,
 };
 use tauri::{App, Manager};
 
 use crate::{
-    common::{self, OLD, PIN, TMP_PIN},
+    common::{self, OLD, PIN, SIMULATION, TMP_PIN},
     shortcut, tray, util, window,
 };
 
@@ -78,54 +77,85 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
 
     // 监听快捷键 和 鼠标操作
     spawn(move || {
+        // 检测是否快速按下并抬起按键
+        // Check if the key is quickly pressed and released
+        let mut fast = 0;
         // 双击
         // Double click
-        let mut double_cap = 0;
+        let mut double = 0;
         // 划词翻译
         // Selection translation
-        let mut selected_cap = 0;
+        let mut selected = 0;
         // 双击鼠标左键
         // Double click mouse left
-        let mut double_click_cap = 0;
+        let mut double_click = 0;
         let mut double_click_x = 0;
         let mut double_click_y = 0;
 
+        // 确定按键
+        // Confirm the key
+        let key = Key::ShiftLeft;
+
         rdev::listen(move |event| match event.event_type {
-            KeyRelease(Key::ShiftLeft) => {
-                let old = double_cap;
+            KeyPress(k) => {
+                // 如果按键不是设置的按键则忽略
+                // If the key is not the setting key, ignore
+                if k != key {
+                    return;
+                }
+                // 如果在模拟中则忽略
+                // If in simulation, ignore
+                if SIMULATION.load(Ordering::SeqCst) {
+                    return;
+                }
 
-                let now = SystemTime::now();
-                let timestamp = now
-                    .duration_since(SystemTime::UNIX_EPOCH)
-                    .expect("Time went backwards");
-                let now = timestamp.as_millis() as u64;
+                if fast == 0 {
+                    let now = util::now();
+                    fast = now;
+                }
+            }
+            KeyRelease(k) => {
+                // 如果按键不是设置的按键则忽略
+                // If the key is not the setting key, ignore
+                if k != key {
+                    // 仅处理连续双击按键的情况, 时间满足但中间若有其他按键按下则忽略
+                    // Only handle continuous double clicks
+                    double = 0;
+                    return;
+                }
+                // 如果在模拟中则忽略
+                // If in simulation, ignore
+                if SIMULATION.load(Ordering::SeqCst) {
+                    return;
+                }
 
+                let now = util::now();
+
+                if now > fast + 500 {
+                    fast = 0;
+                    return;
+                }
+                fast = 0;
+
+                let old = double;
                 if now < old + 1000 {
                     key_s.send(()).expect("Channel send failed");
-                    double_cap = 0;
+                    double = 0;
                 } else {
-                    double_cap = now;
+                    double = now;
                 }
             }
             ButtonPress(Button::Left) => {
                 if common::PIN.load(Ordering::SeqCst) {
-                    let now = SystemTime::now();
-                    let timestamp = now
-                        .duration_since(SystemTime::UNIX_EPOCH)
-                        .expect("Time went backwards");
-                    let now = timestamp.as_millis() as u64;
-                    selected_cap = now;
+                    let now = util::now();
+                    selected = now;
                 }
             }
             ButtonRelease(Button::Left) => {
                 if common::PIN.load(Ordering::SeqCst) {
-                    let now = SystemTime::now();
-                    let timestamp = now
-                        .duration_since(SystemTime::UNIX_EPOCH)
-                        .expect("Time went backwards");
-                    let now = timestamp.as_millis() as u64;
+                    let now = util::now();
 
-                    let old = selected_cap;
+                    let old = selected;
                     if now >= old + 500 {
                         match mouse_s.send(()) {
                             Ok(_) => (),
@@ -137,7 +167,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                     }
 
                     // 检测双击
-                    let old = double_click_cap;
+                    let old = double_click;
                     let x = double_click_x;
                     let y = double_click_y;
 
@@ -154,7 +184,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                                     }
                                 }
                             } else {
-                                double_click_cap = now;
+                                double_click = now;
                                 double_click_x = x1;
                                 double_click_y = y1;
                             }
@@ -163,12 +193,6 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                     };
                 }
             }
-            KeyRelease(_) => {
-                // 仅处理连续双击按键的情况, 时间满足但中间若有其他按键按下则忽略
-                // Only handle continuous double clicks
-                double_cap = 0;
-            }
-
             _ => (),
         })
     });

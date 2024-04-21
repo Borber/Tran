@@ -10,6 +10,7 @@ pub static CLIENT: Lazy<Client> = Lazy::new(Client::new);
 pub static PIN: Lazy<Arc<AtomicBool>> = Lazy::new(|| Arc::new(AtomicBool::new(false)));
 pub static TMP_PIN: Lazy<Arc<AtomicBool>> = Lazy::new(|| Arc::new(AtomicBool::new(false)));
 pub static OLD: Lazy<Arc<RwLock<String>>> = Lazy::new(|| Arc::new(RwLock::new(String::new())));
+pub static SIMULATION: Lazy<Arc<AtomicBool>> = Lazy::new(|| Arc::new(AtomicBool::new(false)));
 
 pub async fn init() {
     config::load();
