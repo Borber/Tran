@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@tauri-apps/api':
-    specifier: ^2.0.0-beta.7
-    version: 2.0.0-beta.7
+    specifier: ^2.0.0-beta.9
+    version: 2.0.0-beta.9
   solid-js:
     specifier: ^1.8.17
     version: 1.8.17
@@ -723,8 +723,8 @@ packages:
     dev: true
     optional: true
 
-  /@tauri-apps/api@2.0.0-beta.7:
-    resolution: {integrity: sha512-cM7SJQP4DBkLLMOdybLFYUURWn/tng2FEdAnXlu42f3NhFxKL4KVeeQTkuwlgC7ePwwwvDSqiXGiF+dKOadY7w==}
+  /@tauri-apps/api@2.0.0-beta.9:
+    resolution: {integrity: sha512-WFwFsqvvQBwGFL26eHoM+zaSF3wzAin3Itcl/KBGdCtPrconjUtOGcIJdg8jCyBqoU9bznhwF51TsRssw6SZwA==}
     engines: {node: '>= 18', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
     dev: false
 
