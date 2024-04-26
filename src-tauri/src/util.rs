@@ -1,8 +1,9 @@
 use std::{path::PathBuf, sync::atomic::Ordering, time::SystemTime};
 
+use rdev::Key;
 use selection::get_text;
 
-use crate::{clip, common::SIMULATION};
+use crate::{clip, common::SIMULATION, config::KEY};
 
 /// 模拟获取复制文本
 ///
@@ -52,4 +53,16 @@ pub fn get_exe_dir() -> PathBuf {
         .parent()
         .expect("Failed to get current executable parent directory")
         .to_path_buf()
+}
+
+/// 获取当前指定快捷键
+///
+/// Get current key
+pub fn key() -> Key {
+    let key = KEY.load(Ordering::SeqCst);
+    match key {
+        1 => Key::ControlLeft,
+        2 => Key::CapsLock,
+        _ => Key::ShiftLeft,
+    }
 }

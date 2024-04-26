@@ -1,5 +1,5 @@
 use std::sync::{
-    atomic::{AtomicBool, Ordering},
+    atomic::{AtomicBool, AtomicU8, Ordering},
     Arc,
 };
 
@@ -18,12 +18,22 @@ pub struct Config {
     ///
     /// Mode, true: mirror mode, false: direct mode
     pub mode: bool,
+
+    /// 快捷键
+    ///
+    /// Key, 0: shift, 1: ctrl, 2: caps
+    pub key: u8,
 }
 
-/// 全局配置
+/// API模式
 ///
-/// Global config
+/// API mode
 pub static MODE: Lazy<Arc<AtomicBool>> = Lazy::new(|| Arc::new(AtomicBool::new(true)));
+
+/// 快捷键配置
+///
+/// Key config
+pub static KEY: Lazy<Arc<AtomicU8>> = Lazy::new(|| Arc::new(AtomicU8::new(0)));
 
 /// 读取配置
 ///
@@ -38,8 +48,10 @@ pub fn load() {
         let config = std::fs::read_to_string(path).expect("Failed to read config");
         let config = serde_json::from_str::<Config>(&config).expect("Failed to parse config");
         MODE.store(config.mode, Ordering::SeqCst);
+        KEY.store(config.key, Ordering::SeqCst);
     } else {
         MODE.store(true, Ordering::SeqCst);
+        KEY.store(0, Ordering::SeqCst);
     }
 }
 
@@ -49,6 +61,7 @@ pub fn load() {
 fn save() -> Result<()> {
     let config = Config {
         mode: MODE.load(Ordering::SeqCst),
+        key: KEY.load(Ordering::SeqCst),
     };
     let exe_dir = util::get_exe_dir();
     let path = exe_dir.join("config.json");
@@ -63,4 +76,12 @@ fn save() -> Result<()> {
 pub fn mode(mode: bool) {
     MODE.store(mode, Ordering::SeqCst);
     save().expect("Failed to save config after switch mode");
+}
+
+/// 切换快捷键
+///
+/// switch key
+pub fn key(key: u8) {
+    KEY.store(key, Ordering::SeqCst);
+    save().expect("Failed to save config after switch key");
 }

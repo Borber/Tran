@@ -8,7 +8,6 @@ use mouse_position::mouse_position::Mouse;
 use rdev::{
     Button,
     EventType::{ButtonPress, ButtonRelease, KeyPress, KeyRelease},
-    Key,
 };
 use tauri::{App, Manager};
 
@@ -94,13 +93,14 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
 
         // 确定按键
         // Confirm the key
-        let key = Key::ShiftLeft;
+        // let k =
+        // let key = Key::ShiftLeft;
 
         rdev::listen(move |event| match event.event_type {
             KeyPress(k) => {
                 // 如果按键不是设置的按键则忽略
                 // If the key is not the setting key, ignore
-                if k != key {
+                if k != util::key() {
                     return;
                 }
                 // 如果在模拟中则忽略
@@ -117,7 +117,7 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
             KeyRelease(k) => {
                 // 如果按键不是设置的按键则忽略
                 // If the key is not the setting key, ignore
-                if k != key {
+                if k != util::key() {
                     // 仅处理连续双击按键的情况, 时间满足但中间若有其他按键按下则忽略
                     // Only handle continuous double clicks
                     double = 0;
