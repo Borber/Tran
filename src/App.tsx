@@ -20,6 +20,21 @@ const App = () => {
         Result(undefined)
     }
 
+    const copy = async (content: string) => {
+        await invoke("copy", {
+            content,
+        })
+
+        let pin = await invoke<Resp<boolean>>("pin").then((pos) => {
+            return pos.data
+        })
+
+        // 未固定则直接关闭
+        if (!pin) {
+            await close()
+        }
+    }
+
     onMount(async () => {
         // 生产环境, 全局取消右键菜单
         // Production environment, cancel right-click menu
@@ -69,25 +84,12 @@ const App = () => {
                     let content
                     if (result() == undefined) {
                         return
-                    } else if (!result()?.word) {
+                    }
+                    if (!result()?.word) {
                         content = e.target.innerHTML
                             .replace(/<br>/g, "\r\n")
                             .replace(/&nbsp;/g, " ")
-                    } else {
-                        content = result()!.dicts[0].terms[0]
-                    }
-
-                    await invoke("copy", {
-                        content,
-                    })
-
-                    let pin = await invoke<Resp<boolean>>("pin").then((pos) => {
-                        return pos.data
-                    })
-
-                    // 未固定则直接关闭
-                    if (!pin) {
-                        await close()
+                        await copy(content)
                     }
                 }}
             >
@@ -115,6 +117,9 @@ const App = () => {
                                             <div
                                                 data-tauri-drag-region
                                                 class="dict-term"
+                                                onClick={async () => {
+                                                    await copy(term)
+                                                }}
                                             >
                                                 {term}
                                             </div>

@@ -40,6 +40,11 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     // Listen for shortcut keys
     spawn(move || {
         while let Ok(()) = key_r.recv() {
+            // 防止在 panel 中再次翻译
+            // Prevent the translation from being repeated in the panel
+            if panel.is_focused().unwrap_or(false) {
+                continue;
+            }
             if !PIN.load(Ordering::SeqCst) {
                 // 模拟复制获取文本, fallback 到系统剪贴板
                 // Simulate copy and get text, fallback to system clipboard
@@ -58,6 +63,11 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     // Listen for word selection
     spawn(move || {
         while let Ok(()) = mouse_r.recv() {
+            // 防止在 panel 中再次翻译
+            // Prevent the translation from being repeated in the panel
+            if panel.is_focused().unwrap_or(false) {
+                continue;
+            }
             if PIN.load(Ordering::SeqCst) {
                 // 模拟复制获取文本, 不 fallback 到系统剪贴板
                 // Simulate copy and get text, do not fallback to system clipboard

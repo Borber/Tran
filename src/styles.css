@@ -190,7 +190,6 @@ input:-webkit-autofill {
   width: 100%;
   overflow: hidden;
   box-sizing: border-box;
-  background-color: #1e1e1e;
   border: #434244 1px solid;
 }
 
