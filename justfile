@@ -19,3 +19,11 @@ up:
     pnpm up --interactive --latest; \
     cd ./src-tauri; \
     cargo update
+
+# 提交依赖更新
+gu:
+    git add ./package.json; \
+    git add ./pnpm-lock.yaml; \
+    git add ./src-tauri/Cargo.toml; \
+    git add ./src-tauri/Cargo.lock; \
+    git commit -m "Update dependencies";
