@@ -111,7 +111,7 @@
 
 vercel proxy google translate
 
--   仅消耗流量, 不消耗函数运行次数
+-   消耗 Edge Requests
 
 [![vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/Borber/v2g)
 

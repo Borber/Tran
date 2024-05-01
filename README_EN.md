@@ -108,7 +108,7 @@ More mirrors can support more people, so you are encouraged to create mirrors.
 
 vercel proxy google translate
 
--   Only consumes traffic, not the number of function runs
+-   consumes Edge Requests
 
 [![vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/Borber/v2g)
 
