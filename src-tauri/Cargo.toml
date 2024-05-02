@@ -13,7 +13,6 @@ tauri-build = { version = "2.0.0-beta", features = [] }
 
 [dependencies]
 tauri = { version = "2.0.0-beta", features = ["tray-icon"] }
-tauri-plugin-process = "2.0.0-beta"
 tauri-plugin-single-instance = "2.0.0-beta"
 
 # For base
@@ -52,9 +51,6 @@ open = "5"
 rdev = { git = "https://github.com/fufesou/rdev.git" }
 crossbeam-channel = "0.5"
 
-
-[features]
-custom-protocol = ["tauri/custom-protocol"]
 
 [profile.release]
 opt-level = "z"

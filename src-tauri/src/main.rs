@@ -63,7 +63,6 @@ async fn main() {
     common::init().await;
 
     tauri::Builder::default()
-        .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_single_instance::init(|_, _, _| {}))
         .setup(setup::handler)
         .invoke_handler(tauri::generate_handler![copy, open, pin, unpin, untmp])
