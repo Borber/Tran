@@ -3544,9 +3544,9 @@ dependencies = [
 
 [[package]]
 name = "schemars"
-version = "0.8.17"
+version = "0.8.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7f55c82c700538496bdc329bb4918a81f87cc8888811bd123cf325a0f2f8d309"
+checksum = "fc6e7ed6919cb46507fb01ff1654309219f62b4d603822501b0b80d42f6f21ef"
 dependencies = [
  "dyn-clone",
  "indexmap 1.9.3",
@@ -3558,9 +3558,9 @@ dependencies = [
 
 [[package]]
 name = "schemars_derive"
-version = "0.8.17"
+version = "0.8.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83263746fe5e32097f06356968a077f96089739c927a61450efa069905eec108"
+checksum = "185f2b7aa7e02d418e453790dde16890256bbd2bcd04b7dc5348811052b53f49"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -4188,9 +4188,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-build"
-version = "2.0.0-beta.13"
+version = "2.0.0-beta.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "abcf98a9b4527567c3e5ca9723431d121e001c2145651b3fa044d22b5e025a7e"
+checksum = "0d6cf9e29e8b4f6be6e505b96196e31fc6ff7574af5405eb3f26507f9828f02f"
 dependencies = [
  "anyhow",
  "cargo_toml",
@@ -4309,9 +4309,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-utils"
-version = "2.0.0-beta.13"
+version = "2.0.0-beta.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d4709765385f035338ecc330f3fba753b8ee283c659c235da9768949cdb25469"
+checksum = "1d236b18d5e37df540e55c99ceec3868da9a861b4089189cca299d6607c9dcd9"
 dependencies = [
  "brotli",
  "cargo_metadata",
