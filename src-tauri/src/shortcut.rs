@@ -10,7 +10,7 @@ use tauri::WebviewWindow;
 use crate::common::PIN;
 use crate::manager::api::translate;
 use crate::manager::api::TransVO;
-use crate::resp::Resp;
+use crate::resp::R;
 
 /// 鼠标坐标与选中内容
 ///
@@ -33,7 +33,7 @@ pub fn show(panel: &WebviewWindow, content: String) -> Result<()> {
     tauri::async_runtime::spawn(async move {
         let result = translate(&content).await;
         sander
-            .emit::<Resp<TransVO>>("show", result.into())
+            .emit::<R<TransVO>>("show", result.into())
             .expect("Failed to emit show event");
     });
 

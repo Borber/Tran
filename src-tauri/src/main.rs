@@ -2,7 +2,7 @@
 
 use std::sync::atomic::Ordering;
 
-use resp::Resp;
+use resp::R;
 
 mod clip;
 mod common;
@@ -20,7 +20,7 @@ mod window;
 ///
 /// Write to clipboard
 #[tauri::command]
-fn copy(content: String) -> Resp<()> {
+fn copy(content: String) -> R<()> {
     clip::set(content).into()
 }
 
@@ -28,7 +28,7 @@ fn copy(content: String) -> Resp<()> {
 ///
 /// Open the specified link
 #[tauri::command]
-async fn open(url: String) -> Resp<()> {
+async fn open(url: String) -> R<()> {
     open::that(url).map_err(anyhow::Error::msg).into()
 }
 
@@ -36,8 +36,8 @@ async fn open(url: String) -> Resp<()> {
 ///
 /// Pin the window
 #[tauri::command]
-async fn pin() -> Resp<bool> {
-    Resp::success(common::PIN.load(Ordering::SeqCst))
+async fn pin() -> R<bool> {
+    R::success(common::PIN.load(Ordering::SeqCst))
 }
 
 /// 取消固定窗口标识
