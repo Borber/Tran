@@ -74,9 +74,8 @@ const App = () => {
     })
 
     return (
-        <div class="panel" data-tauri-drag-region>
+        <div data-tauri-drag-region class="panel">
             <div
-                data-tauri-drag-region
                 class="result"
                 // 因为全局的可拖拽导致双击正好能触发点击事件
                 // Because the draggable global causes the double click to trigger the click event
@@ -95,7 +94,7 @@ const App = () => {
             >
                 <Switch>
                     <Match when={result() == undefined}>
-                        <div data-tauri-drag-region>
+                        <div>
                             翻译中{`\u00A0`}
                             <ThreeDots width={20} height={10} />
                         </div>
@@ -103,19 +102,13 @@ const App = () => {
                     <Match when={result()?.word}>
                         <For each={result()!.dicts}>
                             {(dict) => (
-                                <div data-tauri-drag-region class="dict">
+                                <div class="dict">
                                     <Show when={dict.pos != ""}>
-                                        <div
-                                            data-tauri-drag-region
-                                            class="dict-pos"
-                                        >
-                                            {dict.pos}
-                                        </div>
+                                        <div class="dict-pos">{dict.pos}</div>
                                     </Show>
                                     <For each={dict.terms}>
                                         {(term) => (
                                             <div
-                                                data-tauri-drag-region
                                                 class="dict-term"
                                                 onClick={async () => {
                                                     await copy(term)
