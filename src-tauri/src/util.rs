@@ -2,8 +2,9 @@ use std::{path::PathBuf, sync::atomic::Ordering, time::SystemTime};
 
 use rdev::Key;
 use selection::get_text;
+use tauri::{AppHandle, Manager};
 
-use crate::{clip, common::SIMULATION, config::KEY};
+use crate::{clip, common::SIMULATION, config};
 
 /// 模拟获取复制文本
 ///
@@ -59,10 +60,19 @@ pub fn get_exe_dir() -> PathBuf {
 ///
 /// Get current key
 pub fn key() -> Key {
-    let key = KEY.load(Ordering::SeqCst);
+    let key = config::key();
     match key {
         1 => Key::ControlLeft,
         2 => Key::CapsLock,
         _ => Key::ShiftLeft,
     }
+}
+
+/// 修改主题
+///
+/// Change theme
+pub fn theme(app: &AppHandle, theme: &str) {
+    config::set_theme(theme);
+    let panel = app.get_webview_window("panel").unwrap();
+    let _ = panel.emit("theme", theme);
 }

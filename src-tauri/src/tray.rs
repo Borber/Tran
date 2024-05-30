@@ -1,5 +1,3 @@
-use std::sync::atomic::Ordering;
-
 use anyhow::Result;
 use tauri::{
     menu::{CheckMenuItem, Menu, MenuEvent, MenuItem, Submenu},
@@ -7,7 +5,7 @@ use tauri::{
     AppHandle, Manager, Wry,
 };
 
-use crate::config::{self, MODE};
+use crate::{config, util};
 
 /// 初始化托盘菜单
 ///
@@ -24,21 +22,32 @@ pub fn init(app: &AppHandle) -> Result<()> {
 }
 
 fn menu(handle: &AppHandle) -> Result<Menu<Wry>> {
-    let f = MODE.load(Ordering::SeqCst);
-    let k = config::KEY.load(Ordering::SeqCst);
+    let config = config::config();
+
+    let f = config.mode;
+    let k = config.key;
+    let t = config.theme;
+
     let mirror = CheckMenuItem::with_id(handle, "mirror", "Mirror", true, f, None::<&str>)?;
     let google = CheckMenuItem::with_id(handle, "google", "Google", true, !f, None::<&str>)?;
     let mode = Submenu::with_items(handle, "Mode", true, &[&mirror, &google])?;
+
     let shift = CheckMenuItem::with_id(handle, "shift", "Shift", true, k == 0, None::<&str>)?;
     let ctrl = CheckMenuItem::with_id(handle, "ctrl", "Ctrl", true, k == 1, None::<&str>)?;
     let caps = CheckMenuItem::with_id(handle, "caps", "Caps", true, k == 2, None::<&str>)?;
     let key = Submenu::with_items(handle, "Key", true, &[&shift, &ctrl, &caps])?;
+
+    let light =
+        CheckMenuItem::with_id(handle, "light", "Light", true, t.eq("light"), None::<&str>)?;
+    let dark = CheckMenuItem::with_id(handle, "dark", "Dark", true, t.eq("dark"), None::<&str>)?;
+    let theme = Submenu::with_items(handle, "Theme", true, &[&light, &dark])?;
+
     let github = MenuItem::with_id(handle, "github", "GitHub", true, None::<&str>)?;
     let telegram = MenuItem::with_id(handle, "telegram", "Telegram", true, None::<&str>)?;
-    let version = MenuItem::with_id(handle, "version", "v0.2.14", false, None::<&str>)?;
+    let version = MenuItem::with_id(handle, "version", "v0.2.15", false, None::<&str>)?;
     let about = Submenu::with_items(handle, "About", true, &[&github, &telegram, &version])?;
     let exit = MenuItem::with_id(handle, "exit", "Exit", true, None::<&str>)?;
-    Menu::with_items(handle, &[&mode, &key, &about, &exit])
+    Menu::with_items(handle, &[&mode, &key, &theme, &about, &exit])
         .map_err(|_| anyhow::anyhow!("Failed to create menu"))
 }
 
@@ -52,19 +61,25 @@ fn fresh(app: &AppHandle) {
 fn handler(app: &AppHandle, event: MenuEvent) {
     match event.id.as_ref() {
         "mirror" => {
-            config::mode(true);
+            config::set_mode(true);
         }
         "google" => {
-            config::mode(false);
+            config::set_mode(false);
         }
         "shift" => {
-            config::key(0);
+            config::set_key(0);
         }
         "ctrl" => {
-            config::key(1);
+            config::set_key(1);
         }
         "caps" => {
-            config::key(2);
+            config::set_key(2);
+        }
+        "light" => {
+            util::theme(app, "light");
+        }
+        "dark" => {
+            util::theme(app, "dark");
         }
         "github" => {
             let _ = open::that("https://github.com/Borber/Tran");

@@ -36,6 +36,20 @@ const App = () => {
     }
 
     onMount(async () => {
+        // 主题
+        // Theme
+        let theme = await invoke<Resp<string>>("theme").then((pos) => {
+            return pos.data
+        })
+        document.documentElement.setAttribute("data-theme", theme)
+
+        // 监听更改主题事件
+        // Listen to change theme events
+        await listen<string>("theme", (event) => {
+            console.log(event)
+            document.documentElement.setAttribute("data-theme", event.payload)
+        })
+
         // 生产环境, 全局取消右键菜单
         // Production environment, cancel right-click menu
         if (!import.meta.env.DEV) {
@@ -68,7 +82,7 @@ const App = () => {
         await fetch("https://key.borber.top/TRAN_VERSION").then(
             async (resp) => {
                 const version = await resp.text()
-                Update(version != "0.2.14")
+                Update(version != "0.2.15")
             }
         )
     })

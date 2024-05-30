@@ -56,6 +56,14 @@ async fn untmp() {
     common::TMP_PIN.store(false, Ordering::SeqCst);
 }
 
+/// 取消临时固定窗口标识
+///
+/// Unpin the temporary window
+#[tauri::command]
+async fn theme() -> R<String> {
+    R::success(config::theme())
+}
+
 #[tokio::main]
 async fn main() {
     // 全局初始化
@@ -65,7 +73,9 @@ async fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_single_instance::init(|_, _, _| {}))
         .setup(setup::handler)
-        .invoke_handler(tauri::generate_handler![copy, open, pin, unpin, untmp])
+        .invoke_handler(tauri::generate_handler![
+            copy, open, pin, unpin, untmp, theme
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

@@ -1,11 +1,9 @@
-use std::sync::atomic::Ordering;
-
 use anyhow::Result;
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 use reqwest::Client;
 use serde::Serialize;
 
-use crate::{common::CLIENT, config::MODE, lang, manager::mirror};
+use crate::{common::CLIENT, config, lang, manager::mirror};
 
 /// 翻译结果
 #[derive(Debug, Clone, Serialize)]
@@ -39,7 +37,7 @@ pub async fn translate(content: &str) -> Result<TransVO> {
     // 转换为 url 编码
     let content = utf8_percent_encode(content, NON_ALPHANUMERIC).to_string();
 
-    let host = if MODE.load(Ordering::SeqCst) {
+    let host = if config::mode() {
         mirror::one()
     } else {
         "https://translate.googleapis.com".to_string()

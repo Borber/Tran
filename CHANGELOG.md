@@ -5,12 +5,18 @@
 ### 更新
 
 -   单词界面, 双击后不再默认复制第一个结果, 而是复制所点击的选项, 且不触发双击翻译
+-   添加亮色主题
+
+![theme](https://cdn.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/theme.png)
+
+![theme-light](https://cdn.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/theme-light.png)
+
+![theme-dark](https://cdn.jsdelivr.net/gh/Borber/PublicPic1/tran/v1/theme-dark.png)
+
 
 ### 修复
 
 -   修复翻译时引入的空格导致的排版错误
-
-亮色主题还得再等等, 会做的
 
 ## [0.2.14]
 
