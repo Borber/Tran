@@ -28,7 +28,6 @@ pub struct Dict {
 pub struct Tran {
     // 0: 文本
     // 1: 换行
-    // 2: 空格
     pub typ: u64,
     pub data: Option<String>,
 }
@@ -113,17 +112,7 @@ async fn send(client: &Client, host: String, lang: &str, content: &str) -> Resul
                         }
                         result.push(Tran { typ: 1, data: None });
                     }
-                    '\n' => {
-                        // Do nothing assuming '\n' is always preceded by '\r', handled above.
-                    }
-                    ' ' => {
-                        result.push(Tran {
-                            typ: 0,
-                            data: Some(tmp.clone()),
-                        });
-                        tmp.clear();
-                        result.push(Tran { typ: 2, data: None });
-                    }
+                    '\n' => (), // Do nothing assuming '\n' is always preceded by '\r', handled above.
                     _ => tmp.push(c),
                 }
             }

@@ -74,9 +74,10 @@ const App = () => {
     })
 
     return (
-        <div data-tauri-drag-region class="panel">
+        <div class="panel" data-tauri-drag-region>
             <div
                 class="result"
+                data-tauri-drag-region
                 // 因为全局的可拖拽导致双击正好能触发点击事件
                 // Because the draggable global causes the double click to trigger the click event
                 onClick={async (e) => {
@@ -85,16 +86,14 @@ const App = () => {
                         return
                     }
                     if (!result()?.word) {
-                        content = e.target.innerHTML
-                            .replace(/<br>/g, "\r\n")
-                            .replace(/&nbsp;/g, " ")
+                        content = e.target.innerHTML.replace(/<br>/g, "\r\n")
                         await copy(content)
                     }
                 }}
             >
                 <Switch>
                     <Match when={result() == undefined}>
-                        <div>
+                        <div data-tauri-drag-region>
                             翻译中{`\u00A0`}
                             <ThreeDots width={20} height={10} />
                         </div>
@@ -102,14 +101,20 @@ const App = () => {
                     <Match when={result()?.word}>
                         <For each={result()!.dicts}>
                             {(dict) => (
-                                <div class="dict">
+                                <div class="dict" data-tauri-drag-region>
                                     <Show when={dict.pos != ""}>
-                                        <div class="dict-pos">{dict.pos}</div>
+                                        <div
+                                            class="dict-pos"
+                                            data-tauri-drag-region
+                                        >
+                                            {dict.pos}
+                                        </div>
                                     </Show>
                                     <For each={dict.terms}>
                                         {(term) => (
                                             <div
                                                 class="dict-term"
+                                                data-tauri-drag-region
                                                 onClick={async () => {
                                                     await copy(term)
                                                 }}
@@ -127,10 +132,8 @@ const App = () => {
                             {(tran) => {
                                 if (tran.typ == 0) {
                                     return tran.data
-                                } else if (tran.typ == 1) {
-                                    return <br />
                                 } else {
-                                    return `\u00A0`
+                                    return <br />
                                 }
                             }}
                         </For>
