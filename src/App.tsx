@@ -30,6 +30,7 @@ const App = () => {
         })
 
         // 未固定则直接关闭
+        // Unfixed, close directly
         if (!pin) {
             await close()
         }
