@@ -74,6 +74,29 @@ const App = () => {
             Result(undefined)
         })
 
+        // 调整滚动范围
+        // Adjust scroll range
+        const RESULT = document.getElementById("result")!
+
+        RESULT.addEventListener("wheel", (e) => {
+            // 阻止浏览器默认行为
+            // Prevent browser default behavior
+            e.preventDefault()
+
+            const height = 60
+            const scrollAmount = e.deltaY > 0 ? height : -height
+            const newScrollTopWithAmount = RESULT.scrollTop + scrollAmount
+
+            // 限制滚动范围
+            const maxScrollTop = RESULT.scrollHeight - RESULT.clientHeight
+            const newScrollTopLimited = Math.min(
+                Math.max(newScrollTopWithAmount, 0),
+                maxScrollTop
+            )
+
+            RESULT.scrollTo({ top: newScrollTopLimited, behavior: "smooth" })
+        })
+
         window.addEventListener("keydown", async (e) => {
             if (e.key == "Escape") {
                 await close()
@@ -92,6 +115,7 @@ const App = () => {
         <div class="panel" data-tauri-drag-region>
             <div
                 class="result"
+                id="result"
                 data-tauri-drag-region
                 // 因为全局的可拖拽导致双击正好能触发点击事件
                 // Because the draggable global causes the double click to trigger the click event
