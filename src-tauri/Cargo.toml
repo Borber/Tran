@@ -48,7 +48,7 @@ fastrand = "2"
 # For browser
 open = "5"
 
-rdev = { git = "https://github.com/fufesou/rdev.git" }
+rdev = { git = "https://github.com/Narsil/rdev.git" }
 crossbeam-channel = "0.5"
 
 
