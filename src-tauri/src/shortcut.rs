@@ -2,15 +2,13 @@ use std::sync::atomic::Ordering;
 
 use anyhow::Result;
 use mouse_position::mouse_position::Mouse;
-use tauri::LogicalSize;
-use tauri::Manager;
-use tauri::PhysicalPosition;
-use tauri::WebviewWindow;
+use tauri::{Emitter, LogicalSize, PhysicalPosition, WebviewWindow};
 
-use crate::common::PIN;
-use crate::manager::api::translate;
-use crate::manager::api::TransVO;
-use crate::resp::R;
+use crate::{
+    common::PIN,
+    manager::api::{translate, TransVO},
+    resp::R,
+};
 
 /// 鼠标坐标与选中内容
 ///

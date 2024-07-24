@@ -28,7 +28,7 @@ serde_json = "1"
 
 # For window
 mouse_position = "0.1"
-selection = { git = "https://github.com/Borber/selection" }
+selection = { git = "https://github.com/Borber/selection.git" }
 
 # For URL
 percent-encoding = "2"
