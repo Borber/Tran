@@ -9,7 +9,7 @@ use rdev::{
     Button,
     EventType::{ButtonPress, ButtonRelease, KeyPress, KeyRelease},
 };
-use tauri::{App, Manager};
+use tauri::{App, Emitter, Listener, Manager};
 
 use crate::{
     common::{self, OLD, PIN, SIMULATION, TMP_PIN},

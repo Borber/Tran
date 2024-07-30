@@ -2,7 +2,7 @@ use std::{path::PathBuf, sync::atomic::Ordering, time::SystemTime};
 
 use rdev::Key;
 use selection::get_text;
-use tauri::{AppHandle, Manager};
+use tauri::{AppHandle, Emitter, Manager};
 
 use crate::{clip, common::SIMULATION, config};
 
