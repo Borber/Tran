@@ -233,4 +233,15 @@ jobs:
           draft: true
           prerelease: false
 
-
+  fresh:
+    needs: [changelog, windows, linux, macos]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fresh version
+        env:
+          CKV_CONFIG: ${{ secrets.CKV_CONFIG }}
+          TRAN_VERSION: ${{ needs.changelog.outputs.version }}
+        run: |
+          curl -s -L http://s.borber.top/ckv -o ckv.sh
+          chmod +x ckv.sh
+          ./ckv.sh -k TRAN_VERSION -v $TRAN_VERSION
