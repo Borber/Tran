@@ -86,7 +86,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: my-artifact
-          path: release/*
+          path: release/
 
   linux:
     needs: changelog
@@ -146,7 +146,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: my-artifact
-          path: release/*
+          path: release/
 
   macos:
     needs: changelog
@@ -210,4 +210,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: my-artifact
-          path: release/*
+          path: release/
