@@ -1,4 +1,4 @@
-name: "Release"
+name: "dev"
 
 permissions:
   contents: write
