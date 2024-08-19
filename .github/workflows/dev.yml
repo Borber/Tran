@@ -1,0 +1,213 @@
+name: "Release"
+
+permissions:
+  contents: write
+
+on:
+  push:
+    tags:
+      - v*
+  workflow_dispatch:
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    outputs:
+      changes: ${{ steps.changelog_reader.outputs.changes }}
+      version: ${{ steps.get_version.outputs.VERSION }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get version number
+        id: get_version
+        run: |
+          VERSION=$(jq -r '.version' package.json)
+          echo $VERSION
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+      - name: Changelog Reader
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2.2.3
+        with:
+          path: "CHANGELOG.md"
+          version: ${{ steps.get_version.outputs.VERSION }}
+
+  windows:
+    needs: changelog
+    strategy:
+      fail-fast: false
+      matrix:
+        lang: [zh_en, zh_ja, ja_zh]
+
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Rust nightly
+        uses: dtolnay/rust-toolchain@nightly
+
+      - name: Install dependencies
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: Install frontend dependencies
+        run: pnpm install
+
+      - name: Install deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: canary
+
+      - name: Confirm language
+        env:
+          MATRIX_LANG: ${{ matrix.lang }}
+        run: deno run -A  script/lang.ts
+
+      - name: Build
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Built
+        env:
+          MATRIX_LANG: ${{ matrix.lang }}
+          TRAN_VERSION: ${{ needs.changelog.outputs.version }}
+          TRAN_PLATFORM: "windows"
+        run: deno run -A script/built-windows.ts
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: my-artifact
+          path: release/*
+
+  linux:
+    needs: changelog
+    strategy:
+      fail-fast: false
+      matrix:
+        lang: [zh_en, zh_ja, ja_zh]
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Rust nightly
+        uses: dtolnay/rust-toolchain@nightly
+
+      - name: Install dependencies (ubuntu only)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.1 libxdo-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: Install frontend dependencies
+        run: pnpm install
+
+      - name: Install deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: canary
+
+      - name: Confirm language
+        env:
+          MATRIX_LANG: ${{ matrix.lang }}
+        run: deno run -A  script/lang.ts
+
+      - name: Build
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Built
+        env:
+          MATRIX_LANG: ${{ matrix.lang }}
+          TRAN_VERSION: ${{ needs.changelog.outputs.version }}
+          TRAN_PLATFORM: "linux"
+        run: deno run -A script/built-linux.ts
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: my-artifact
+          path: release/*
+
+  macos:
+    needs: changelog
+    strategy:
+      fail-fast: false
+      matrix:
+        lang: [zh_en, zh_ja, ja_zh]
+        arch: [aarch64, x86_64]
+
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Rust nightly
+        uses: dtolnay/rust-toolchain@nightly
+
+      - name: Install toolchains
+        env:
+          MACOS_ARCH: ${{ matrix.arch }}
+        run: |
+          rustup target add "$MACOS_ARCH-apple-darwin"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - name: Install frontend dependencies
+        run: pnpm install
+
+      - name: Install deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: canary
+
+      - name: Confirm language
+        env:
+          MATRIX_LANG: ${{ matrix.lang }}
+        run: deno run -A  script/lang.ts
+
+      - name: Build
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: --target ${{ matrix.arch }}-apple-darwin"
+
+      - name: Built
+        env:
+          MATRIX_LANG: ${{ matrix.lang }}
+          MATRIX_ARCH: ${{ matrix.arch }}
+          TRAN_VERSION: ${{ needs.changelog.outputs.version }}
+          TRAN_PLATFORM: "macos"
+        run: deno run -A script/built-macos.ts
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: my-artifact
+          path: release/*
