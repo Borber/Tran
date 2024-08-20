@@ -1,4 +1,9 @@
 # Changelog
+## [0.2.17]
+
+### 修复
+
+-   分行的句子合并 感谢 [pwh-pwh](https://github.com/pwh-pwh)
 
 ## [0.2.16]
 

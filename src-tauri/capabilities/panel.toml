@@ -2,12 +2,12 @@ identifier = "panel"
 description = "Capability for the panel window"
 windows = ["panel"]
 permissions = [
-    "event:allow-listen",
-    "window:allow-show",
-    "window:allow-hide",
-    "window:allow-set-size",
-    "window:allow-set-focus",
-    "window:allow-set-position",
-    "window:allow-start-dragging",
+    "core:event:allow-listen",
+    "core:window:allow-show",
+    "core:window:allow-hide",
+    "core:window:allow-set-size",
+    "core:window:allow-set-focus",
+    "core:window:allow-set-position",
+    "core:window:allow-start-dragging",
 ]
 platforms = ["linux", "macOS", "windows"]

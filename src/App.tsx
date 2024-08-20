@@ -2,7 +2,7 @@ import "./App.css"
 
 import { invoke } from "@tauri-apps/api/core"
 import { listen } from "@tauri-apps/api/event"
-import { getCurrent } from "@tauri-apps/api/window"
+import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow"
 import { createSignal, For, Match, onMount, Show, Switch } from "solid-js"
 import { ThreeDots } from "solid-spinner"
 
@@ -10,7 +10,7 @@ import { UpdateIcon } from "./icon"
 import { Resp, TransVO } from "./model/resp"
 
 const App = () => {
-    const panel = getCurrent()
+    const panel = getCurrentWebviewWindow()
     const [result, Result] = createSignal<TransVO>()
     const [update, Update] = createSignal(false)
 
@@ -106,7 +106,7 @@ const App = () => {
         await fetch("https://key.borber.top/TRAN_VERSION").then(
             async (resp) => {
                 const version = await resp.text()
-                Update(version != "0.2.16")
+                Update(version != "0.2.17")
             }
         )
     })
