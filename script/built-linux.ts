@@ -5,9 +5,9 @@ const platform = Deno.env.get("TRAN_PLATFORM")
 const root = "src-tauri/target/release/";
 
 const bundle = root + "bundle/"
-const deb = bundle + "deb/tran_" + version + "_amd64.deb"
-const rpm = bundle + "rpm/tran-" + version + "-1.x86_64.rpm"
-const appimage = bundle + "appimage/tran_" + version + "_amd64.AppImage"
+const deb = bundle + "deb/Tran_" + version + "_amd64.deb"
+const rpm = bundle + "rpm/Tran-" + version + "-1.x86_64.rpm"
+const appimage = bundle + "appimage/Tran_" + version + "_amd64.AppImage"
 
 const new_deb = "Tran_" + lang + "_amd64.deb"
 const new_rpm = "Tran_" + lang + "_amd64.rpm"
