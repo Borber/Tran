@@ -38,7 +38,7 @@ pub async fn translate(content: &str) -> Result<TransVO> {
     let content = utf8_percent_encode(content, NON_ALPHANUMERIC).to_string();
 
     // 将多行合并一行
-    let content = content.replace('\n', " ").replace('\r', " ");
+    let content = content.replace(['\n', '\r'], " ");
     let host = if config::mode() {
         mirror::one()
     } else {

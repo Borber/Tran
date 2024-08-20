@@ -9,11 +9,11 @@ edition = "2021"
 
 
 [build-dependencies]
-tauri-build = { version = "2.0.0-beta", features = [] }
+tauri-build = { version = "2.0.0-rc", features = [] }
 
 [dependencies]
-tauri = { version = "2.0.0-beta", features = ["tray-icon"] }
-tauri-plugin-single-instance = "2.0.0-beta"
+tauri = { version = "2.0.0-rc", features = ["tray-icon"] }
+tauri-plugin-single-instance = "2.0.0-rc"
 
 # For base
 once_cell = "1"
