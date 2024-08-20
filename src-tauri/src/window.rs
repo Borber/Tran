@@ -14,6 +14,7 @@ pub fn panel(app: &AppHandle) {
         .visible(false)
         .shadow(true)
         .center()
+        .transparent(true)
         .build()
         .expect("Failed to create panel window");
 }

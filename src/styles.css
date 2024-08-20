@@ -191,6 +191,7 @@ input:-webkit-autofill {
   overflow: hidden;
   box-sizing: border-box;
   border: #434244 1px solid;
+  border-radius: 8px;
 }
 
 /*
