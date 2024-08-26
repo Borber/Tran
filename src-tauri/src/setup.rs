@@ -27,58 +27,60 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     // Initialize the tray
     tray::init(handle)?;
 
-    let paneld = app
+    let panel = app
         .get_webview_window("panel")
         .expect("Failed to get panel window");
 
     let (key_s, key_r) = bounded(1);
     let (mouse_s, mouse_r) = bounded(1);
 
-    let panel = paneld.clone();
-
     // 监听快捷键
     // Listen for shortcut keys
-    spawn(move || {
-        while let Ok(()) = key_r.recv() {
-            // 防止在 panel 中再次翻译
-            // Prevent the translation from being repeated in the panel
-            if panel.is_focused().unwrap_or(false) {
-                continue;
-            }
-            if !PIN.load(Ordering::SeqCst) {
-                // 模拟复制获取文本, fallback 到系统剪贴板
-                // Simulate copy and get text, fallback to system clipboard
-                let content = util::content(true);
-                // 临时固定
-                // Temporary pined
-                TMP_PIN.store(true, Ordering::SeqCst);
-                shortcut::show(&panel, content).expect("Shortcut key call failed")
+    spawn({
+        let panel = panel.clone();
+        move || {
+            while let Ok(()) = key_r.recv() {
+                // 防止在 panel 中再次翻译
+                // Prevent the translation from being repeated in the panel
+                if panel.is_focused().unwrap_or(false) {
+                    continue;
+                }
+                if !PIN.load(Ordering::SeqCst) {
+                    // 模拟复制获取文本, fallback 到系统剪贴板
+                    // Simulate copy and get text, fallback to system clipboard
+                    let content = util::content(true);
+                    // 临时固定
+                    // Temporary pined
+                    TMP_PIN.store(true, Ordering::SeqCst);
+                    shortcut::show(&panel, content).expect("Shortcut key call failed")
+                }
             }
         }
     });
 
-    let panel = paneld.clone();
-
     // 监听划词
     // Listen for word selection
-    spawn(move || {
-        while let Ok(()) = mouse_r.recv() {
-            // 防止在 panel 中再次翻译
-            // Prevent the translation from being repeated in the panel
-            if panel.is_focused().unwrap_or(false) {
-                continue;
-            }
-            if PIN.load(Ordering::SeqCst) {
-                // 模拟复制获取文本, 不 fallback 到系统剪贴板
-                // Simulate copy and get text, do not fallback to system clipboard
-                let content = util::content(false);
+    spawn({
+        let panel = panel.clone();
+        move || {
+            while let Ok(()) = mouse_r.recv() {
+                // 防止在 panel 中再次翻译
+                // Prevent the translation from being repeated in the panel
+                if panel.is_focused().unwrap_or(false) {
+                    continue;
+                }
+                if PIN.load(Ordering::SeqCst) {
+                    // 模拟复制获取文本, 不 fallback 到系统剪贴板
+                    // Simulate copy and get text, do not fallback to system clipboard
+                    let content = util::content(false);
 
-                // 避免重复翻译
-                // Avoid repeated translation
-                if content != OLD.read().as_str() {
-                    let mut old = OLD.write();
-                    old.clone_from(&content);
-                    shortcut::show(&panel, content).expect("Selection call failed")
+                    // 避免重复翻译
+                    // Avoid repeated translation
+                    if content != OLD.read().as_str() {
+                        let mut old = OLD.write();
+                        old.clone_from(&content);
+                        shortcut::show(&panel, content).expect("Selection call failed")
+                    }
                 }
             }
         }
@@ -207,36 +209,38 @@ pub fn handler(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
         })
     });
 
-    let panel = paneld.clone();
-    let check = paneld.clone();
-
     // 当panel获取焦点,并移动时, 固定窗口
     // Pin the window when the panel gets focus and moves
-    spawn(move || {
-        panel.listen("tauri://move", move |_| {
-            if check.is_focused().unwrap_or(false) {
-                PIN.store(true, Ordering::SeqCst);
-            }
-        })
+    spawn({
+        let panel = panel.clone();
+        let check = panel.clone();
+        move || {
+            panel.listen("tauri://move", move |_| {
+                if check.is_focused().unwrap_or(false) {
+                    PIN.store(true, Ordering::SeqCst);
+                }
+            })
+        }
     });
-
-    let panel = paneld.clone();
 
     // 检测是否应该隐藏窗口
     // Check if the window should be hidden
-    spawn(move || {
-        loop {
-            if !TMP_PIN.load(Ordering::SeqCst)
-                && !PIN.load(Ordering::SeqCst)
-                && !panel.is_focused().unwrap_or(false)
-            {
-                let _ = panel.hide();
-                // 窗口隐藏后, 清空翻译结果
-                // Clear the translation result after the window is hidden
-                let _ = panel.emit("reset", ());
-                PIN.store(false, Ordering::SeqCst)
+    spawn({
+        let panel = panel.clone();
+        move || {
+            loop {
+                if !TMP_PIN.load(Ordering::SeqCst)
+                    && !PIN.load(Ordering::SeqCst)
+                    && !panel.is_focused().unwrap_or(false)
+                {
+                    let _ = panel.hide();
+                    // 窗口隐藏后, 清空翻译结果
+                    // Clear the translation result after the window is hidden
+                    let _ = panel.emit("reset", ());
+                    PIN.store(false, Ordering::SeqCst)
+                }
+                sleep(std::time::Duration::from_millis(100));
             }
-            sleep(std::time::Duration::from_millis(100));
         }
     });
 
