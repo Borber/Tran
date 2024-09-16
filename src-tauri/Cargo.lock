@@ -4933,7 +4933,6 @@ version = "0.2.17"
 dependencies = [
  "anyhow",
  "arboard",
- "crossbeam-channel",
  "fastrand",
  "lingua",
  "mouse_position",

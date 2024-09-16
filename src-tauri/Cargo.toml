@@ -49,7 +49,6 @@ fastrand = "2"
 open = "5"
 
 rdev = { git = "https://github.com/Narsil/rdev.git" }
-crossbeam-channel = "0.5"
 
 
 [profile.release]
