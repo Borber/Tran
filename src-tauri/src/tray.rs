@@ -44,7 +44,7 @@ fn menu(handle: &AppHandle) -> Result<Menu<Wry>> {
 
     let github = MenuItem::with_id(handle, "github", "GitHub", true, None::<&str>)?;
     let telegram = MenuItem::with_id(handle, "telegram", "Telegram", true, None::<&str>)?;
-    let version = MenuItem::with_id(handle, "version", "v0.2.17", false, None::<&str>)?;
+    let version = MenuItem::with_id(handle, "version", "v0.2.18", false, None::<&str>)?;
     let about = Submenu::with_items(handle, "About", true, &[&github, &telegram, &version])?;
     let exit = MenuItem::with_id(handle, "exit", "Exit", true, None::<&str>)?;
     Menu::with_items(handle, &[&mode, &key, &theme, &about, &exit])

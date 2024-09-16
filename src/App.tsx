@@ -37,6 +37,8 @@ const App = () => {
     }
 
     onMount(async () => {
+        const RESULT = document.getElementById("result") as HTMLElement
+
         // 主题
         // Theme
         let theme = await invoke<Resp<string>>("theme").then((pos) => {
@@ -63,6 +65,8 @@ const App = () => {
         // Listen to events and display panel
         await listen<Resp<TransVO>>("show", async (pos) => {
             Result(pos.payload.data)
+            // 滚动到顶部
+            RESULT.scrollTop = 0
             // 显示完成后取消临时固定
             // After displaying, cancel temporary pin
             await invoke("untmp")
@@ -76,25 +80,53 @@ const App = () => {
 
         // 调整滚动范围
         // Adjust scroll range
-        const RESULT = document.getElementById("result")!
+        const easeOutCubic = (t: number): number => 1 - Math.pow(1 - t, 3)
+        const smoothScroll = (
+            element: HTMLElement,
+            target: number,
+            duration: number
+        ): void => {
+            const start = element.scrollTop
+            const distance = target - start
+            const startTime = performance.now()
+            const animation = (currentTime: number): void => {
+                const progress = Math.min(
+                    (currentTime - startTime) / duration,
+                    1
+                )
+                element.scrollTop = start + distance * easeOutCubic(progress)
+                if (progress < 1) requestAnimationFrame(animation)
+            }
+            requestAnimationFrame(animation)
+        }
 
-        RESULT.addEventListener("wheel", (e) => {
-            // 阻止浏览器默认行为
-            // Prevent browser default behavior
+        let lastScrollTime = 0
+        let accumulatedDelta = 0
+        let scrollAnimationFrame: number
+        let scrollTimeoutId: number
+
+        RESULT.addEventListener("wheel", (e: WheelEvent): void => {
             e.preventDefault()
-
-            const height = 60
-            const scrollAmount = e.deltaY > 0 ? height : -height
-            const newScrollTopWithAmount = RESULT.scrollTop + scrollAmount
-
-            // 限制滚动范围
+            const currentTime = performance.now()
+            if (currentTime - lastScrollTime > 50) accumulatedDelta = 0
+            lastScrollTime = currentTime
+            accumulatedDelta =
+                Math.sign(e.deltaY) *
+                Math.min(Math.abs(accumulatedDelta + e.deltaY), 50)
+            const newScrollTop = RESULT.scrollTop + accumulatedDelta * 0.5
             const maxScrollTop = RESULT.scrollHeight - RESULT.clientHeight
-            const newScrollTopLimited = Math.min(
-                Math.max(newScrollTopWithAmount, 0),
-                maxScrollTop
+            const targetScrollTop = Math.max(
+                0,
+                Math.min(newScrollTop, maxScrollTop)
             )
-
-            RESULT.scrollTo({ top: newScrollTopLimited, behavior: "smooth" })
+            cancelAnimationFrame(scrollAnimationFrame)
+            scrollAnimationFrame = requestAnimationFrame(() => {
+                smoothScroll(RESULT, targetScrollTop, 150)
+            })
+            clearTimeout(scrollTimeoutId)
+            scrollTimeoutId = window.setTimeout(() => {
+                accumulatedDelta = 0
+            }, 200)
         })
 
         window.addEventListener("keydown", async (e) => {
@@ -106,7 +138,7 @@ const App = () => {
         await fetch("https://key.borber.top/TRAN_VERSION").then(
             async (resp) => {
                 const version = await resp.text()
-                Update(version != "0.2.17")
+                Update(version != "0.2.18")
             }
         )
     })

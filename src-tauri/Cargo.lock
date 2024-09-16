@@ -2019,9 +2019,9 @@ dependencies = [
 
 [[package]]
 name = "iana-time-zone"
-version = "0.1.60"
+version = "0.1.61"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e7ffbb5a1b541ea2561f8c41c087286cc091e21e556a4f09a8f6cbf17b69b141"
+checksum = "235e081f3925a06703c2d0117ea8b91f042756fd6e7a6e5d901e8ca1a996b220"
 dependencies = [
  "android_system_properties",
  "core-foundation-sys 0.8.7",
@@ -2917,9 +2917,9 @@ dependencies = [
 
 [[package]]
 name = "once_cell"
-version = "1.20.0"
+version = "1.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "33ea5043e58958ee56f3e15a90aee535795cd7dfd319846288d93c5b57d85cbe"
+checksum = "3fdb12b2476b595f9358c5161aa467c2438859caa136dec86c26fdd2efe17b92"
 
 [[package]]
 name = "open"
@@ -3824,7 +3824,7 @@ dependencies = [
 [[package]]
 name = "selection"
 version = "1.2.2"
-source = "git+https://github.com/Borber/selection.git#6cd9d92f172e0482745789a5787bf7294eea4999"
+source = "git+https://github.com/Borber/selection.git#3ae7aaa9f744a5b82262f6a0f948781fe21d2ec9"
 dependencies = [
  "accessibility-ng",
  "accessibility-sys-ng",
@@ -4929,7 +4929,7 @@ dependencies = [
 
 [[package]]
 name = "tran"
-version = "0.2.17"
+version = "0.2.18"
 dependencies = [
  "anyhow",
  "arboard",
