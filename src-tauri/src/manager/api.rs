@@ -5,6 +5,7 @@ use serde::Serialize;
 
 use crate::{common::CLIENT, config, lang, manager::mirror};
 
+// TODO: 数组字段枚举
 /// 翻译结果
 #[derive(Debug, Clone, Serialize)]
 pub struct TransVO {
