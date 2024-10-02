@@ -61,7 +61,7 @@ jobs:
         run: pnpm install
 
       - name: Install deno
-        uses: denoland/setup-deno@v1
+        uses: denoland/setup-deno@v2
         with:
           deno-version: canary
 
@@ -128,7 +128,7 @@ jobs:
         run: pnpm install
 
       - name: Install deno
-        uses: denoland/setup-deno@v1
+        uses: denoland/setup-deno@v2
         with:
           deno-version: canary
 
@@ -196,7 +196,7 @@ jobs:
         run: pnpm install
 
       - name: Install deno
-        uses: denoland/setup-deno@v1
+        uses: denoland/setup-deno@v2
         with:
           deno-version: canary
 
