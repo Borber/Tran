@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@tauri-apps/api':
-        specifier: 2.0.0-rc.6
-        version: 2.0.0-rc.6
+        specifier: 2.0.2
+        version: 2.0.2
       solid-js:
         specifier: ^1.9.1
         version: 1.9.1
@@ -446,8 +446,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@tauri-apps/api@2.0.0-rc.6':
-    resolution: {integrity: sha512-oENxL0C5WqHNSXWjZEbjnzoBwFFyn8do5S0elOg0ME1cLvWJOAKmqdCnWPpAwtzHQZ+xAzMU0/k8nPpJq4OQYA==}
+  '@tauri-apps/api@2.0.2':
+    resolution: {integrity: sha512-3wSwmG+1kr6WrgAFKK5ijkNFPp8TT3FLj3YHUb5EwMO+3FxX4uWlfSWkeeBy+Kc1RsKzugtYLuuya+98Flj+3w==}
 
   '@tauri-apps/cli-darwin-arm64@2.0.0-rc.17':
     resolution: {integrity: sha512-LXlLpavNfhvELPBcjCzQ9DOLx7rlAzZM4iltsaKawAewx30Q0EpIjK53Sg5AR3p5/KzNfCsTMjjpeUZg1AcFgw==}
@@ -1583,7 +1583,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.22.5':
     optional: true
 
-  '@tauri-apps/api@2.0.0-rc.6': {}
+  '@tauri-apps/api@2.0.2': {}
 
   '@tauri-apps/cli-darwin-arm64@2.0.0-rc.17':
     optional: true
