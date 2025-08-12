@@ -20,7 +20,7 @@
     "@tauri-apps/cli": "2.0.0-rc.17",
     "@types/node": "^22.7.4",
     "@typescript-eslint/eslint-plugin": "^8.7.0",
-    "@typescript-eslint/parser": "^8.7.0",
+    "@typescript-eslint/parser": "^8.39.1",
     "eslint": "^9.11.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-solid": "^0.14.3",
