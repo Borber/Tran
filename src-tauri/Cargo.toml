@@ -9,11 +9,11 @@ edition = "2021"
 
 
 [build-dependencies]
-tauri-build = { version = "2.0.0-rc", features = [] }
+tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "2.0.0-rc", features = ["tray-icon"] }
-tauri-plugin-single-instance = "2.0.0-rc"
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-plugin-single-instance = "2"
 
 # For base
 once_cell = "1"
@@ -33,9 +33,9 @@ selection = { git = "https://github.com/Borber/selection.git" }
 # For URL
 percent-encoding = "2"
 
-# For clipboard
 arboard = { version = "3", default-features = false }
 
+# For clipboard
 # For language detection
 lingua = { version = "1.6", default-features = false, features = [
     "chinese",

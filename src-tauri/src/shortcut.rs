@@ -10,14 +10,6 @@ use crate::{
     resp::R,
 };
 
-/// 鼠标坐标与选中内容
-///
-/// Mouse coordinates and selected content
-#[derive(Debug, Clone, serde::Serialize)]
-pub struct ShowVO {
-    pub content: String,
-}
-
 pub fn show(panel: &WebviewWindow, content: String) -> Result<()> {
     // 如果内容为空则直接返回
     // If the content is empty, return directly
